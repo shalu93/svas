@@ -1,2 +1,2 @@
 # svas
-svas bank
+Banka - a core banking application ( Added UI)
