@@ -1,0 +1,147 @@
+body{
+  font: 15px/1.5 Arial;
+  padding: 0;
+  margin: 0;
+  background-color: #f4f4f4;
+}
+
+body, html {
+  height: 100%;
+}
+
+
+.container{
+  width: 90%;
+  margin: auto;
+  overflow: hidden;
+}
+
+header{
+  background: midnightblue;
+  color: white;
+  padding-top: 10px;
+  min-height: 2px;
+  border-bottom: #e8491d 3px solid;
+}
+header{
+  padding: -10px;
+  margin: 0;
+}
+.container p{
+  text-align: center;
+  font: 15px/1.5 Arial;
+  margin-top: 1px;
+}
+.button_1{
+  height: 30px;
+  background-color: grey;
+  border: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #ffffff;
+}
+.button_2{
+  height: 10px;
+  background-color: grey;
+  border: 0;
+  padding-left: 20px;
+  padding-right: 20px;
+  color: #ffffff;
+}
+#showcase{
+  min-height: 500px;
+  min-width: 1500px;
+  background: url('../img/F pg.jpg');
+    /* The image used */
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#showcase h1{
+  padding: 10px;
+  margin: 0;
+  text-align: left;
+  border: 0;
+  color: maroon;
+}
+
+#showcase h2{
+  padding: 10px;
+  margin: 0;
+  text-align: left;
+  border: 0;
+  color: purple;
+  font: 15px/1.5 Arial;
+}
+#showcase h3{
+    padding: 10px;
+    margin: 0;
+    text-align: left;
+    border: 0;
+    color: purple;
+    font: 15px/1.5 Arial;
+  }
+  #showcase h4{
+      padding: 10px;
+      margin: 0;
+      text-align: left;
+      border: 0;
+      color: purple;
+      font: 15px/1.5 Arial;
+    }
+    #showcase h5{
+        padding: 10px;
+        margin: 0;
+        text-align: left;
+        border: 0;
+        color: purple;
+        font: 12px/1.5 Arial;
+      }
+
+/* Full-width input fields */
+  input[type=text], input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+
+/* Add padding to container elements */
+.container {
+  padding: 16px;
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Full-width inputs */
+input[type=text], input[type=password] {
+  width: 12%;
+  padding: 10px 15px;
+  margin: 8px 0;
+  border: 1px solid black;
+  box-sizing: border-box;
+}

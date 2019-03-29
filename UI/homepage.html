@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Banka">
+    <meta name="keywords" content="Bank For the people">
+    <meta name="author" content="Shalu Chandwani Vaswani">
+    <title>Banka | homepage </title>
+    <link rel="stylesheet" href="./css/style1.css">
+  </head>
+  <body>
+  <header>
+  <div  id="Header" class="container1">
+      <h1><img src="img/bank logo.jpg" alt="Banka" style="width:150px;height:60px;">Banka<p>Your Trust Our Commitment</p>
+
+      <form method="get" action="index.html">
+      <button type="Logout" class = "button3" name="button">Logout</button></form>
+    </h1>
+    </div>
+  </header>
+   <script src="jquery.js"></script>
+  <script type="text/javascript">
+
+  function getUrlVars() {
+    var vars = {};
+    var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+        vars[key] = value;
+    });
+    return vars;
+}
+   var dynamicContent = getUrlVars()["AccountType"];
+$(document).ready(function() {
+// Check if the URL parameter is Admin
+if (dynamicContent == 'Admin') {
+$('#Admin').show();
+$('#AdminStaff').show();
+}
+// Check if the URL parameter is Staff
+else if (dynamicContent == 'Staff') {
+$('#Staff').show();
+$('#AdminStaff').show();
+}
+// Check if the URL parameter is Client
+else if (dynamicContent == 'Client') {
+$('#Client').show();
+}
+// Check if the URL parmeter is empty or not defined, display default content
+else {
+$('#default-content').show();
+}
+});
+  </script>
+  <script>
+function myFunction() {
+  alert("Sure You Want To Delete the Account");
+}
+</script>
+    <section id="showcase">
+    <div id ="default-content" class="container" >
+    <h1>Enter Account Type First</h1>
+    </div>
+    <div id ="Admin" class="container" >
+      <h1><b>Bank Operations</b></h1>
+      <h2>
+      <details>
+      <summary><b>Activate/Deactivate User accounts</b></summary>
+      <div class="topnav">
+      <div class="search-container">
+        <form method="get" action="Amend admin or staff user acct.html">Search For User Id
+        <input type="text" placeholder="Search.." name="search">
+        <a href="Amend admin or staff user acct.html">
+        <button type="button" name="button" >Submit</button></a></form>
+      </div>
+      </div>
+      </details>
+      </h2>
+      <h3>
+      <details>
+      <summary><a href="create admin or staff user acct.html"><b>Create Admin/Staff</b></a></summary>
+      <div class="topnav">
+      <div class="search-container"></div></div></details>
+      </h3>
+      </div>
+      <br>
+      <div id="Staff" class="container">
+      <h1><b>Transaction</b><h1>
+      <h2>
+      <details>
+      <summary><a href="transaction page.html"><b>Credit/Debit Account</b></a></summary>
+      <div class="topnav">
+      <div class="search-container"></div></div></details>
+      </h2>
+      </div>
+      <br>
+    <div id="Client" class="container">
+      <h1><b>User Operations</b></h1>
+      <h2>
+      <form method="get" action="create bank account.html">
+      <button type="Create Bank Account" name="button" class="button" style="vertical-align:middle"><span></span>Create Bank Account</button></form></h2><br>
+      <h3>
+      <form method="get" action="profile.html">
+      <button type="Profile" name="button" class="button" style="vertical-align:middle"><span></span>Profile</button></form></h3><br>
+      <h4>
+      <form method="get" action="transaction history.html">
+      <button type="Transaction History" name="button" class="button" style="vertical-align:middle"><span></span>Transaction History</button></form></h4><br>
+      <h4>
+      <form method="get" action="forgot password.html">
+      <button type="reset password" name="button" class="button" style="vertical-align:middle"><span></span>Reset Password</button></form></h5><br>
+    </div>
+    <br>
+    <div id="AdminStaff" class="container">
+      <h1><b>Admin/Staff Rights</b></h1>
+      <h2>
+        <details>
+        <summary><a href="Bank Account Records.html"><b>View list of all bank accounts</b></a></summary>
+        <div class="topnav">
+        <div class="search-container">
+        <form method="get" action="Bank Account Records.html">
+        </form></div></div>
+      </h2>
+      <h3>
+        <details>
+        <summary><b>View a specific bank account record</b></summary>
+        <div class="topnav">
+        <div class="search-container">
+        <form method="get" action="Bank Account Records.html">Search For Account Number
+        <input type="text" placeholder="Search.." name="search">
+        <a href="Bank Account Records.html">
+        <button type="button" name="button">Submit</button></a>
+        </form>
+        </div>
+        </div>
+        </details>
+        </h3>
+        <h4>
+          <details>
+          <summary><b>Delete a specific account</b></summary>
+          <div class="topnav">
+          <div class="search-container">
+          <form method="get" action="Delete a specific account.html">Search For Account Number
+          <input type="text" placeholder="Search.." name="search">
+          <button type="button" name="button" onclick="myFunction()">Submit</button>
+          </form>
+          </div>
+          </div>
+          </details>
+        </h4>
+      </div>
+   </section>
+  </body>
+</html>
