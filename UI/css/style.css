@@ -10,7 +10,7 @@ body, html {
 }
 
 
-.container{
+.container1{
   width: 90%;
   margin: auto;
   overflow: hidden;
@@ -19,7 +19,7 @@ body, html {
 header{
   background: midnightblue;
   color: white;
-  padding-top: 10px;
+  padding-top: 0;
   min-height: 2px;
   border-bottom: #e8491d 3px solid;
 }
@@ -27,27 +27,12 @@ header{
   padding: -10px;
   margin: 0;
 }
-.container p{
+.container1 p{
   text-align: center;
   font: 15px/1.5 Arial;
   margin-top: 1px;
 }
-.button_1{
-  height: 30px;
-  background-color: grey;
-  border: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #ffffff;
-}
-.button_2{
-  height: 10px;
-  background-color: grey;
-  border: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #ffffff;
-}
+
 #showcase{
   min-height: 500px;
   min-width: 1500px;
@@ -62,6 +47,7 @@ header{
     background-repeat: no-repeat;
     background-size: cover;
 }
+
 
 #showcase h1{
   padding: 10px;
@@ -104,44 +90,67 @@ header{
         font: 12px/1.5 Arial;
       }
 
-/* Full-width input fields */
-  input[type=text], input[type=password] {
-  width: 100%;
-  padding: 15px;
-  margin: 5px 0 22px 0;
-  display: inline-block;
-  border: none;
-  background: #f1f1f1;
+
+div.container{
+width: 900px;
+height: 610px;
+margin:35px auto;
+}
+div.main{
+width: 500px;
+padding: 10px 50px 25px;
+border: 2px solid gray;
+border-radius: 10px;
+float:left;
+margin-top:50px;
+}
+input[type=LoginId],input[type=password]{
+width: 90%;
+height: 20px;
+padding: 2px;
+margin-bottom: 20px;
+margin-top: 5px;
+border: 2px solid #ccc;
+color: #4f4f4f;
+font-size: 16px;
+border-radius: 5px;
 }
 
-input[type=text]:focus, input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
+label{
+color: #464646;
+text-shadow: 0 1px 0 #fff;
+font-size: 14px;
+font-weight: bold;
 }
-
-hr {
-  border: 1px solid #f1f1f1;
-  margin-bottom: 25px;
+center{
+font-size:32px;
 }
-
-
-/* Add padding to container elements */
-.container {
-  padding: 16px;
+.note{
+color:red;
 }
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
+.valid{
+color:green;
 }
-
-/* Full-width inputs */
-input[type=text], input[type=password] {
-  width: 12%;
-  padding: 10px 15px;
-  margin: 8px 0;
-  border: 1px solid black;
-  box-sizing: border-box;
+.back{
+text-decoration: none;
+border: 1px solid rgb(0, 143, 255);
+background-color: rgb(0, 214, 255);
+padding: 3px 20px;
+border-radius: 2px;
+color: black;
+}
+input[type=button]{
+font-size: 16px;
+background: linear-gradient(#ffbc00 5%, #ffdd7f 100%);
+border: 1px solid #e5a900;
+color: #4E4D4B;
+font-weight: bold;
+cursor: pointer;
+width: 100%;
+border-radius: 5px;
+padding: 10px 0;
+outline:none;
+}
+input[type=button]:hover{
+background: linear-gradient(#ffdd7f 5%, #ffbc00 100%);
 }
