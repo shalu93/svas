@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Banka">
+    <meta name="keywords" content="Bank For the people">
+    <meta name="author" content="Shalu Chandwani Vaswani">
+    <title>Banka | welcome </title>
+    <link rel="stylesheet" href="./css/style.css">
+  </head>
+  <body>
+  <header>
+  <div class="container1">
+    <div id="branding">
+      <h1><img src="img/bank logo.jpg" alt="Banka" style="width:150px;height:60px;">Banka
+      <p>Your Trust Our Commitment</p></h1>
+      <script type="text/javascript">
+          function get_action(form) {
+          form.action = document.querySelector('input[name = "AccountType"]:checked').value;
+      }
+      </script>
+    </div>
+  </div>
+  </header>
+  <section id="showcase">
+    <div class="container">
+      <div class="main">
+      <h1>Bank Login</h1>
+      <h2><b>Login Id</b>
+      <input type="LoginId" placeholder="Login Id"></h2>
+      <h3><b>Password</b>
+      <input type="Password" placeholder="Password"></h3>
+      <h4>
+        <form method="get" action="HTML/homepage.html"><b>Account Type</b>
+          <input type="radio" name="AccountType" value="Admin"> <b>Admin</b>
+          <input type="radio" name="AccountType" value="Client"> <b>Client</b>
+          <input type="radio" name="AccountType" value="Staff"> <b>Staff</b>
+          <br>
+          <button type="submit" value="Submit" class = "button_1" onclick="get_action(this);">Submit</button>
+        </form>
+      </h4>
+      <h5><b>Not Our Client</b>
+      <form  action="HTML/signup page.html">
+      <button type="sign up" name="button_2">Sign Up</button>
+      </form>
+    </h5>
+    </div>
+    </div>
+  </section>
+  </body>
+</html>
