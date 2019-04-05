@@ -1,7 +1,7 @@
 {
   "name": "banka",
   "version": "1.0.0",
-  "description": "svas\r Svas - Banka challenge - A core Banking Solution Product (UI Only)",
+  "description": " Svas - Banka challenge - A core Banking Solution Product (UI Only)",
   "main": "server.js",
   "dependencies": {
     "bcrypt": "^3.0.5",
@@ -28,7 +28,7 @@
     "nyc": "^13.3.0"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 5000 server/test/*.js --exit",
+    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 3000 server/test/*.js --exit",
     "start": "nodemon --exec babel-node server/server.js",
     "build": "babel server/server.js --out-dir build",
     "serve": "node server/server.js"
@@ -38,12 +38,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mifeille/banka.git"
+    "url": "git+https://github.com/shalu93/banka.git"
   },
-  "author": "",
+  "author": "shalu chandwani",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mifeille/banka/issues"
+    "url": "https://github.com/shalu93/banka/issues"
   },
-  "homepage": "https://github.com/mifeille/banka#readme"
+  "homepage": "https://shalu93.github.io/svas/UI/"
 }
