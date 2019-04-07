@@ -1,3 +1,4 @@
-node_modules
-mocha
-javascript
+node_modules/
+.env
+.nyc_output
+coverage
