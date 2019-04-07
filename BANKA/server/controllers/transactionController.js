@@ -78,10 +78,10 @@ export default class transaction{
                             type : "credit",
                             accountNumber : accountNumb,
                             amount : req.body.amount ,
-                            oldBalance : transaction[0].oldBalance,
-                            newBalance : (+transaction[0].oldBalance - +req.body.amount) ,
-                        }
-                        transaction[0].oldBalance=debit.newBalance;
+                        oldBalance : transaction[0].oldBalance,
+                        newBalance : (+transaction[0].oldBalance - +req.body.amount) ,
+                    }
+                    transaction[0].oldBalance=credit.newBalance;
                         allTransactions.push(credit);
                         let transactionId = credit.id, accountNumber = credit.accountNumber, amount = credit.amount, transactionType = credit.type, accountBalance = credit.newBalance;
                         return res.status(201).json({
