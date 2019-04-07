@@ -4,7 +4,7 @@ const userData = [
         firstName: "shalu",
         lastName : "chandwani",
         email: "shaluchandwani@svasbanka.com",
-        password : "$2b$10$Ta3TcZj1wo83aAD.tBY1.uyR9E57V71PrWhfGfIC2k1ZUSSW/Dclm",
+        password : "Shalu@1993",
         type: "client"
     },
     {
@@ -12,7 +12,7 @@ const userData = [
         firstName: "pankaj",
         lastName : "vaswani",
         email: "pankajvaswani@svasbanka.com",
-        password : "$2b$10$1yJje0OVe67ij5fnA8mHDumJIdhZKNUHjghuhxX5p1eZM17ABOJ12",
+        password : "Pankaj@1993",
         type: "client"
     },
 
@@ -21,7 +21,7 @@ const userData = [
         firstName: "sakshi",
         lastName : "chandwani",
         email: "sakshichandwani@svasbanka.com",
-        password : "$2b$10$1yJje0OVe67ij5fnA8mHDumJIdhZKNUHjghuhxX5p1eZM17ABOJ12",
+        password : "Sakshi@2000",
         type: "client"
     }
     
