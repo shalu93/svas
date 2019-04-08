@@ -45,10 +45,11 @@ export default class authUsers{
                         const token = jwt.sign({
                             email: users.email,
                             userId: users.id
-                        }, process.env.JWTKEY,
+                        }, "mysupersecretkey",
                         {
-                            expiresIn: "24h"
+                            expiresIn: "12h"
                         });
+                        
                         let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,password=hash,type=user.type;
                         res.status(201).json({
                             status :201,
@@ -100,7 +101,7 @@ export default class authUsers{
                                 const token = jwt.sign({
                                     email: users.email,
                                     userId: users.id
-                                }, process.env.JWTKEY,
+                                }, "mysupersecretkey",
                                 { 
                                     expiresIn: "24h"
                                 });

@@ -1,6 +1,7 @@
 import chaiHttp from 'chai-http';
-import chai from 'chai';
 import server from '../server';
+import chai from 'chai';
+
 
 // Error messages Used
 // 201 - fetch all users
@@ -22,13 +23,13 @@ let expect = chai.expect;
 chai.use(chaiHttp);
 
 // should be able to fetch all users
-describe('Users', () => {
+describe('Users login validations', () => {
   it('fetch all users', (done) => {
     chai.request(server)
     .get('/api/v1/users')
     .send()
     .end((err, res) => {
-      expect(res).to.have.status(201);
+      expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -48,7 +49,7 @@ describe('User signup', () => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(202);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -67,7 +68,7 @@ describe('User signup', () => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(203);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -86,7 +87,7 @@ it('create a user with right signup credentials', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(204);
+      expect(res).to.have.status(201);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -104,7 +105,7 @@ it('email already existing', (done) => {
     confirmPassword: "Shalu@1993"
   })
   .end((err, res) => {
-    expect(res).to.have.status(205);
+    expect(res).to.have.status(409);
     expect(res.body).to.be.an('object');
     done();
   });
@@ -122,7 +123,7 @@ it('wrong email format', (done) => {
     confirmPassword: "Shalu@1993"
   })
   .end((err, res) => {
-    expect(res).to.have.status(206);
+    expect(res).to.have.status(400);
     expect(res.body).to.be.an('object');
     done();
   });
@@ -141,7 +142,7 @@ it('First Name field is empty', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(207);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -159,7 +160,7 @@ it('First Name field is empty', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(208);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -177,7 +178,7 @@ it('First Name field is empty', (done) => {
       confirmPassword: "shal"
     })
     .end((err, res) => {
-      expect(res).to.have.status(209);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -195,7 +196,7 @@ it('First Name field is empty', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(210);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -203,7 +204,7 @@ it('First Name field is empty', (done) => {
 });
 
 //should login a user without the correct credentials
-describe('User login', () => {
+describe('User login validation', () => {
   it('Incorrect credentials', (done) => {
     chai.request(server)
     .post('/api/v1/auth/signin')
@@ -213,7 +214,7 @@ describe('User login', () => {
         password : "Shalu@1993"
         })
       .end((err, res) => {
-        expect(res).to.have.status(211);
+        expect(res).to.have.status(401);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -228,14 +229,14 @@ describe('User login', () => {
         password : ""
       })
       .end((err, res) => {
-        expect(res).to.have.status(212);
+        expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         done();
         });
     });
     
     //should not log in user with an integer email
-    it('Incorrect credentials ', (done) => {
+    it('email format should be like google@gmail.com ', (done) => {
       chai.request(server)
       .post('/api/v1/auth/signin')
       .send({
@@ -243,7 +244,7 @@ describe('User login', () => {
         password : "Shalu@1993"
       })
       .end((err, res) => {
-        expect(res).to.have.status(211);
+        expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -258,7 +259,7 @@ describe('User login', () => {
         password : "Shalu@1993"
       })
       .end((err, res) => {
-        expect(res).to.have.status(213);
+        expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -272,7 +273,7 @@ describe('User login', () => {
         email: "shalu@svasbanka.com",
         password : "Shalu"})
       .end((err, res) => {
-        expect(res).to.have.status(214);
+        expect(res).to.have.status(401);
         expect(res.body).to.be.an('object');
         done();
       });

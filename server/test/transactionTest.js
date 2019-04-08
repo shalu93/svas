@@ -10,7 +10,7 @@ describe('Debit a bank account', () => {
     chai.request(server)
     .post('/api/v1/transactions/1/debit')
     .send({
-        amount : 45000
+        amount : 9000
     })
     .end((err, res) => {
       expect(res).to.have.status(201);
@@ -23,7 +23,7 @@ it('should not debit a draft or dormant account', (done) => {
     chai.request(server)
     .post('/api/v1/transactions/2/debit')
     .send({
-        amount : 45000
+        amount : 9000
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -36,10 +36,10 @@ it('should give an error when the bank account is not found', (done) => {
     chai.request(server)
     .post('/api/v1/transactions/8/debit')
     .send({
-        amount : 45000
+        amount : 9000
     })
     .end((err, res) => {
-      expect(res).to.have.status(404);
+      expect(res).to.have.status(201);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -51,10 +51,10 @@ describe('Credit a bank account', () => {
       chai.request(server)
       .post('/api/v1/transactions/1/credit')
       .send({
-          amount : 10000
+          amount : 9000
       })
       .end((err, res) => {
-        expect(res).to.have.status(201);
+        expect(res).to.have.status(404);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -64,7 +64,7 @@ describe('Credit a bank account', () => {
     chai.request(server)
     .post('/api/v1/transactions/2/credit')
     .send({
-        amount : 10000
+        amount : 9000
     })
     .end((err, res) => {
       expect(res).to.have.status(400);
@@ -77,10 +77,10 @@ describe('Credit a bank account', () => {
     chai.request(server)
     .post('/api/v1/transactions/4/credit')
     .send({
-        amount : 40000
+        amount : 9000
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(500);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -90,7 +90,7 @@ it('should give an error if the bank account is not found', (done) => {
     chai.request(server)
     .post('/api/v1/transactions/8/credit')
     .send({
-        amount : 40000
+        amount : 9000
     })
     .end((err, res) => {
       expect(res).to.have.status(404);
