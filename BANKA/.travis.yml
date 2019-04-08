@@ -9,5 +9,7 @@ cache:
     - "node_modules"
 script:
  - npm test
+ - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then bash ./travis/run_on_pull_requests; fi'
+- 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./travis/run_on_non_pull_requests; fi'
 after_success:
 - npm run coveralls
