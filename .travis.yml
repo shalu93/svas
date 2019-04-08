@@ -1,6 +1,6 @@
 env:
   global:
-    - JWTKEY=namepwdshalu_chandwani
+    - JWTKEY=45erkjherht45495783
 language: node_js
 node_js: 
   - "stable"
