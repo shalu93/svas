@@ -42,8 +42,8 @@ export default class transaction{
             }
             
             if(accounts.length==0){
-                return res.status(404).json({
-                    status :404,
+                return res.status(201).json({
+                    status :201,
                     message: "The bank account entered does not exist!"
                 });
             }
@@ -64,9 +64,9 @@ export default class transaction{
     
                     }
                     if(accounts[0].balance < req.body.amount ){
-                        return res.status(400).json({
-                            status :400,
-                            message: "You have that amount on your account"
+                        return res.status(500).json({
+                            status :500,
+                            message: "You dont have that amount on your account"
                         });
                     }
                     
