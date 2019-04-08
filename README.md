@@ -1,6 +1,9 @@
 svas
 Svas - Banka challenge - A core Banking Solution Product (UI Only)
 
+[![Build Status](https://travis-ci.com/shalu93/svas.svg?branch=master)](https://travis-ci.com/shalu93/svas)
+
+
 1 Login Page ---->>
 
 It has 2 buttons -
