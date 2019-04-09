@@ -103,7 +103,7 @@ export default class authUsers{
                                     userId: users.id
                                 }, "mysupersecretkey",
                                 { 
-                                    expiresIn: "24h"
+                                    expiresIn: "12h"
                                 });
                                 let email=req.body.email,password=hash;
                                 return res.status(200).json({
