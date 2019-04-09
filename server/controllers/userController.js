@@ -43,8 +43,6 @@ export default class authUsers{
                         
                         const users = UserInfo.filter(user => user.email == req.body.email);
                         const token = jwt.sign({
-                            firstName: users.firstName,
-                            lastName: users.lastName,
                             email: users.email,
                             userId: users.id
                         }, "mysupersecretkey",
@@ -53,7 +51,7 @@ export default class authUsers{
                         });
                         
                         let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,password=hash,type=user.type;
-                        res.status(201).json({
+                        return res.status(201).json({
                             status :201,
                             data: {token,id,firstName,lastName,email,password,type}
                         });
@@ -105,7 +103,7 @@ export default class authUsers{
                                     userId: users.id
                                 }, "mysupersecretkey",
                                 { 
-                                    expiresIn: "24h"
+                                    expiresIn: "12h"
                                 });
                                 let email=req.body.email,password=hash;
                                 return res.status(200).json({

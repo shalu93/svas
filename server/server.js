@@ -7,10 +7,10 @@ dotenv.config();
 
 
 const app=express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api', apiRoutes);
 
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
 
 const port=process.env.PORT||3000;
 
