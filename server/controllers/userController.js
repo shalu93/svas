@@ -85,16 +85,16 @@ export default class authUsers{
                         
                         const users = UserInfo.filter(user =>user.email==oneUser.email);
                         if(users.length<1){
-                            return res.status(401).json({
-                                status:401,
+                            return res.status(211).json({
+                                status:211,
                                 message: "Incorrect email or password"
                             });
                         }
                         const userPassword = UserInfo.find(user => user.email == req.body.email);
                         bcrypt.compare(req.body.password, userPassword.password, function (err, result) {
                             if (result == false) {
-                                return res.status(401).json({
-                                    status:401,
+                                return res.status(211).json({
+                                    status:211,
                                     message: "Incorrect email or password"
                                 });
                             } else {

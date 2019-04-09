@@ -17,7 +17,7 @@ import chai from 'chai';
 // 211 - Incorrect credentials
 // 212 - Incorrect password
 // 213 - Invalid email address
-// 214 - Invalid email and password
+// 211 - Invalid email and password
 
 let expect = chai.expect;
 chai.use(chaiHttp);
@@ -56,7 +56,7 @@ it('create a user with right signup credentials', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(400);
+      expect(res).to.have.status(201);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -81,7 +81,7 @@ it('email is required', (done) => {
 });
 
 //should not register a new user with an already existing email
-it('email already existing', (done) => {
+it('This email already exists', (done) => {
   chai.request(server)
   .post('/api/v1/auth/signup')
   .send({
@@ -92,7 +92,7 @@ it('email already existing', (done) => {
     confirmPassword: "Shalu@1993"
   })
   .end((err, res) => {
-    expect(res).to.have.status(400);
+    expect(res).to.have.status(409);
     expect(res.body).to.be.an('object');
     done();
   });
@@ -203,7 +203,7 @@ describe('User login validation', () => {
         password : "Shalu@1993"
         })
       .end((err, res) => {
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(211);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -244,7 +244,7 @@ describe('User login validation', () => {
         email: "shalu@svasbanka.com",
         password : "Shalu"})
       .end((err, res) => {
-        expect(res).to.have.status(400);
+        expect(res).to.have.status(211);
         expect(res.body).to.be.an('object');
         done();
       });
