@@ -1,4 +1,4 @@
-const transactionData =[
+const transactionDb =[
     {
         id :1,
         createdOn : "07/04/2019",
@@ -9,4 +9,4 @@ const transactionData =[
         newBalance : 200
     }
 ]
-export {transactionData};
+export {transactionDb};
