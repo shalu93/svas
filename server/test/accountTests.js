@@ -39,7 +39,7 @@ it('create a bank account', (done) => {
     type: "savings"
   })
   .end((err, res) => {
-    expect(res).to.have.status(400);
+    expect(res).to.have.status(201);
     expect(res.body).to.be.an('object');
     done();
   });
@@ -71,7 +71,7 @@ it('activate or deactivate a bank account', (done) => {
         status: "active"
     })
     .end((err, res) => {
-      expect(res).to.have.status(404);
+      expect(res).to.have.status(200);
       expect(res.body).to.be.an('object');
       done();
     });
