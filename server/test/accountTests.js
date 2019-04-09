@@ -16,8 +16,8 @@ let expect = chai.expect;
 chai.use(chaiHttp);
 
 //should be able to fetch all bank accounts
-describe('Bank account', () => {
-  it('should be able to fetch all bank accounts', (done) => {
+describe('Bank account validations', () => {
+  it('fetch all bank accounts', (done) => {
     chai.request(server)
     .get('/api/v1/accounts')
     .send()
@@ -29,7 +29,7 @@ describe('Bank account', () => {
 });
 
 //should be able to create a bank account
-it('should be able to create a bank account', (done) => {
+it('create a bank account', (done) => {
   chai.request(server)
   .post('/api/v1/accounts')
   .send({
@@ -37,23 +37,6 @@ it('should be able to create a bank account', (done) => {
     lastName : "chandwani",
     email: "shaluchandwani@svasbanka.com",
     type: "savings"
-  })
-  .end((err, res) => {
-    expect(res).to.have.status(201);
-    expect(res.body).to.be.an('object');
-    done();
-  });
-});
-
-//should not create a bank account when the account type is empty
-it('account type is empty', (done) => {
-  chai.request(server)
-  .post('/api/v1/accounts')
-  .send({
-    firstName: "shalu",
-    lastName : "chandwani",
-    email: "shaluchandwani@svasbanka.com",
-    type: ""
   })
   .end((err, res) => {
     expect(res).to.have.status(400);
@@ -88,10 +71,23 @@ it('activate or deactivate a bank account', (done) => {
         status: "active"
     })
     .end((err, res) => {
-      expect(res).to.have.status(200);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       done();
     });
+});
+
+
+//should notify the staff/admin when the bank account is not found
+it('bank account is not found to delete', (done) => {
+  chai.request(server)
+  .delete('/api/v1/accounts/8')
+  .send()
+  .end((err, res) => {
+    expect(res).to.have.status(404);
+    expect(res.body).to.be.an('object');
+    done();
+  });
 });
 
 // it should give an error if the bank account is not found
@@ -121,15 +117,22 @@ it('deleted a bank account', (done) => {
   });
 });
 
-//should notify the staff/admin when the bank account is not found
-  it('bank account is not found to delete', (done) => {
-    chai.request(server)
-    .delete('/api/v1/accounts/8')
-    .send()
-    .end((err, res) => {
-      expect(res).to.have.status(404);
-      expect(res.body).to.be.an('object');
-      done();
-    });
+
+  //should not create a bank account when the account type is empty
+it('account type is empty', (done) => {
+  chai.request(server)
+  .post('/api/v1/accounts')
+  .send({
+    firstName: "shalu",
+    lastName : "chandwani",
+    email: "shaluchandwani@svasbanka.com",
+    type: ""
+  })
+  .end((err, res) => {
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('object');
+    done();
   });
+});
+
   })

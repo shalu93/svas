@@ -1,9 +1,9 @@
-import {accountData} from '../models/accountsData';
-import {transactionData} from '../models/transactionData'
+import {accountDb} from '../Db/accountsDb';
+import {transactionDb} from '../Db/transactionDb'
 import validation from '../validation/accountValidation'
 
-const allAccounts = accountData;
-const allTransactions= transactionData;
+const AcctInfo = accountDb;
+const TranInfo= transactionDb;
 
 export default class transaction{
 
@@ -11,19 +11,19 @@ export default class transaction{
 
         const accountNumb=req.params.accountNumber;
         let toDay = new Date();
-        const accounts = allAccounts.filter(account => account.accountNumber == accountNumb);
+        const accounts = AcctInfo.filter(account => account.accountNumber == accountNumb);
             if(accounts.length==1){
                 if(accounts[0].status ==="draft" || accounts[0].status==="dormant"){
-                    return res.status(400).json({
-                        status :400,
+                    return res.status(404).json({
+                        status :404,
                         message: "You have to activate this account first"
                     });
 
 
                 } else {
-                    const transaction = allTransactions.filter(transaction => transaction.accountNumber == accountNumb);    
+                    const transaction = TranInfo.filter(transaction => transaction.accountNumber == accountNumb);    
                     const debit = {
-                        id : allTransactions.length + 1,
+                        id : TranInfo.length + 1,
                         createdOn : toDay,
                         type : "debit",
                         accountNumber : accountNumb,
@@ -32,7 +32,7 @@ export default class transaction{
                         newBalance : (+transaction[0].oldBalance + +req.body.amount) ,
                     }
                     transaction[0].oldBalance=debit.newBalance;
-                    allTransactions.push(debit);
+                    TranInfo.push(debit);
                     let transactionId = debit.id, accountNumber = debit.accountNumber, amount = debit.amount, transactionType = debit.type, accountBalance = debit.newBalance;
                     return res.status(201).json({
                         status :201,
@@ -53,11 +53,11 @@ export default class transaction{
 
             const accountNumb=req.params.accountNumber;
             let toDay = new Date();
-            const accounts = allAccounts.filter(account => account.accountNumber == accountNumb);
+            const accounts = AcctInfo.filter(account => account.accountNumber == accountNumb);
                 if(accounts.length==1){
                     if(accounts[0].status ==="draft" || accounts[0].status==="dormant"){
-                        return res.status(400).json({
-                            status :400,
+                        return res.status(404).json({
+                            status :404,
                             message: "You have to activate this account first"
                         });
     
@@ -71,9 +71,9 @@ export default class transaction{
                     }
                     
                     else {
-                        const transaction = allTransactions.filter(transaction => transaction.accountNumber == accountNumb);
+                        const transaction = TranInfo.filter(transaction => transaction.accountNumber == accountNumb);
                         const credit = {
-                            id : allTransactions.length + 1,
+                            id : TranInfo.length + 1,
                             createdOn : toDay,
                             type : "credit",
                             accountNumber : accountNumb,
@@ -82,7 +82,7 @@ export default class transaction{
                         newBalance : (+transaction[0].oldBalance - +req.body.amount) ,
                     }
                     transaction[0].oldBalance=credit.newBalance;
-                        allTransactions.push(credit);
+                        TranInfo.push(credit);
                         let transactionId = credit.id, accountNumber = credit.accountNumber, amount = credit.amount, transactionType = credit.type, accountBalance = credit.newBalance;
                         return res.status(201).json({
                             status :201,

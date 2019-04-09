@@ -5,8 +5,6 @@ Svas - Banka challenge - A core Banking Solution Product (UI Only)
 [![Coverage Status](https://coveralls.io/repos/github/shalu93/svas/badge.svg?branch=testing-tests-travis-ci)]
 (https://coveralls.io/github/shalu93/svas?branch=testing-tests-travis-ci)  
 
-
-
 1 Login Page ---->>
 
 It has 2 buttons - 

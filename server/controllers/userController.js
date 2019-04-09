@@ -1,23 +1,23 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {userData} from '../models/usersData';
+import {userDb} from '../Db/userDb';
 import validation from '../validation/userValidation';
 
-const allUsers = userData;
+const UserInfo = userDb;
 
 export default class authUsers{
    static getAll(req, res){
-        const allUsers= userData;
+        const UserInfo= userDb;
         return res.send({
             status :200,
-            data: allUsers
+            data: UserInfo
         })
     };
 
     static SignupUser(req, res){
         try{
-            if(validation.validateSignup(req, res)){
-                const users = allUsers.filter(user => user.email == req.body.email);
+            if(validation.Signup(req, res)){
+                const users = UserInfo.filter(user => user.email == req.body.email);
                 if(users.length === 1){
                    return res.status(409).json({
                         status:409,
@@ -32,17 +32,19 @@ export default class authUsers{
                         });
                     } else {
                         const user = {
-                            id:allUsers.length +1,
+                            id:UserInfo.length +1,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email,
                             password: hash,
                             type:"client"
                         }
-                        allUsers.push(user);
+                        UserInfo.push(user);
                         
-                        const users = allUsers.filter(user => user.email == req.body.email);
+                        const users = UserInfo.filter(user => user.email == req.body.email);
                         const token = jwt.sign({
+                            firstName: users.firstName,
+                            lastName: users.lastName,
                             email: users.email,
                             userId: users.id
                         }, "mysupersecretkey",
@@ -69,9 +71,9 @@ export default class authUsers{
 
     static SigninUser (req, res){
         try{
-            const allUsers = userData;
+            const UserInfo = userDb;
             let oneUser,loginDetails;
-            if(validation.validateLogin(req, res)){
+            if(validation.Login(req, res)){
                 bcrypt.hash(req.body.password, 10, (err, hash) =>{
                     if(err) {
                         return res.status(500).json({
@@ -83,14 +85,14 @@ export default class authUsers{
                             password: hash
                         }
                         
-                        const users = allUsers.filter(user =>user.email==oneUser.email);
+                        const users = UserInfo.filter(user =>user.email==oneUser.email);
                         if(users.length<1){
                             return res.status(401).json({
                                 status:401,
                                 message: "Incorrect email or password"
                             });
                         }
-                        const userPassword = allUsers.find(user => user.email == req.body.email);
+                        const userPassword = UserInfo.find(user => user.email == req.body.email);
                         bcrypt.compare(req.body.password, userPassword.password, function (err, result) {
                             if (result == false) {
                                 return res.status(401).json({
