@@ -2,7 +2,9 @@ svas
 Svas - Banka challenge - A core Banking Solution Product (UI Only)
 
 [![Build Status](https://travis-ci.com/shalu93/svas.svg?branch=master)](https://travis-ci.com/shalu93/svas)
-[![Coverage Status](https://coveralls.io/repos/github/shalu93/svas/badge.svg?branch=testing-tests-travis-ci)]
+[![Coverage Status](https://coveralls.io/repos/github/shalu93/svas/badge.svg?branch=testing-tests-travis-ci)](https://coveralls.io/github/shalu93/svas)  
+[![Maintainability](https://api.codeclimate.com/v1/badges/6f9d176365640932903b/maintainability)](https://codeclimate.com/github/shalu93/svas)
+ 
  
 
 1 Login Page ---->>
