@@ -1,4 +1,4 @@
-const accountData = [
+const accountDb = [
     {
         accountNumber: 1,
         firstName: "shalu",
@@ -39,4 +39,4 @@ const accountData = [
     }
 ]
 
-export {accountData};
+export {accountDb};

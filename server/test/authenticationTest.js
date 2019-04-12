@@ -1,6 +1,7 @@
 import chaiHttp from 'chai-http';
-import chai from 'chai';
 import server from '../server';
+import chai from 'chai';
+
 
 // Error messages Used
 // 201 - fetch all users
@@ -16,58 +17,27 @@ import server from '../server';
 // 211 - Incorrect credentials
 // 212 - Incorrect password
 // 213 - Invalid email address
-// 214 - Invalid email and password
+// 211 - Invalid email and password
 
 let expect = chai.expect;
 chai.use(chaiHttp);
 
-// should be able to fetch all users
-describe('Users', () => {
-  it('fetch all users', (done) => {
-    chai.request(server)
-    .get('/api/v1/users')
-    .send()
-    .end((err, res) => {
-      expect(res).to.have.status(201);
-      expect(res.body).to.be.an('object');
-      done();
-    });
-});
-})
-
-describe('User signup', () => {
-// should not register a user with empty email field
-  it('email is required', (done) => {
-    chai.request(server)
-    .post('/api/v1/auth/signup')
-    .send({
-      firstName: "shalu",
-      lastName : "chandwani",
-      email: "",
-      password: "Shalu@1993",
-      confirmPassword: "Shalu@1993"
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(202);
-      expect(res.body).to.be.an('object');
-      done();
-    });
-});
+describe('User signup validations', () => {
 
 // should not register a user with an integer email  
 
-  it('only integers are not allowed in email', (done) => {
+  it('only integers cannot be entered in email', (done) => {
     chai.request(server)
     .post('/api/v1/auth/signup')
     .send({
       firstName: "shalu",
       lastName : "chandwani",
-      email: 2,
+      email: 9,
       password: "Shalu@1993",
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(203);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -86,14 +56,32 @@ it('create a user with right signup credentials', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(204);
+      expect(res).to.have.status(201);
       expect(res.body).to.be.an('object');
       done();
     });
 });
 
+// should not register a user with empty email field
+it('email is required', (done) => {
+  chai.request(server)
+  .post('/api/v1/auth/signup')
+  .send({
+    firstName: "shalu",
+    lastName : "chandwani",
+    email: "",
+    password: "Shalu@1993",
+    confirmPassword: "Shalu@1993"
+  })
+  .end((err, res) => {
+    expect(res).to.have.status(400);
+    expect(res.body).to.be.an('object');
+    done();
+  });
+});
+
 //should not register a new user with an already existing email
-it('email already existing', (done) => {
+it('This email already exists', (done) => {
   chai.request(server)
   .post('/api/v1/auth/signup')
   .send({
@@ -104,7 +92,7 @@ it('email already existing', (done) => {
     confirmPassword: "Shalu@1993"
   })
   .end((err, res) => {
-    expect(res).to.have.status(205);
+    expect(res).to.have.status(409);
     expect(res.body).to.be.an('object');
     done();
   });
@@ -122,7 +110,7 @@ it('wrong email format', (done) => {
     confirmPassword: "Shalu@1993"
   })
   .end((err, res) => {
-    expect(res).to.have.status(206);
+    expect(res).to.have.status(400);
     expect(res.body).to.be.an('object');
     done();
   });
@@ -141,25 +129,7 @@ it('First Name field is empty', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(207);
-      expect(res.body).to.be.an('object');
-      done();
-    });
-  });
-  
-  //should not register a user with an empty Last Name field 
-  it('Last Name field is empty', (done) => {
-    chai.request(server)
-    .post('/api/v1/auth/signup')
-    .send({
-      firstName: "Shalu",
-      lastName : "",
-      email: "shaluchandwani@svasbanka.com",
-      password: "Shalu@1993",
-      confirmPassword: "Shalu@1993"
-    })
-    .end((err, res) => {
-      expect(res).to.have.status(208);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -177,11 +147,29 @@ it('First Name field is empty', (done) => {
       confirmPassword: "shal"
     })
     .end((err, res) => {
-      expect(res).to.have.status(209);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
   });
+
+    //should not register a user with an empty Last Name field 
+    it('Last Name field is empty', (done) => {
+      chai.request(server)
+      .post('/api/v1/auth/signup')
+      .send({
+        firstName: "Shalu",
+        lastName : "",
+        email: "shaluchandwani@svasbanka.com",
+        password: "Shalu@1993",
+        confirmPassword: "Shalu@1993"
+      })
+      .end((err, res) => {
+        expect(res).to.have.status(400);
+        expect(res.body).to.be.an('object');
+        done();
+      });
+    });
   
   //should give an error when password and confirm password do not match 
   it('password and confirm password do not match', (done) => {
@@ -195,15 +183,17 @@ it('First Name field is empty', (done) => {
       confirmPassword: "Shalu@1993"
     })
     .end((err, res) => {
-      expect(res).to.have.status(210);
+      expect(res).to.have.status(400);
       expect(res.body).to.be.an('object');
       done();
     });
   });
 });
 
+
+
 //should login a user without the correct credentials
-describe('User login', () => {
+describe('User login validation', () => {
   it('Incorrect credentials', (done) => {
     chai.request(server)
     .post('/api/v1/auth/signin')
@@ -218,7 +208,19 @@ describe('User login', () => {
         done();
       });
     });
-    
+
+    // should fetch all users
+    it('fetch all users', (done) => {
+      chai.request(server)
+      .get('/api/v1/users')
+      .send()
+      .end((err, res) => {
+        expect(res).to.have.status(200);
+        expect(res.body).to.be.an('object');
+        done();
+      });
+  });
+
     //should not login user without password
     it('Incorrect password', (done) => {
       chai.request(server)
@@ -228,14 +230,28 @@ describe('User login', () => {
         password : ""
       })
       .end((err, res) => {
-        expect(res).to.have.status(212);
+        expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         done();
         });
     });
+
+    //should not login user with an incorrect email and password
+    it('Invalid email and password', (done) => {
+      chai.request(server)
+      .post('/api/v1/auth/signin')
+      .send({ 
+        email: "shalu@svasbanka.com",
+        password : "Shalu"})
+      .end((err, res) => {
+        expect(res).to.have.status(211);
+        expect(res.body).to.be.an('object');
+        done();
+      });
+    });
     
     //should not log in user with an integer email
-    it('Incorrect credentials ', (done) => {
+    it('email format should be like google@gmail.com ', (done) => {
       chai.request(server)
       .post('/api/v1/auth/signin')
       .send({
@@ -243,7 +259,7 @@ describe('User login', () => {
         password : "Shalu@1993"
       })
       .end((err, res) => {
-        expect(res).to.have.status(211);
+        expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -258,24 +274,12 @@ describe('User login', () => {
         password : "Shalu@1993"
       })
       .end((err, res) => {
-        expect(res).to.have.status(213);
+        expect(res).to.have.status(400);
         expect(res.body).to.be.an('object');
         done();
       });
     });
 
-//should not login user with an incorrect email and password
-    it('Invalid email and password', (done) => {
-      chai.request(server)
-      .post('/api/v1/auth/signin')
-      .send({ 
-        email: "shalu@svasbanka.com",
-        password : "Shalu"})
-      .end((err, res) => {
-        expect(res).to.have.status(214);
-        expect(res.body).to.be.an('object');
-        done();
-      });
-    });
+
     });
         

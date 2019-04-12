@@ -7,17 +7,13 @@ dotenv.config();
 
 
 const app=express();
-
-app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
-
-
+app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api', apiRoutes);
 
 
 const port=process.env.PORT||3000;
 
-
-const server=app.listen(port, ()=>console.log(`The server is listening on port ${port}`));
+const server=app.listen(port, ()=>console.log(`The server is up on port ${port}`));
 
 module.exports = server
