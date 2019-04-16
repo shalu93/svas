@@ -42,6 +42,11 @@ body, html {
   width: 90%;
   margin: auto;
   overflow: hidden;
+  
+}
+
+.container{
+  overflow-x: auto;
 }
 
 .button_1{
