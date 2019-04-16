@@ -15,8 +15,13 @@
       <header>
           <div  id="Header" class="container1">
               <h1>Banka<p>Your Trust Our Commitment</p></h1>
-              <h2><a href="../index.html">Logout</a></h2>
             </div>
+            <nav>
+              <ul>
+                <form method="get" action="../index.html">
+                  <button type="Logout" name="button_Logout" class="button_Logout"><span></span>Logout</button></form>
+              </ul>
+          </nav>
       </header>
    <script src="../js/jquery.js"></script>
   <script type="text/javascript">
@@ -65,7 +70,7 @@ function myFunction() {
                 <li class="current_page_item"><a href="#" accesskey="1" title="">Welcome</a></li>
                 <li><a href="Amend admin or staff user acct.html" accesskey="2" title="">Activate/Deactivate User accounts</a></li>
                 <li><a href="create admin or staff user acct.html" accesskey="3" title="">Create Admin/Staff</a></li>
-                <li><a href="Bank_Account_Records.html" accesskey="4" title="">View list of all bank accounts</a></li>
+                <li><a href="Bank_Account_Records.html?AccountType=Admin" accesskey="4" value = "Admin" title="">View list of all bank accounts</a></li>
             </ul>
           </div>
       </div>
@@ -74,7 +79,7 @@ function myFunction() {
           <ul>
               <li class="current_page_item"><a href="#" accesskey="1" title="">Welcome</a></li>
               <li><a href="transaction page.html" accesskey="2" title="">Credit/Debit Account</a></li>
-              <li><a href="Bank_Account_Records.html" accesskey="3" title="">View list of all bank accounts</a></li>
+              <li><a href="Bank_Account_Records.htmlAccountType=Staff" accesskey="3" title="">View list of all bank accounts</a></li>
           </ul>
           </div>
       </div>    

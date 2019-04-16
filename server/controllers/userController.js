@@ -16,6 +16,10 @@ export default class authUsers{
 
     static SignupUser(req, res){
         try{
+            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password ) {
+                return res.status(400).json({ msg: 'Please fill in first name , last name , email and password as inputs of the form'});
+            }
+
             if(validation.Signup(req, res)){
                 const users = UserInfo.filter(user => user.email == req.body.email);
                 if(users.length === 1){
@@ -24,7 +28,7 @@ export default class authUsers{
                         message: "This email already exists"
                     })
                 }
-                
+                                
                 bcrypt.hash(req.body.password, 10, (err, hash) =>{
                     if(err) {
                         return res.status(500).json({
@@ -53,7 +57,7 @@ export default class authUsers{
                         let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,password=hash,type=user.type;
                         return res.status(201).json({
                             status :201,
-                            data: {token,id,firstName,lastName,email,password,type}
+                            data: {token,id,firstName,lastName,email,type}
                         });
                     }
                 });
@@ -69,6 +73,10 @@ export default class authUsers{
 
     static SigninUser (req, res){
         try{
+            if(!req.body.email ||  !req.body.password ) {
+                return res.status(400).json({ msg: 'Please fill in  email and password as inputs of the form'});
+            }
+
             const UserInfo = userDb;
             let oneUser,loginDetails;
             if(validation.Login(req, res)){
@@ -108,7 +116,7 @@ export default class authUsers{
                                 let email=req.body.email,password=hash;
                                 return res.status(200).json({
                                     status:200,
-                                    data: {token,email,password}
+                                    data: {token,email}
 
                                 });
                             }

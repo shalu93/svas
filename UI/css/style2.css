@@ -39,7 +39,7 @@ body, html {
 }
 
 .container{
-  width: 90%;
+  width: 80%;
   margin: auto;
   overflow: hidden;
   
@@ -47,6 +47,7 @@ body, html {
 
 .container{
   overflow-x: auto;
+  overflow-y: auto;
 }
 
 .button_1{
@@ -69,7 +70,7 @@ body, html {
 #showcase h1{
   padding: 10px;
   margin: 0;
-  text-align: left;
+  text-align: center;
   border: 0;
   color: maroon;
 }
@@ -109,7 +110,7 @@ body, html {
 
 /* Full-width input fields */
   input[type=text], input[type=password] {
-  width: 100%;
+  width: 90%;
   padding: 10px;
   margin: 2px 0 20px 0;
   border: none;
@@ -213,3 +214,5 @@ table, th , td{
   border: 1px solid black;
   text-align: center;
 }
+
+

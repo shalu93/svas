@@ -24,6 +24,7 @@ chai.use(chaiHttp);
 
 describe('User signup validations', () => {
 
+
 // should not register a user with an integer email  
 
   it('only integers cannot be entered in email', (done) => {
