@@ -1,21 +1,25 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
-    <meta name="description" content="Banka">
-    <meta name="keywords" content="Bank For the people">
-    <meta name="author" content="Shalu Chandwani Vaswani">
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="Banka">
+      <meta name="keywords" content="Bank For the people">
+      <meta name="author" content="Shalu Chandwani Vaswani">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Banka | homepage </title>
     <link rel="stylesheet" href="../css/style1.css">
   </head>
   <body>
   <header>
   <div  id="Header" class="container1">
-      <h1><img src="../img/bank logo.jpg" alt="Banka" style="width:150px;height:60px;">Banka<p>Your Trust Our Commitment</p>
-
-      <form method="get" action="../index.html">
-      <button type="Logout" class = "button3" name="button">Logout</button></form>
+      <h1>Banka<p>Your Trust Our Commitment</p>
+        <nav>
+            <ul>
+              <li><a href="../index.html">Logout</a></li>
+            </ul>
+        </nav>
     </h1>
     </div>
   </header>
@@ -34,12 +38,12 @@ $(document).ready(function() {
 // Check if the URL parameter is Admin
 if (dynamicContent == 'Admin') {
 $('#Admin').show();
-$('#AdminStaff').show();
+
 }
 // Check if the URL parameter is Staff
 else if (dynamicContent == 'Staff') {
 $('#Staff').show();
-$('#AdminStaff').show();
+
 }
 // Check if the URL parameter is Client
 else if (dynamicContent == 'Client') {
@@ -58,39 +62,24 @@ function myFunction() {
 </script>
     <section id="showcase">
     <div id ="default-content" class="container" >
-    <h1>Enter Account Type First</h1>
+    <h1>Enter Account Type First In the login page</h1>
     </div>
-    <div id ="Admin" class="container" >
-      <h1><b>Bank Operations</b></h1>
-      <h2>
-      <details>
-      <summary><b>Activate/Deactivate User accounts</b></summary>
-      <div class="topnav">
-      <div class="search-container">
-        <form method="get" action="Amend admin or staff user acct.html">Search For User Id
-        <input type="text" placeholder="Search.." name="search">
-        <a href="Amend admin or staff user acct.html">
-        <button type="button" name="button" >Submit</button></a></form>
-      </div>
-      </div>
-      </details>
-      </h2>
-      <h3>
-      <li>
-      <link><a href="create admin or staff user acct.html"><b>Create Admin/Staff</b></a></link>  
-      </li>
-      </h3>
-      </div>
-      <br>
+    <div id="Admin" class="container">
+          <div id="menu">
+            <ul>
+                <li class="current_page_item"><a href="searchaccount.html" accesskey="1" title="">Activate/Deactivate User accounts</a></li>
+                <li><a href="create admin or staff user acct.html" accesskey="2" title="">Create Admin/Staff</a></li>
+                <li><a href="Bank_Account_Records.html" accesskey="3" title="">View list of all bank accounts</a></li>
+            </ul>
+          </div>
+        </div>
       <div id="Staff" class="container">
-      <h1><b>Transaction</b><h1>
-      <h2>
-      <li>
-      <link><a href="transaction page.html"><b>Credit/Debit Account</b></a></link>  
-      </li>
-      </h2>
-      </div>
-      <br>
+          <div id="menu">
+          <ul>
+              <li class="current_page_item"><a href="transaction page.html" accesskey="1" title="">Credit/Debit Account</a></li>
+              <li><a href="Bank_Account_Records.html" accesskey="2" title="">View list of all bank accounts</a></li>
+          </ul>
+      </div>    
     <div id="Client" class="container">
       <h1><b>User Operations</b></h1>
       <h2>
@@ -106,42 +95,16 @@ function myFunction() {
       <form method="get" action="forgot password.html">
       <button type="reset password" name="button" class="button" style="vertical-align:middle"><span></span>Reset Password</button></form></h5><br>
     </div>
-    <br>
-    <div id="AdminStaff" class="container">
-      <h1><b>Admin/Staff Rights</b></h1>
-      <h2>
-        <li>
-          <link><a href="Bank_Account_Records.html"><b>View list of all bank accounts</b></a></link>  
-       </li>
-      </h2>
-      <h3>
-        <details>
-        <summary><b>View a specific bank account record</b></summary>
-        <div class="topnav">
-        <div class="search-container">
-        <form method="get" action="Bank Account Records.html">Search For Account Number
-        <input type="text" placeholder="Search.." name="search">
-        <a href="Bank_Account_Records.html">
-        <button type="button" name="button">Submit</button></a>
-        </form>
-        </div>
-        </div>
-        </details>
-        </h3>
-        <h4>
-          <details>
-          <summary><b>Delete a specific account</b></summary>
-          <div class="topnav">
-          <div class="search-container">
-          <form method="get" action="Delete a specific account.html">Search For Account Number
-          <input type="text" placeholder="Search.." name="search">
-          <button type="button" name="button" onclick="myFunction()">Submit</button>
-          </form>
-          </div>
-          </div>
-          </details>
-        </h4>
-      </div>
    </section>
+   <div id="main">
+      <h1>Search for account Number</h1><br>
+      <form method="get" action="Amend admin or staff user acct.html">
+          <div>
+              <label for="AccountNum">Account Number:</label>
+              <input type="text" id="token" name="AccountNum" title="AccountNum" />
+          </div><br>
+          <button class="button_1" type="submit">Search</button>
+      </form>    
+    </div>
   </body>
 </html>
