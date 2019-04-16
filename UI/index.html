@@ -2,10 +2,12 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Banka">
     <meta name="keywords" content="Bank For the people">
     <meta name="author" content="Shalu Chandwani Vaswani">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <title>Banka | welcome </title>
     <link rel="stylesheet" href="./css/style.css">
   </head>
@@ -13,7 +15,7 @@
   <header>
   <div class="container1">
     <div id="branding">
-      <h1><img src="img/bank logo.jpg" alt="Banka" style="width:150px;height:60px;">Banka
+      <h1>Banka
       <p>Your Trust Our Commitment</p></h1>
       <script type="text/javascript">
           function get_action(form) {
@@ -25,26 +27,36 @@
   </header>
   <section id="showcase">
     <div class="container">
-      <div class="main">
       <h1>Bank Login</h1>
-      <h2><b>Login Id</b>
-      <input type="LoginId" placeholder="Login Id"></h2>
-      <h3><b>Password</b>
-      <input type="Password" placeholder="Password"></h3>
-      <h4>
-        <form method="get" action="HTML/homepage.html"><b>Account Type</b>
-          <input type="radio" name="AccountType" value="Admin"> <b>Admin</b>
-          <input type="radio" name="AccountType" value="Client"> <b>Client</b>
-          <input type="radio" name="AccountType" value="Staff"> <b>Staff</b>
-          <br>
-          <button type="submit" value="Submit" class = "button_1" onclick="get_action(this);">Submit</button>
-        </form>
-      </h4>
-      <h5><b>Not Our Client</b>
-      <form  action="HTML/signup page.html">
-      <button type="sign up" name="button_2">Sign Up</button>
-      </form>
-    </h5>
+      <div class="main">
+        <div class='login_fields__user'>
+              <div class='icon'>
+                <img src='img/user_icon_copy.png'>
+              </div>
+              <input placeholder='Email Id' type='text'>
+              </input>
+        </div><br>
+        <div class='login_fields__password'>
+                <div class='icon'>
+                  <img src='img/lock_icon_copy.png'>
+                </div>
+                <input placeholder='Password' type='password'>
+        </div>
+        <div class='login_fields__submit'>
+          <div class="radio_button">
+            <form method="get" action="HTML/homepage.html">Account Type
+            <input type="radio" name="AccountType" value="Admin"> Admin
+            <input type="radio" name="AccountType" value="Client"> Client
+            <input type="radio" name="AccountType" value="Staff"> Staff
+            <br>
+            <br>
+            <input type='submit' value='Log In' onclick="get_action(this);">
+          </form></div>
+        
+        <div class='signup'>
+          <a href='HTML/signup page.html'>Sign Up</a>
+        </div>
+        </div>
     </div>
     </div>
   </section>

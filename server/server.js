@@ -1,7 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import apiRoutes from './routes/Routes';
+import myRouter from './routes/Routes';
 
 dotenv.config();
 
@@ -9,7 +9,7 @@ dotenv.config();
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use('/api', apiRoutes);
+app.use('/api', myRouter);
 
 
 const port=process.env.PORT||3000;

@@ -1,164 +1,535 @@
 body{
-  font: 15px/1.5 Arial;
-  padding: 0;
+  height: 100vh;
   margin: 0;
-  background-color: #f4f4f4;
+  overflow: hidden;
+  font-family: 'Century Gothic';
+  background: rgb(231, 75, 67);
+  background: linear-gradient(135deg, white 0%, #bb6dec 100%);
 }
 
 body, html {
   height: 100%;
+  color: #4E546D;
 }
 
 
-.container{
+.container1{
   width: 90%;
   margin: auto;
   overflow: hidden;
 }
 
-header{
-  background: midnightblue;
-  color: white;
-  padding-top: 10px;
-  min-height: 2px;
-  border-bottom: #e8491d 3px solid;
-}
-header{
-  padding: -10px;
-  margin: 0;
-}
-.container p{
-  text-align: center;
-  font: 15px/1.5 Arial;
+.container1 p{
+  text-align: left;
+  font-family: 'Century Gothic';
+  font-size: 0.9rem;
   margin-top: 1px;
 }
-.button3{
-  height: 20px;
-  background-color: teal;
-  margin-right: right;
+
+.container1 a{
   text-align: right;
+  font-family: 'Century Gothic';
+  font-size: 0.9rem;
+  margin-top: 1px;
+}
+html, body
+{
+  height: 100%;
+}
+
+
+h1, h2, h3
+{
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  color: #333333;
+}
+
+p, ol, ul
+{
+  margin-top: 0;
+}
+
+ol, ul
+{
+  padding: 0;
+  list-style: none;
+}
+
+p
+{
+  line-height: 180%;
+}
+
+strong
+{
+}
+
+a
+{
+  color: #2980b9;
+}
+
+a:hover
+{
+  text-decoration: none;
+}
+
+.container
+{
+  overflow: hidden;
+  margin: 0em auto;
+  width: 1000px;
+}
+
+/*********************************************************************************/
+/* Image Style                                                                   */
+/*********************************************************************************/
+
+.image
+{
+  display: inline-block;
+}
+
+.image img
+{
+  display: block;
+  width: 900%;
+}
+
+.image-full
+{
+  display: block;
+  width: 100%;
+  margin: 0 50em 2em 0;
+}
+
+.image-left
+{
+  float: left;
+  margin: 0 2em 2em 0;
+}
+
+.image-centered
+{
+  display: block;
+  margin: 0 0 2em 0;
+}
+
+.image-centered img
+{
+  margin: 0 auto;
+  width: auto;
+}
+
+/*********************************************************************************/
+/* List Styles                                                                   */
+/*********************************************************************************/
+
+ul.style1
+{
+  margin: 0 auto;
+  padding: 0;
+  width: 80%;
+  overflow: hidden;
+  list-style: none;
+  text-align: left;
+  color: #6c6c6c
+}
+
+ul.style1 li
+{
+  padding: 1.6em 0em 0em 0em;
+  margin: 0 0 2.5em 0;
+  border-top: 1px solid rgba(0,0,0,.1); 
+}
+
+ul.style1 li:first-child
+{
+  border-top: none;
+}
+
+ul.style1 p
+{
+  margin: 0;
+}
+
+ul.style1 a
+{
+  display: block;
+  text-decoration: none;
+  color: #2D2D2D;
+}
+
+ul.style1 a:hover
+{
+  text-decoration: underline;
+}
+
+ul.style1 h3
+{
+  padding: 1em 0em 5px 0em;
+  text-transform: uppercase;
+  font-size: 1em;
+  font-weight: 400;
+}
+
+ul.style1 .first
+{
+  padding-top: 0;
+  background: none;
+}
+
+ul.style1 .date
+{
+  float: left;
+  position: relative;
+  width: 80px;
+  height: 70px;
+  margin: 0.5em 1.5em 0em 0.5em;
+  padding: 1.5em 0em 1.5em 0em;
+  box-shadow: 0px 0px 0px 5px rgba(255,255,255,0.1);
+  line-height: normal;
+  text-align: center;
+  text-transform: uppercase;
+  text-shadow: 0px 1px 0px rgba(0,0,0,.2);
+  font-size: 1em;
+  font-weight: 400;
+  border-right: 1px solid rgba(0,0,0,.1); 
+}
+
+ul.style1 .date:after
+{
+  content: '';
+  display: block;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 6px;
+}
+
+ul.style1 .date b
+{
+  margin: 0;
+  padding: 0;
+  display: block;
+  margin-top: -5px;
+  font-size: 1.8em;
+  font-weight: 700;
+}
+
+ul.style1 .date a
+{
+}
+
+ul.style1 .date a:hover
+{
+  text-decoration: none;
+}
+
+
+/*********************************************************************************/
+/* Social Icon Styles                                                            */
+/*********************************************************************************/
+
+ul.contact
+{
+  margin: 0;
+  padding: 2em 0em 0em 0em;
+  list-style: none;
+}
+
+ul.contact li
+{
+  display: inline-block;
+  padding: 0em 0.30em;
+  font-size: 1em;
+}
+
+ul.contact li span
+{
+  display: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.contact li a
+{
+  color:black;
+}
+
+ul.contact li a:before
+{
+  display: inline-block;
+  background: #3f3f3f;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  color: rgb(46, 25, 25);
+}
+
+
+/*********************************************************************************/
+/* Button Style                                                                  */
+/*********************************************************************************/
+
+.button
+{
+  display: inline-block;
+  padding: 1em 3em 1em 2em;
+  letter-spacing: 0.20em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.90em;
+  color: rgb(124, 115, 115);
+}
+
+.button:before
+{
+  display: inline-block;
+  background: #FFC31F;
+  margin-right: 1em;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  border-radius: 20px;
+  text-align: center;
+  color: #272925;
+}
+  
+/*********************************************************************************/
+/* 4-column                                                                      */
+/*********************************************************************************/
+
+.box1,
+.box2,
+.box3,
+.box4
+{
+  width: 235px;
+}
+
+.box1,
+.box2,
+.box3,
+{
+  float: left;
+  margin-right: 20px;
+}
+
+.box4
+{
   float: right;
-  border: 0;
-  padding-left: 10px;
-  padding-right: 120px;
-  color: #ffffff;
 }
 
-.button_1{
-  height: 30px;
-  background-color: teal;
-  border: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #ffffff;
-}
-.button_2{
-  height: 10px;
-  background-color: grey;
-  border: 0;
-  padding-left: 20px;
-  padding-right: 20px;
-  color: #ffffff;
-}
-#showcase{
-  min-height: 500px;
-  min-width: 1500px;
-  background: url('../img/inside login.jpg');
-    /* The image used */
+/*********************************************************************************/
+/* 3-column                                                                      */
+/*********************************************************************************/
 
-    /* Full height */
-    height: 100%;
-
-    /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+.boxA,
+.boxB,
+.boxC
+{
+  width: 320px;
 }
 
-#showcase h1{
-  padding: 10px;
-  margin: 0;
-  text-align: left;
-  border: 0;
-  color: maroon;
+.boxA,
+.boxB,
+{
+  float: left;
+  margin-right: 20px;
 }
 
-#showcase h2{
-  padding: 10px;
-  margin: 0;
-  text-align: left;
-  border: 0;
-  color: purple;
-  font: 15px/1.5 Arial;
+.boxC
+{
+  float: right;
 }
-#showcase h3{
-    padding: 10px;
-    margin: 0;
-    text-align: left;
-    border: 0;
-    color: purple;
-    font: 15px/1.5 Arial;
-  }
-  #showcase h4{
-      padding: 10px;
-      margin: 0;
-      text-align: left;
-      border: 0;
-      color: purple;
-      font: 15px/1.5 Arial;
-    }
-    #showcase h5{
-        padding: 10px;
-        margin: 0;
-        text-align: left;
-        border: 0;
-        color: purple;
-        font: 12px/1.5 Arial;
-      }
+
+/*********************************************************************************/
+/* 2-column                                                                      */
+/*********************************************************************************/
+
+.tbox1,
+.tbox2
+{
+  width: 575px;
+}
+
+.tbox1
+{
+  float: left;
+}
+
+.tbox2
+{
+  float: right;
+}
+
+/*********************************************************************************/
+/* Heading Titles                                                                */
+/*********************************************************************************/
+
+.title
+{
+  margin-bottom: 17em;
+}
+
+.title h2
+{
+  text-transform: lowercase;
+  font-size: 2.8em;
+}
+
+.title .byline
+{
+  font-size: 1.3em;
+  color: rgb(110, 76, 76);
+}
+  
+/*********************************************************************************/
+/* Header                                                                        */
+/*********************************************************************************/
+
+#Admin 
+{
+  position: relative;
+  float: left;
+  width: 300px;
+  padding: 3em 0em;
+}
+#Staff
+{
+  position: relative;
+  float: left;
+  width: 300px;
+  padding: 3em 0em;
+}
+#Client
+{
+  position: relative;
+  float: left;
+  width: 300px;
+  padding: 3em 0em;
+}
+
+
+/*********************************************************************************/
+/* Menu                                                                          */
+/*********************************************************************************/
+
+#menu
+{
+}
+
+#menu ul
+{
+}
+
+#menu li
+{
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+#menu li a, #menu li span
+{
+  display: block;
+  padding: 2em 1.5em;
+  text-align: center;
+  text-decoration:  none;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: rgba(24, 15, 15, 0.5);
+}
+
+#menu li:hover a, #menu li.active a, #menu li.active span
+{
+}
+
+#menu .current_page_item a
+{
+  background: #2980b9;
+  color: rgb(14, 9, 9);
+}
+
+#menu .icon
+{
+}
+
+/*********************************************************************************/
+/* Banner                                                                        */
+/*********************************************************************************/
+
+#banner
+{
+  margin-bottom: 4em;
+}
+
+/*********************************************************************************/
+/* Page                                                                          */
+/*********************************************************************************/
+
+#page
+{
+  background: #2a2a2a;
+}
+
+/*********************************************************************************/
+/* Main                                                                          */
+/*********************************************************************************/
+
+#main
+{
+  overflow: hidden;
+  float: right;
+  width: 800px;
+  height: 700px;
+  padding: 0 100px 0 100px;
+  background: #FFF;
+  border-top: 6px solid #2980b9;
+  text-align: center;
+}
+
+/*********************************************************************************/
+/* Featured                                                                      */
+/*********************************************************************************/
+
+#featured
+{
+  overflow: hidden;
+  margin-bottom: 3em;
+  padding-top: 5em;
+  border-top: 1px solid rgba(0,0,0,0.08);
+}
+
+/*********************************************************************************/
+/* Sidebar     
+                                                                */
+/*********************************************************************************/
+
+#sidebar
+{
+}
+
+/*********************************************************************************/
+/* Footer                                                                        */
+/*********************************************************************************/
+
+#footer
+{
+}
 
 .container {
   display: none;
 }
-.button {
-  display: inline-block;
-  border-radius: 4px;
-  background-color: #f4511e;
-  border: none;
-  color: #FFFFFF;
-  text-align: center;
-  font-size: 15px;
-  padding: 10px;
-  width: 300px;
-  transition: all 0.5s;
-  cursor: pointer;
-  margin: 5px;
-}
-
-.button span {
-  cursor: pointer;
-  display: inline-block;
-  position: relative;
-  transition: 0.5s;
-}
-
-.button span:after {
-  content: '\00bb';
-  position: absolute;
-  opacity: 0;
-  top: 0;
-  right: -20px;
-  transition: 0.5s;
-}
-
-.button:hover span {
-  padding-right: 25px;
-}
-
-.button:hover span:after {
-  opacity: 1;
-  right: 0;
-}
-.container1 p{
-  text-align: center;
-  font: 15px/1.5 Arial;
+.container1 h2{
+  text-align: right;
+  font-family: 'Century Gothic';
+  font-size: 0.5rem;
+  margin-top: 1px;
 }
