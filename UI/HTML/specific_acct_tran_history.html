@@ -23,43 +23,8 @@
                 </ul>
             </nav>
         </header>
-     <script src="../js/jquery.js"></script>
-    <script type="text/javascript">
-  
-    function getUrlVars() {
-      var vars = {};
-      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-          vars[key] = value;
-      });
-      return vars;
-  }
-     var dynamicContent = getUrlVars()["AccountType"];
-  $(document).ready(function() {
-  // Check if the URL parameter is Admin
-  if (dynamicContent == 'Admin') {
-  $('#Admin').show();
-  
-  }
-  // Check if the URL parameter is Staff
-  else if (dynamicContent == 'Staff') {
-  $('#Staff').show();
-  
-  }
-  // Check if the URL parameter is Client
-  else if (dynamicContent == 'Client') {
-  $('#Client').show();
-  }
-  // Check if the URL parmeter is empty or not defined, display default content
-  else {
-  $('#default-content').show();
-  }
-  });
-    </script>
-    <script>
-  function myFunction() {
-    alert("Sure You Want To Delete the Account");
-  }
-  </script>
+        <script src="../js/jquery.js"></script>
+        <script src="../js/hide_show.js"></script>
       <section id="showcase"> 
       <div id="Client" class="container">
           <div id="menu">
