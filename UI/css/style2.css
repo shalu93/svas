@@ -14,9 +14,10 @@ body, html {
 
 
 .container1{
-  width: 90%;
+  width: 100%;
   margin: auto;
   overflow: hidden;
+  background: white;
 }
 
 .container1 p{
@@ -39,7 +40,7 @@ body, html {
 }
 
 .container{
-  width: 90%;
+  width: 80%;
   margin: auto;
   overflow: hidden;
   
@@ -47,6 +48,7 @@ body, html {
 
 .container{
   overflow-x: auto;
+  overflow-y: auto;
 }
 
 .button_1{
@@ -69,7 +71,7 @@ body, html {
 #showcase h1{
   padding: 10px;
   margin: 0;
-  text-align: left;
+  text-align: center;
   border: 0;
   color: maroon;
 }
@@ -111,19 +113,57 @@ body, html {
   input[type=text], input[type=password] {
   width: 100%;
   padding: 10px;
-  margin: 2px 0 20px 0;
+  margin: 2px 0 10px 0;
   border: none;
   background: #f1f1f1;
+  float: center;
 }
-
 
 
 hr {
   border: 1px solid #f1f1f1;
 }
 
+/*********************************************************************************/
+/* Button Style                                                                  */
+/*********************************************************************************/
+
+.button_Logout
+{
+  display:flex;
+  float: right;
+	margin-top: -70px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 1em 3em 1em 2em;
+  letter-spacing: 0.20em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.90em;
+  background: rgb(238, 228, 228);
+  color:rgb(66, 15, 15);
+}
+
+.button_Logout:before
+{
+  display:flex;
+  float: right;
+	margin-top: 1px;
+  margin-bottom: 10px;
+  margin-right: 10px;
+  padding: 1em 3em 1em 2em;
+  letter-spacing: 0.20em;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 400;
+  font-size: 0.90em;
+  background: rgb(238, 228, 228);
+  color:rgb(66, 15, 15);
+}
+  
 /* Set a style for all buttons */
-button {
+.button {
   background-color: #4CAF50;
   color: white;
   padding: 14px 20px;
@@ -134,7 +174,7 @@ button {
   opacity: 0.9;
 }
 
-button:hover {
+.button:hover {
   opacity:1;
 }
 
@@ -186,18 +226,6 @@ tr:hover{
   font-size: 18px;
 }
 
-button {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
-  color: white;
-  background-color: #000;
-  text-align: center;
-  cursor: pointer;
-  width: 100%;
-  font-size: 18px;
-}
 
 a {
   text-decoration: none;
@@ -205,11 +233,11 @@ a {
   color: black;
 }
 
-button:hover, a:hover {
-  opacity: 0.7;
-}
+
 
 table, th , td{
   border: 1px solid black;
   text-align: center;
 }
+
+

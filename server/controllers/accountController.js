@@ -15,6 +15,11 @@ export default class authUsers{
 
     static createAccount(req, res){
         try{
+            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.type ) {
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in first name , last name , email and type as inputs of the form'});
+            }
             if(validation.validateAccount(req, res)){
                 const users = UserInfo.filter(user => user.email == req.body.email);
                 if(users.length < 1){
@@ -51,6 +56,11 @@ export default class authUsers{
 
     static updateAccount(req, res){
         try{
+            if(!req.body.status ) {
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in status as inputs of the form'});
+            }
             const accountNumber=req.params.accountNumber;
             const accounts = AcctInfo.filter(account => account.accountNumber == accountNumber);
             console.log(accounts);

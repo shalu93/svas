@@ -1,6 +1,5 @@
 import {accountDb} from '../Db/accountsDb';
-import {transactionDb} from '../Db/transactionDb'
-import validation from '../validation/accountValidation'
+import {transactionDb} from '../Db/transactionDb';
 
 const AcctInfo = accountDb;
 const TranInfo= transactionDb;
@@ -8,6 +7,11 @@ const TranInfo= transactionDb;
 export default class transaction{
 
     static debitAccount(req, res){
+        if(!req.body.amount ) {
+            return res.status(400).json({
+                status:400,
+                message: 'Please fill in amount as input of the form'});
+        }
 
         const accountNumb=req.params.accountNumber;
         let toDay = new Date();
@@ -51,6 +55,11 @@ export default class transaction{
 
         static creditAccount(req, res){
 
+            if(!req.body.amount ) {
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in amount as input of the form'});
+            }
             const accountNumb=req.params.accountNumber;
             let toDay = new Date();
             const accounts = AcctInfo.filter(account => account.accountNumber == accountNumb);
