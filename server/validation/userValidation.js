@@ -3,7 +3,7 @@ import {userDb} from '../Db/userDb';
 
 export default class validation {
 
-    static Signup (req, res , next){
+    static Signup (req, res){
         const UserInfo = userDb;
 
         if (validator.isEmpty(req.body.firstName)) {
@@ -52,11 +52,11 @@ export default class validation {
         else {
             
         }
-            return next();
+            return true;
     }
         
         
-    static Login (req, res, next){
+    static Login (req, res){
         const UserInfo = userDb;
 
         if (typeof req.body.email == "number") {
@@ -73,7 +73,7 @@ export default class validation {
         if (validator.isEmpty(req.body.password)) {
             throw Error("Password is required");
         }
-        return next();
+        return true;
     }
     
 }
