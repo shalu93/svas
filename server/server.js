@@ -16,7 +16,7 @@ app.use('/api/v1', authRouter);
 app.use('/api/v1', tranRouter);
 
 
-const port=process.env.PORT||3000;
+const port=process.env.PORT||3001;
 
 const server=app.listen(port, ()=>console.log(`The server is up on port ${port}`));
 

@@ -1,6 +1,5 @@
 import {accountDb} from '../Db/accountsDb';
 import {transactionDb} from '../Db/transactionDb';
-import validation from '../validation/accountValidation';
 
 const AcctInfo = accountDb;
 const TranInfo= transactionDb;
