@@ -2,7 +2,7 @@ import validator from 'validator';
 import {accountsDb} from '../Db/accountsDb';
 
 export default class validation {
-static validateAccount (req, res){
+static validateAccount (req, res , next){
     const AcctInfo = accountsDb;
     
     if (validator.isEmpty(req.body.email)) {
@@ -16,7 +16,7 @@ static validateAccount (req, res){
     }
 
     else {
-        return true;
+        return next();
     }
 }
 }
