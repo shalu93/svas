@@ -11,9 +11,9 @@ dotenv.config();
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use('/api', AcctRouter);
-app.use('/api', authRouter);
-app.use('/api', tranRouter);
+app.use('/api/v1', AcctRouter);
+app.use('/api/v1', authRouter);
+app.use('/api/v1', tranRouter);
 
 
 const port=process.env.PORT||3000;

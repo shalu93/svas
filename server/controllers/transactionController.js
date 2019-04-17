@@ -9,7 +9,9 @@ export default class transaction{
 
     static debitAccount(req, res){
         if(!req.body.amount ) {
-            return res.status(400).json({ msg: 'Please fill in amount as input of the form'});
+            return res.status(400).json({
+                status:400,
+                message: 'Please fill in amount as input of the form'});
         }
 
         const accountNumb=req.params.accountNumber;
@@ -55,7 +57,9 @@ export default class transaction{
         static creditAccount(req, res){
 
             if(!req.body.amount ) {
-                return res.status(400).json({ msg: 'Please fill in amount as input of the form'});
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in amount as input of the form'});
             }
             const accountNumb=req.params.accountNumber;
             let toDay = new Date();

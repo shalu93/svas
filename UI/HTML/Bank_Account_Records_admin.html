@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="description" content="Banka">
+      <meta name="keywords" content="Bank For the people">
+      <meta name="author" content="Shalu Chandwani Vaswani">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    <title>Banka | Records </title>
+    <link rel="stylesheet" href="../css/style1.css"> 
+  </head>
+  <body>
+    <header>
+      <div  id="Header" class="container1">
+          <h1>Banka<p>Your Trust Our Commitment</p></h1>
+        </div>
+        <nav>
+          <ul>
+            <form method="get" action="../index.html">
+              <button type="Logout" name="button_Logout" class="button_Logout"><span></span>Logout</button></form>
+          </ul>
+      </nav>
+  </header>
+          <script>
+              function myFunction() {
+                alert("Sure You Want To Delete the Account");
+              }
+          </script>
+             <script src="../js/jquery.js"></script>
+             <script type="text/javascript">
+           
+             function getUrlVars() {
+               var vars = {};
+               var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+                   vars[key] = value;
+               });
+               return vars;
+           }
+              var dynamicContent = getUrlVars()["AccountType"];
+           $(document).ready(function() {
+           // Check if the URL parameter is Admin
+           if (dynamicContent == 'Admin') {
+           $('#Admin').show();
+           
+           }
+           // Check if the URL parameter is Staff
+           else if (dynamicContent == 'Staff') {
+           $('#Staff').show();
+           
+           }
+           // Check if the URL parameter is Client
+           else if (dynamicContent == 'Client') {
+           $('#Client').show();
+           }
+           // Check if the URL parmeter is empty or not defined, display default content
+           else {
+           $('#default-content').show();
+           }
+           });
+             </script>
+              <section id="showcase">
+                  <div id="Admin" class="container">
+                      <div id="menu">
+                        <ul>
+                          <li><a href="homepage.html?AccountType=Admin" accesskey="1" title="">Welcome</a></li>
+                          <li class="current_page_item"><a href="Bank_Account_Records_admin.html?AccountType=Admin" accesskey="2" value = "Admin" title="">Bank Accounts</a></li>                            
+                          <li><a href="searchaccount.html?AccountType=Admin" accesskey="3" title="">Activate/Deactivate User accounts</a></li>
+                          <li><a href="create_admin_or_staff_user_acct.html?AccountType=Admin" accesskey="4" title="">Create Admin/Staff</a></li>
+                        </ul>
+                      </div>
+                  </div>  
+                <div id="main">
+                  <h1>Bank Account</h1>
+                  <hr>
+                  <table style="width:90%">
+                    <tr>
+                      <th>Id</th>
+                      <th>Account Number</th>
+                      <th>Creation Date</th>
+                      <th>Owner of Account</th>
+                      <th>Type</th>
+                      <th>Status</th>
+                      <th>Balance</th>
+                      <th></th>
+                    </tr>
+                    <tr>
+                     <td>1</td>
+                     <td><a href="Inquire_bank_acct.html?AccountType=Admin">60000001</a></td>
+                     <td>30/03/2019</td>
+                     <td>200000001</td>
+                     <td>Savings</td>
+                     <td>Active</td>
+                     <td>50000$</td>
+                     <td><a href="#" onclick="myFunction()" >Delete</a></td>
+                   </tr>
+                   <tr>
+                      <td>2</td>
+                      <td><a href="Inquire_bank_acct.html?AccountType=Admin">60000002</a></td>
+                      <td>30/03/2019</td>
+                      <td>200000002</td>
+                      <td>Savings</td>
+                      <td>Active</td>
+                      <td>5000$</td>
+                      <td><a href="#" onclick="myFunction()" >Delete</a></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><a href="Inquire_bank_acct.html?AccountType=Admin">60000003</a></td>
+                        <td>30/03/2019</td>
+                        <td>200000003</td>
+                        <td>Dormat</td>
+                        <td>Active</td>
+                        <td>60$</td>
+                        <td><a href="#" onclick="myFunction()" >Delete</a></td>
+                      </tr>
+                      <tr>
+                          <td>4</td>
+                          <td><a href="Inquire_bank_acct.html?AccountType=Admin">60000004</a></td>
+                          <td>30/03/2019</td>
+                          <td>200000004</td>
+                          <td>Current</td>
+                          <td>Active</td>
+                          <td>500$</td>
+                          <td><a href="#" onclick="myFunction()" >Delete</a></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><a href="Inquire_bank_acct.html?AccountType=Admin">60000005</a></td>
+                            <td>30/03/2019</td>
+                            <td>200000005</td>
+                            <td>Savings</td>
+                            <td>Active</td>
+                            <td>800$</td>
+                            <td><a href="#" onclick="myFunction()" >Delete</a></td>
+                          </tr>
+                  </table>
+  </section>
+  </body>
+</html>

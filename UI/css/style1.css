@@ -14,9 +14,10 @@ body, html {
 
 
 .container1{
-  width: 90%;
+  width: 100%;
   margin: auto;
   overflow: hidden;
+  background: white;
 }
 
 .container1 p{
@@ -282,7 +283,7 @@ ul.contact li a:before
 {
   display:flex;
   float: right;
-	margin-top: 1px;
+	margin-top: -70px;
   margin-bottom: 10px;
   margin-right: 10px;
   padding: 1em 3em 1em 2em;
@@ -501,6 +502,9 @@ ul.contact li a:before
   padding: 0 100px 0 100px;
   background: #FFF;
   border-top: 6px solid #2980b9;
+}
+
+#main h1{
   text-align: center;
 }
 
@@ -542,3 +546,49 @@ ul.contact li a:before
   font-size: 0.5rem;
   margin-top: 1px;
 }
+
+table, th , td{
+  border: 1px solid black;
+  text-align: center;
+}
+
+.container{
+  overflow-x: auto;
+  overflow-y: auto;
+}
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 10px;
+  margin: 2px 0 10px 0;
+  border: none;
+  background: #f1f1f1;
+  float: center;
+  text-align: left;
+}
+
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  background-color: #f44336;
+}
+
+tr:hover{
+  cursor: pointer;
+  background-color: #ccc;
+}
+
+/* Float cancel and signup buttons and add an equal width */
+.cancelbtn, .signupbtn {
+  float: left;
+  width: 50%;
+  height: 40px;
+}
+
+.Submit {
+  float: inherit;
+  width: 10%;
+  height: 40px;
+}
+

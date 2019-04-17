@@ -32,7 +32,7 @@ c. Client -->
 
 I have tried to use various functions of html to showcase , so this page will show you the hover buttons for submit
 
-i. Create a bank account. ii. View bank account profile (dashboard). iii. View account transaction history. iv. Change Password -> additional option that was given in optional.
+i. Create a bank account. ii. View bank account profile (dashboard). iii. View account transaction_history. iv. Change Password -> additional option that was given in optional.
 
 
 # Setting up Dev

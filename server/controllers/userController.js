@@ -17,7 +17,9 @@ export default class authUsers{
     static SignupUser(req, res){
         try{
             if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password ) {
-                return res.status(400).json({ msg: 'Please fill in first name , last name , email and password as inputs of the form'});
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in first name , last name , email and password as inputs of the form'});
             }
 
             if(validation.Signup(req, res)){
@@ -74,7 +76,9 @@ export default class authUsers{
     static SigninUser (req, res){
         try{
             if(!req.body.email ||  !req.body.password ) {
-                return res.status(400).json({ msg: 'Please fill in  email and password as inputs of the form'});
+                return res.status(400).json({
+                    status:400,
+                    message: "Please fill in  email and password as inputs of the form"});
             }
 
             const UserInfo = userDb;

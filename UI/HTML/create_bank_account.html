@@ -9,17 +9,70 @@
         <meta name="author" content="Shalu Chandwani Vaswani">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
       <title>Banka | create bank account </title>
-      <link rel="stylesheet" href="../css/style2.css">
+      <link rel="stylesheet" href="../css/style1.css">
     </head>
     <body>
         <header>
             <div  id="Header" class="container1">
                 <h1>Banka<p>Your Trust Our Commitment</p></h1>
-                <h2><a href="../index.html">Logout</a></h2>
               </div>
-            </header>
-  <section id="showcase">
-    <div class="container">
+              <nav>
+                <ul>
+                  <form method="get" action="../index.html">
+                    <button type="Logout" name="button_Logout" class="button_Logout"><span></span>Logout</button></form>
+                </ul>
+            </nav>
+        </header>
+     <script src="../js/jquery.js"></script>
+    <script type="text/javascript">
+  
+    function getUrlVars() {
+      var vars = {};
+      var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+          vars[key] = value;
+      });
+      return vars;
+  }
+     var dynamicContent = getUrlVars()["AccountType"];
+  $(document).ready(function() {
+  // Check if the URL parameter is Admin
+  if (dynamicContent == 'Admin') {
+  $('#Admin').show();
+  
+  }
+  // Check if the URL parameter is Staff
+  else if (dynamicContent == 'Staff') {
+  $('#Staff').show();
+  
+  }
+  // Check if the URL parameter is Client
+  else if (dynamicContent == 'Client') {
+  $('#Client').show();
+  }
+  // Check if the URL parmeter is empty or not defined, display default content
+  else {
+  $('#default-content').show();
+  }
+  });
+    </script>
+    <script>
+  function myFunction() {
+    alert("Sure You Want To Delete the Account");
+  }
+  </script>
+      <section id="showcase"> 
+      <div id="Client" class="container">
+          <div id="menu">
+              <ul>
+                  <li><a href="homepage.html?AccountType=Client" accesskey="1" title="">Welcome</a></li>
+                  <li class="current_page_item"><a href="create_bank_account.html?AccountType=Client" accesskey="2" title="">Create Bank Account</a></li>
+                  <li><a href="profile.html?AccountType=Client" accesskey="3" title="">Profile</a></li>
+                  <li><a href="transaction_history.html?AccountType=Client" accesskey="4" title="">transaction_history</a></li>
+                  <li><a href="forgot_password.html?AccountType=Client" accesskey="5" title="">Reset Password</a></li>
+                </ul>
+            </div>
+      </div>
+      <div id="main">
       <h1>Create Bank Account</h1>
           <p1>Please fill in this form to Create Bank Account</p1>
           <hr>
