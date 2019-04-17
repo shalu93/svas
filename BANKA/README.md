@@ -3,7 +3,7 @@ Svas - Banka challenge - A core Banking Solution Product (UI Only)
 
 1 Login Page ---->>
 
-It has 2 buttons -
+It has 2 buttons -  
 
 a. Submit -> Account type must be selected before submitting otherwise it will show blank page with a message "Please select account Type" Also On the Basis of Account Type the Page will display Different Links . Admin / Client / Staff Rights are restricted via this way.
 

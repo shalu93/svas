@@ -1,10 +1,13 @@
 svas
-Svas - Banka challenge - A core Banking Solution Product (UI Only)
+
 
 [![Build Status](https://travis-ci.com/shalu93/svas.svg?branch=master)](https://travis-ci.com/shalu93/svas)
 [![Coverage Status](https://coveralls.io/repos/github/shalu93/svas/badge.svg?branch=testing-tests-travis-ci)](https://coveralls.io/github/shalu93/svas)  
 [![Maintainability](https://api.codeclimate.com/v1/badges/6f9d176365640932903b/maintainability)](https://codeclimate.com/github/shalu93/svas)
  
+Svas - Banka challenge - A core Banking Solution Product
+
+# Description
 
 1 Login Page ---->>
 
@@ -29,7 +32,7 @@ c. Client -->
 
 I have tried to use various functions of html to showcase , so this page will show you the hover buttons for submit
 
-i. Create a bank account. ii. View bank account profile (dashboard). iii. View account transaction history. iv. Change Password -> additional option that was given in optional.
+i. Create a bank account. ii. View bank account profile (dashboard). iii. View account transaction_history. iv. Change Password -> additional option that was given in optional.
 
 
 # Setting up Dev
@@ -75,6 +78,7 @@ npm run test
 ```
 
 # API ENDPOINTS ROUTES
+## Documentation
 | Methods | Endpoints | Actions |
 | :----- | :----- | ----- |
 | /GET | /api/v1/users | to get all users |
