@@ -9,13 +9,13 @@ dotenv.config();
 const UserInfo = userDb;
 
 export default class authUsers{
-   static getAll(req, res){
+    static getAll(req, res){
         const UserInfo= userDb;
         return res.send({
             status :200,
             data: UserInfo
-        })
-    };
+        });
+    }
 
     static SignupUser(req, res){
         try{
@@ -30,13 +30,13 @@ export default class authUsers{
                 const users = UserInfo.filter(user => user.email == req.body.email.trim());
 
                 if(users.length === 1){
-                   return res.status(409).json({
+                    return res.status(409).json({
                         status:409,
-                        message: "This email already exists"
-                    })                    
+                        message: 'This email already exists'
+                    });                    
                 }
                                 
-                bcrypt.hash(req.body.password, 10, (err, hash) =>{
+                bcrypt.hash(req.body.password, 10, (err) =>{
                     if(err) {
                         return res.status(500).json({
                             error: err
@@ -47,9 +47,8 @@ export default class authUsers{
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
                             email: req.body.email.trim(),
-                            password: hash,
-                            AcctType:"client"
-                        }
+                            AcctType:'client'
+                        };
                         UserInfo.push(user);
                         
                         const users = UserInfo.filter(user => user.email == req.body.email);
@@ -59,12 +58,13 @@ export default class authUsers{
                             firstName: users.firstName,
                             lastName: users.lastName,
                             AcctType:users.AcctType
+                            // eslint-disable-next-line 
                         }, process.env.JWTSECRETKEY,
                         {
-                            expiresIn: "12h"
+                            expiresIn: '12h'
                         });
                         
-                        let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,password=hash,type=user.type;
+                        let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,type=user.type;
                         return res.status(201).json({
                             status :201,
                             data: {token,id,firstName,lastName,email,type}
@@ -86,28 +86,28 @@ export default class authUsers{
             if(!req.body.email ||  !req.body.password ) {
                 return res.status(400).json({
                     status:400,
-                    message: "Please fill in  email and password as inputs of the form"});
+                    message: 'Please fill in  email and password as inputs of the form'});
             }
 
             const UserInfo = userDb;
-            let oneUser,loginDetails;
+            let oneUser;
             if(validation.Login(req, res)){
-                bcrypt.hash(req.body.password, 10, (err, hash) =>{
+                bcrypt.hash(req.body.password, 10, (err) =>{
                     if(err) {
                         return res.status(500).json({
                             error: err
                         });
                     } else {
                         oneUser = {
-                            email: req.body.email,
-                            password: hash
-                        }
+                            email: req.body.email
+                            
+                        };
                         
                         const users = UserInfo.filter(user =>user.email==oneUser.email);
                         if(users.length<1){
                             return res.status(204).json({
                                 status:204,
-                                message: "Incorrect email or password"
+                                message: 'Incorrect email or password'
                             });
                         }
                         const userPassword = UserInfo.find(user => user.email == req.body.email);
@@ -115,17 +115,18 @@ export default class authUsers{
                             if (result == false) {
                                 return res.status(204).json({
                                     status:204,
-                                    message: "Incorrect email or password"
+                                    message: 'Incorrect email or password'
                                 });
                             } else {
                                 const token = jwt.sign({
                                     email: users.email,
                                     userId: users.id
+                                    // eslint-disable-next-line 
                                 }, process.env.JWTSECRETKEY,
                                 { 
-                                    expiresIn: "12h"
+                                    expiresIn: '12h'
                                 });
-                                let email=req.body.email,password=hash;
+                                let email=req.body.email;
                                 return res.status(200).json({
                                     status:200,
                                     data: {token,email}
@@ -134,7 +135,7 @@ export default class authUsers{
                             }
                         });
                     }
-                })
+                });
             }
         } catch(err){
             res.status(400).json({
