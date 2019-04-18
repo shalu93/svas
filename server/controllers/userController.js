@@ -2,6 +2,9 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import {userDb} from '../Db/userDb';
 import validation from '../validation/userValidation';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const UserInfo = userDb;
 
@@ -16,19 +19,21 @@ export default class authUsers{
 
     static SignupUser(req, res){
         try{
-            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password ) {
+
+            if(!req.body.email.trim() || !req.body.firstName || !req.body.lastName || !req.body.password ) {
                 return res.status(400).json({ 
                     status:400,
-                    message: 'Please fill in first name , last name , email and password as inputs of the form'});
+                    message: 'Please fill in firstName , lastName , email and password as inputs of the form'});
             }
 
             if(validation.Signup(req, res)){
-                const users = UserInfo.filter(user => user.email == req.body.email);
+                const users = UserInfo.filter(user => user.email == req.body.email.trim());
+
                 if(users.length === 1){
                    return res.status(409).json({
                         status:409,
                         message: "This email already exists"
-                    })
+                    })                    
                 }
                                 
                 bcrypt.hash(req.body.password, 10, (err, hash) =>{
@@ -41,17 +46,20 @@ export default class authUsers{
                             id:UserInfo.length +1,
                             firstName: req.body.firstName,
                             lastName: req.body.lastName,
-                            email: req.body.email,
+                            email: req.body.email.trim(),
                             password: hash,
-                            type:"client"
+                            AcctType:"client"
                         }
                         UserInfo.push(user);
                         
                         const users = UserInfo.filter(user => user.email == req.body.email);
                         const token = jwt.sign({
                             email: users.email,
-                            userId: users.id
-                        }, "mysupersecretkey",
+                            userId: users.id,
+                            firstName: users.firstName,
+                            lastName: users.lastName,
+                            AcctType:users.AcctType
+                        }, process.env.JWTSECRETKEY,
                         {
                             expiresIn: "12h"
                         });
@@ -97,23 +105,23 @@ export default class authUsers{
                         
                         const users = UserInfo.filter(user =>user.email==oneUser.email);
                         if(users.length<1){
-                            return res.status(211).json({
-                                status:211,
+                            return res.status(204).json({
+                                status:204,
                                 message: "Incorrect email or password"
                             });
                         }
                         const userPassword = UserInfo.find(user => user.email == req.body.email);
                         bcrypt.compare(req.body.password, userPassword.password, function (err, result) {
                             if (result == false) {
-                                return res.status(211).json({
-                                    status:211,
+                                return res.status(204).json({
+                                    status:204,
                                     message: "Incorrect email or password"
                                 });
                             } else {
                                 const token = jwt.sign({
                                     email: users.email,
                                     userId: users.id
-                                }, "mysupersecretkey",
+                                }, process.env.JWTSECRETKEY,
                                 { 
                                     expiresIn: "12h"
                                 });

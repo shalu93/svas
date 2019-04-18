@@ -313,73 +313,6 @@ ul.contact li a:before
   color:rgb(66, 15, 15);
 }
   
-/*********************************************************************************/
-/* 4-column                                                                      */
-/*********************************************************************************/
-
-.box1,
-.box2,
-.box3,
-.box4
-{
-  width: 235px;
-}
-
-.box1,
-.box2,
-.box3,
-{
-  float: left;
-  margin-right: 20px;
-}
-
-.box4
-{
-  float: right;
-}
-
-/*********************************************************************************/
-/* 3-column                                                                      */
-/*********************************************************************************/
-
-.boxA,
-.boxB,
-.boxC
-{
-  width: 320px;
-}
-
-.boxA,
-.boxB,
-{
-  float: left;
-  margin-right: 20px;
-}
-
-.boxC
-{
-  float: right;
-}
-
-/*********************************************************************************/
-/* 2-column                                                                      */
-/*********************************************************************************/
-
-.tbox1,
-.tbox2
-{
-  width: 575px;
-}
-
-.tbox1
-{
-  float: left;
-}
-
-.tbox2
-{
-  float: right;
-}
 
 /*********************************************************************************/
 /* Heading Titles                                                                */
@@ -409,8 +342,8 @@ ul.contact li a:before
 #Admin 
 {
   position: relative;
-  float: left;
-  width: 300px;
+  width: 20%;
+  min-width: 220px;
   padding: 3em 0em;
 }
 #Staff
@@ -496,8 +429,7 @@ ul.contact li a:before
 #main
 {
   overflow: hidden;
-  float: right;
-  width: 800px;
+  width: 80%;
   height: 700px;
   padding: 0 100px 0 100px;
   background: #FFF;
@@ -590,5 +522,9 @@ tr:hover{
   float: inherit;
   width: 10%;
   height: 40px;
+}
+
+#showcase {
+  display: flex;
 }
 

@@ -5,7 +5,7 @@ const userDb = [
         lastName : "chandwani",
         email: "shaluchandwani@svasbanka.com",
         password : "Shalu@1993",
-        type: "client"
+        AcctType: "client"
     },
     {
         id:2,
@@ -13,7 +13,7 @@ const userDb = [
         lastName : "vaswani",
         email: "pankajvaswani@svasbanka.com",
         password : "Pankaj@1993",
-        type: "client"
+        AcctType: "client"
     },
 
     {
@@ -22,7 +22,7 @@ const userDb = [
         lastName : "chandwani",
         email: "sakshichandwani@svasbanka.com",
         password : "Sakshi@2000",
-        type: "client"
+        AcctType: "client"
     }
     
 
