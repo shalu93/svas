@@ -16,7 +16,6 @@ export default class authUsers{
 
     static createAccount(req, res){
         try{
- 
 
             if(req.body.type !== 'saving') {
                 if(req.body.type !== 'current') {
@@ -29,7 +28,6 @@ export default class authUsers{
                 }
             }         
             
-
             if( !req.body.type ) { 
                 return res.status(400).json({ 
                     status:400,
@@ -38,9 +36,9 @@ export default class authUsers{
             else{
                 const account = {
                     accountNumber: Math.floor(Math.random() * 10000000000),
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
+                    firstName: req.Info.firstName,
+                    lastName: req.Info.lastName,
+                    email: req.Info.email,
                     type: req.body.type,
                     Status:'Active',
                     openingBalance:0
