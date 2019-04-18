@@ -1,5 +1,7 @@
 import {accountDb} from '../Db/accountsDb';
 import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+
 
 dotenv.config();
 
@@ -16,6 +18,8 @@ export default class authUsers{
     static createAccount(req, res){
         try{
 
+            const userInfo = jwt.encode(res.header.authorization); 
+
             if(req.body.type !== 'saving') {
                 if(req.body.type !== 'current') {
                     if(req.body.type !== 'dormat') {
@@ -28,7 +32,7 @@ export default class authUsers{
             }         
             
 
-            if( !req.body.type ) {
+            if( !req.body.type ) { 
                 return res.status(400).json({ 
                     status:400,
                     message: 'Please fill in type as inputs of the form'});
@@ -36,9 +40,9 @@ export default class authUsers{
             else{
                 const account = {
                     accountNumber: Math.floor(Math.random() * 10000000000),
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
+                    firstName: userInfo.firstName,
+                    lastName: userInfo.lastName,
+                    email: userInfo.email,
                     type: req.body.type,
                     Status:'Active',
                     openingBalance:0

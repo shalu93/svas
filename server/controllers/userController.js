@@ -120,7 +120,10 @@ export default class authUsers{
                             } else {
                                 const token = jwt.sign({
                                     email: users.email,
-                                    userId: users.id
+                                    userId: users.id,
+                                    firstName: users.firstName, 
+                                    lastName: users.lastName,
+                                    AcctType:users.AcctType
                                     // eslint-disable-next-line 
                                 }, process.env.JWTSECRETKEY,
                                 { 
