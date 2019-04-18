@@ -1,5 +1,5 @@
-import { Router } from "express";
-import transactions from "../controllers/transactionController"
+import { Router } from 'express';
+import transactions from '../controllers/transactionController';
 
 
 
