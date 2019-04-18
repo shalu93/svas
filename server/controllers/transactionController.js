@@ -26,15 +26,15 @@ export default class transaction{
 
 
             } else {
-                const transaction = TranInfo.filter(transaction => transaction.accountNumber === accountNumb);    
+                const transaction = TranInfo.filter(transaction => transaction.accountNumber == accountNumb);
                 const debit = {
                     id : TranInfo.length + 1,
-                    createdOn : toDay, 
+                    createdOn : toDay,
                     type : 'debit',
                     accountNumber : accountNumb,
                     amount : req.body.amount ,
                     oldBalance : transaction[0].oldBalance,
-                    newBalance : (+transaction[0].oldBalance + +req.body.amount) ,
+                    newBalance : (transaction[0].oldBalance + +req.body.amount) ,
                 };
                 transaction[0].oldBalance=debit.newBalance;
                 TranInfo.push(debit);
