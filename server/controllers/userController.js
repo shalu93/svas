@@ -50,20 +50,8 @@ export default class authUsers{
                             AcctType:'client'
                         };
                         UserInfo.push(user);
-                        
-                        const users = UserInfo.filter(user => user.email == req.body.email);
-                        const token = jwt.sign({
-                            email: users.email,
-                            userId: users.id,
-                            firstName: users.firstName,
-                            lastName: users.lastName,
-                            AcctType:users.AcctType
-                            // eslint-disable-next-line 
-                        }, process.env.JWTSECRETKEY,
-                        {
-                            expiresIn: '12h'
-                        });
-                        
+                        // eslint-disable-next-line 
+                        const token = jwt.sign(user, process.env.JWTSECRETKEY);
                         let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,type=user.type;
                         return res.status(201).json({
                             status :201,
@@ -118,17 +106,15 @@ export default class authUsers{
                                     message: 'Incorrect email or password'
                                 });
                             } else {
-                                const token = jwt.sign({
-                                    email: users.email,
-                                    userId: users.id,
-                                    firstName: users.firstName, 
-                                    lastName: users.lastName,
-                                    AcctType:users.AcctType
-                                    // eslint-disable-next-line 
-                                }, process.env.JWTSECRETKEY,
-                                { 
-                                    expiresIn: '12h'
-                                });
+                                const user = {
+                                    id: users[0].id,
+                                    firstName: users[0].firstName,
+                                    lastName: users[0].lastName,
+                                    email: req.body.email.trim(),
+                                    AcctType:users[0].AcctType
+                                };
+                                // eslint-disable-next-line
+                                const token = jwt.sign(user, process.env.JWTSECRETKEY);
                                 let email=req.body.email;
                                 return res.status(200).json({
                                     status:200,
