@@ -3,15 +3,6 @@ import chai from 'chai';
 import server from '../server';
 
 
-// error messages and number used
-// 200 - Successfully created a bank account
-// 300 - account type cannot be empty
-// 400 - user email does not exist
-// 401 - activate or deactivate a bank account
-// 402 - bank account is not found
-// 403 - deleted a bank account
-// 404 - bank account is not found
-
 let expect = chai.expect;
 chai.use(chaiHttp);
 
@@ -36,7 +27,7 @@ it('create a bank account', (done) => {
     firstName: "shalu",
     lastName : "chandwani",
     email: "shaluchandwani@svasbanka.com",
-    type: "savings"
+    type: "saving"
   })
   .end((err, res) => {
     expect(res).to.have.status(201);

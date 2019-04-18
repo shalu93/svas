@@ -1,6 +1,7 @@
 import {accountDb} from '../Db/accountsDb';
 import {transactionDb} from '../Db/transactionDb';
 
+
 const AcctInfo = accountDb;
 const TranInfo= transactionDb;
 
@@ -21,14 +22,14 @@ export default class transaction{
                     return res.status(404).json({
                         status :404,
                         message: "You have to activate this account first"
-                    });
+                    }); 
 
 
                 } else {
-                    const transaction = TranInfo.filter(transaction => transaction.accountNumber == accountNumb);    
+                    const transaction = TranInfo.filter(transaction => transaction.accountNumber === accountNumb);    
                     const debit = {
                         id : TranInfo.length + 1,
-                        createdOn : toDay,
+                        createdOn : toDay, 
                         type : "debit",
                         accountNumber : accountNumb,
                         amount : req.body.amount ,
@@ -46,10 +47,10 @@ export default class transaction{
             }
             
             if(accounts.length==0){
-                return res.status(201).json({
-                    status :201,
+                return res.status(404).json({
+                    status :404,
                     message: "The bank account entered does not exist!"
-                });
+                }); 
             }
         }
 
@@ -74,7 +75,7 @@ export default class transaction{
                     }
                     if(accounts[0].balance < req.body.amount ){
                         return res.status(500).json({
-                            status :500,
+                            status :409,
                             message: "You dont have that amount on your account"
                         });
                     }

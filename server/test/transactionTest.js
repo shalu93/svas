@@ -15,7 +15,7 @@ describe('Debit bank account', () => {
         amount : 9000
     })
     .end((err, res) => {
-      expect(res).to.have.status(201);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       done();
     });
@@ -29,7 +29,7 @@ it('bank account is not found', (done) => {
         amount : 9000
     })
     .end((err, res) => {
-      expect(res).to.have.status(201);
+      expect(res).to.have.status(404);
       expect(res.body).to.be.an('object');
       done();
     });

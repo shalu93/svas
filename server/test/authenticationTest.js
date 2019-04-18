@@ -3,22 +3,6 @@ import server from '../server';
 import chai from 'chai';
 
 
-// Error messages Used
-// 201 - fetch all users
-// 202 - email is required
-// 203 - only integers are not allowed in email
-// 204 - create a user with right signup credentials
-// 205 - email already existing
-// 206 - wrong email format
-// 207 - First Name field is empty
-// 208 - Last Name field is empty
-// 209 - password must be atleast 10 characters
-// 210 - password and confirm password do not match
-// 211 - Incorrect credentials
-// 212 - Incorrect password
-// 213 - Invalid email address
-// 211 - Invalid email and password
-
 let expect = chai.expect;
 chai.use(chaiHttp);
 
@@ -204,7 +188,7 @@ describe('User login validation', () => {
         password : "Shalu@1993"
         })
       .end((err, res) => {
-        expect(res).to.have.status(211);
+        expect(res).to.have.status(204);
         expect(res.body).to.be.an('object');
         done();
       });
@@ -245,7 +229,7 @@ describe('User login validation', () => {
         email: "shalu@svasbanka.com",
         password : "Shalu"})
       .end((err, res) => {
-        expect(res).to.have.status(211);
+        expect(res).to.have.status(204);
         expect(res.body).to.be.an('object');
         done();
       });

@@ -63,7 +63,8 @@ div.container{
   opacity: 1;
   top: 20px;
   position: relative;
-  width: 240px;
+  width: 40%;
+  min-width: 165px;
   border-top: 2px solid #D8312A;
   height: 300px;
   position: absolute;
@@ -79,9 +80,10 @@ div.container{
 }
 
 div.main {
-  height: 208px;
+  height: 100%;
   position: absolute;
   left: 0;
+  width: 100%;
 }
 body .main .icon {
   position: absolute;
@@ -95,11 +97,11 @@ body .main input[type='password'] {
 }
 body .main input[type='text'], body .main input[type='password'] {
   color: #afb1be;
-  width: 190px;
+  width: 100%;
   margin-top: -2px;
   background: #32364a;
   left: 0;
-  padding: 10px 65px;
+  padding: 10px 120px;
   border-top: 2px solid #393d52;
   border-bottom: 2px solid #393d52;
   border-right: none;
@@ -110,6 +112,7 @@ body .main input[type='text'], body .main input[type='password'] {
 }
 body .login_fields__user, body .login_fields__password {
   position: relative;
+  display:flex;
 }
 
 
@@ -159,3 +162,4 @@ body .radio_button {
   text-align: center;
   font-size: 0.7rem;
 }
+
