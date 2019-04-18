@@ -1,6 +1,7 @@
 import {accountDb} from '../Db/accountsDb';
 import dotenv from 'dotenv';
 
+
 dotenv.config();
 
 const AcctInfo = accountDb;
@@ -27,8 +28,7 @@ export default class authUsers{
                 }
             }         
             
-
-            if( !req.body.type ) {
+            if( !req.body.type ) { 
                 return res.status(400).json({ 
                     status:400,
                     message: 'Please fill in type as inputs of the form'});
@@ -36,9 +36,9 @@ export default class authUsers{
             else{
                 const account = {
                     accountNumber: Math.floor(Math.random() * 10000000000),
-                    firstName: req.body.firstName,
-                    lastName: req.body.lastName,
-                    email: req.body.email,
+                    firstName: req.Info.firstName,
+                    lastName: req.Info.lastName,
+                    email: req.Info.email,
                     type: req.body.type,
                     Status:'Active',
                     openingBalance:0
