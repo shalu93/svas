@@ -1,6 +1,7 @@
 import {accountDb} from '../Db/accountsDb';
 import dotenv from 'dotenv';
 
+
 dotenv.config();
 
 const AcctInfo = accountDb;
@@ -15,6 +16,7 @@ export default class authUsers{
 
     static createAccount(req, res){
         try{
+ 
 
             if(req.body.type !== 'saving') {
                 if(req.body.type !== 'current') {
@@ -28,7 +30,7 @@ export default class authUsers{
             }         
             
 
-            if( !req.body.type ) {
+            if( !req.body.type ) { 
                 return res.status(400).json({ 
                     status:400,
                     message: 'Please fill in type as inputs of the form'});
