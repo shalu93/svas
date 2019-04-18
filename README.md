@@ -34,6 +34,20 @@ I have tried to use various functions of html to showcase , so this page will sh
 
 i. Create a bank account. ii. View bank account profile (dashboard). iii. View account transaction_history. iv. Change Password -> additional option that was given in optional.
 
+# API ENDPOINTS ROUTES
+## Documentation
+| Methods | Endpoints | Actions |
+| :----- | :----- | ----- |
+| /GET | /api/v1/users | to get all users |
+| /POST | /api/v1/auth/signup | Creating a User |
+| /POST | /api/v1/auth/signin | Admin/Staff/Client Login |
+| /GET | /api/v1/accounts | Get list of all accounts |
+| /POST | /api/v1/accounts | Create a net account |
+| /PATCH | /api/v1/account/:accountNumber | Update specified account |
+| /DELETE | /api/v1/account/:accountNumber | Delete specified account |
+| /POST | /api/v1/transactions/:accountNumber/debit | debit specified account |
+| /POST | /api//v1/transactions/:accountNumber/credit | credit specified account |
+
 
 # Setting up Dev
 
@@ -76,17 +90,12 @@ npm run start
 ```
 npm run test
 ```
+## Contribute
+```
+Adding more API and tests will be appriciated.
+```
+## Deployment
+```
+The folder structure is very simple it will give an idea about what to add where.
+```
 
-# API ENDPOINTS ROUTES
-## Documentation
-| Methods | Endpoints | Actions |
-| :----- | :----- | ----- |
-| /GET | /api/v1/users | to get all users |
-| /POST | /api/v1/auth/signup | Creating a User |
-| /POST | /api/v1/auth/signin | Admin/Staff/Client Login |
-| /GET | /api/v1/accounts | Get list of all accounts |
-| /POST | /api/v1/accounts | Create a net account |
-| /PATCH | /api/v1/account/:accountNumber | Update specified account |
-| /DELETE | /api/v1/account/:accountNumber | Delete specified account |
-| /POST | /api/v1/transactions/:accountNumber/debit | debit specified account |
-| /POST | /api//v1/transactions/:accountNumber/credit | credit specified account |
