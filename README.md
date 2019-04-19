@@ -1,6 +1,6 @@
-svas
+# BANKA
 
-
+[![npm version](https://badge.fury.io/js/heroku-api-plugin.svg)](http://badge.fury.io/js/heroku-api-plugin)
 [![Build Status](https://travis-ci.com/shalu93/svas.svg?branch=master)](https://travis-ci.com/shalu93/svas)
 [![Coverage Status](https://coveralls.io/repos/github/shalu93/svas/badge.svg?branch=testing-tests-travis-ci)](https://coveralls.io/github/shalu93/svas)  
 [![Maintainability](https://api.codeclimate.com/v1/badges/6f9d176365640932903b/maintainability)](https://codeclimate.com/github/shalu93/svas)

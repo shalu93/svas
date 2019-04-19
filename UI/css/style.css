@@ -63,7 +63,8 @@ div.container{
   opacity: 1;
   top: 20px;
   position: relative;
-  width: 40%;
+  width: 30%;
+  border-radius: 12px;
   min-width: 165px;
   border-top: 2px solid #D8312A;
   height: 300px;
