@@ -46,11 +46,6 @@ body, html {
   
 }
 
-.container{
-  overflow-x: auto;
-  overflow-y: auto;
-}
-
 .button_1{
   height: 30px;
   background-color: teal;
@@ -192,6 +187,7 @@ tr:hover{
 .cancelbtn, .signupbtn {
   float: left;
   width: 50%;
+  height: 40px;
 }
 
 /* Add padding to container elements */
