@@ -10,6 +10,7 @@ AcctRouter.patch('/account/:accountNumber',accounts.updateAccount);
 AcctRouter.delete('/accounts/:accountNumber',accounts.deleteAccount);
 
 AcctRouter.get('/user/:useremail/accounts',accounts.getAcctInfoOfUser);
+AcctRouter.get('/accounts/:accountNumber',accounts.getSpecificAcctInfo);
 
 
 

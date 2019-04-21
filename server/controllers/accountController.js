@@ -29,6 +29,30 @@ export default class authUsers{
         });
     };
 
+     // get specific account detail
+     static getSpecificAcctInfo(req, res){
+        console.log(req.params.accountNumber)
+        pg.connect(process.env.connectionString,function(err,client,done) {
+            if(err){
+                console.log("not able to get connection "+ err);
+                res.status(400).send(err);
+            } 
+            var AcctId = parseInt(req.params.accountNumber);
+            console.log(AcctId)
+            client.query('SELECT * FROM accounts where accounts.accountnumber = $1', [AcctId],function(err,result) {
+                done(); // closing the connection;
+                if(err){
+                    console.log(err);
+                    res.status(400).send(err);
+                } else {
+                return res.send({
+                 status : 200 ,   
+                 data : result.rows});
+                }
+            });
+         });
+     };    
+
     // get all account details of user filtered by email 
     static getAcctInfoOfUser(req, res){
         console.log(req.params.useremail)
