@@ -9,4 +9,8 @@ AcctRouter.post('/accounts',auth.authorization,accounts.createAccount);
 AcctRouter.patch('/account/:accountNumber',accounts.updateAccount);
 AcctRouter.delete('/accounts/:accountNumber',accounts.deleteAccount);
 
+AcctRouter.get('/user/:useremail/accounts',accounts.getAcctInfoOfUser);
+
+
+
 export default AcctRouter;

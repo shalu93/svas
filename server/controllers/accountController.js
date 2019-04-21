@@ -1,28 +1,68 @@
 import {accountDb} from '../Db/accountsDb';
 import dotenv from 'dotenv';
-
+import pg from 'pg';
 
 dotenv.config();
 
 const AcctInfo = accountDb;
 
 export default class authUsers{
+    // get all account details 
     static getAcctInfo(req, res){
-        return res.send({
-            status :200,
-            data: AcctInfo
+        pg.connect(process.env.connectionString,function(err,client,done) {
+           if(err){
+               console.log("not able to get connection "+ err);
+               res.status(400).send(err);
+           } 
+           client.query('SELECT * FROM accounts',function(err,result) {
+               done(); // closing the connection;
+               if(err){
+                   console.log(err);
+                   res.status(400).send(err);
+               } else {
+               console.log(result.rows)
+               return res.send({
+                status : 200 ,   
+                data : result.rows});
+               }
+           });
         });
-    }
+    };
+
+    // get all account details of user filtered by email 
+    static getAcctInfoOfUser(req, res){
+        console.log(req.params.useremail)
+        pg.connect(process.env.connectionString,function(err,client,done) {
+            if(err){
+                console.log("not able to get connection "+ err);
+                res.status(400).send(err);
+            } 
+            var UserMailId = String(req.params.useremail);
+            console.log(UserMailId)
+            client.query('SELECT * FROM accounts WHERE accounts.email = $[UserMailId]',function(err,result) {
+                done(); // closing the connection;
+                if(err){
+                    console.log(err);
+                    res.status(400).send(err);
+                } else {
+                    console.log(result.rows)
+                return res.send({
+                 status : 200 ,   
+                 data : result.rows});
+                }
+            });
+         });
+     };    
 
     static createAccount(req, res){
         try{
 
             if(req.body.type !== 'saving') {
                 if(req.body.type !== 'current') {
-                    if(req.body.type !== 'dormat') {
+                    if(req.body.type !== 'dormant') {
                         return res.status(400).json({ 
                             status: 400,
-                            message: 'Sorry your account type can be either saving ,current or dormat'
+                            message: 'Sorry your account type can be either saving ,current or dormant'
                         });
                     }
                 }

@@ -3,38 +3,43 @@ import jwt from 'jsonwebtoken';
 import {userDb} from '../Db/userDb';
 import validation from '../validation/userValidation';
 import dotenv from 'dotenv';
+import pg from 'pg';
 
 dotenv.config();
 
-const UserInfo = userDb;
+const UserInfo = userDb; 
 
 export default class authUsers{
+    // get all users details 
     static getAll(req, res){
-        const UserInfo= userDb;
-        return res.send({
-            status :200,
-            data: UserInfo
+        pg.connect(process.env.connectionString,function(err,client,done) {
+           if(err){
+               console.log("not able to get connection "+ err);
+               res.status(400).send(err);
+           } 
+           client.query('SELECT * FROM users',function(err,result) {
+               done(); // closing the connection;
+               if(err){
+                   console.log(err);
+                   res.status(400).send(err);
+               } else {
+               console.log(result.rows)
+               return res.send({
+                status : 200 ,   
+                data : result.rows});
+               }
+           });
         });
-    }
+    };
 
     static SignupUser(req, res){
         try{
 
-            if(!req.body.email.trim() || !req.body.firstName || !req.body.lastName || !req.body.password ) {
+            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password ) {
                 return res.status(400).json({ 
                     status:400,
                     message: 'Please fill in firstName , lastName , email and password as inputs of the form'});
             }
-
-            if(validation.Signup(req, res)){
-                const users = UserInfo.filter(user => user.email == req.body.email.trim());
-
-                if(users.length === 1){
-                    return res.status(409).json({
-                        status:409,
-                        message: 'This email already exists'
-                    });                    
-                }
                                 
                 bcrypt.hash(req.body.password, 10, (err) =>{
                     if(err) {
@@ -60,7 +65,7 @@ export default class authUsers{
                     }
                 });
             }
-        }
+        
         catch(err){
             return res.status(400).json({
                 status:400,
