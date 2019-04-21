@@ -4,10 +4,10 @@ import dotenv from 'dotenv';
 import AcctRouter from './routes/acctRoutes';
 import authRouter from './routes/authRoutes';
 import tranRouter from './routes/tranRoutes';
+var pg = require("pg");
 
 dotenv.config();
-
-
+ 
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -15,10 +15,9 @@ app.use('/api/v1', AcctRouter);
 app.use('/api/v1', authRouter);
 app.use('/api/v1', tranRouter);
 
-// eslint-disable-next-line
+ 
 const port=process.env.PORT||3001;
 
-// eslint-disable-next-line 
 const server=app.listen(port, ()=>console.log(`The server is up on port ${port}`));
 
-module.exports = server;
+module.exports = server

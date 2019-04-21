@@ -1,11 +1,62 @@
 import {accountDb} from '../Db/accountsDb';
 import {transactionDb} from '../Db/transactionDb';
+import dotenv from 'dotenv';
+import pg from 'pg';
 
+dotenv.config();
 
 const AcctInfo = accountDb;
 const TranInfo= transactionDb;
 
 export default class transaction{
+
+// get all transaction details 
+    static viewTransaction(req, res){
+        console.log(req.params.accountNumber)
+        pg.connect(process.env.connectionString,function(err,client,done) {
+            if(err){
+                console.log("not able to get connection "+ err);
+                res.status(400).send(err);
+            } 
+            var accountNumb = parseInt(req.params.accountNumber);
+            console.log(accountNumb)
+            client.query('SELECT * FROM transactions where transactions.accountnumber = $1', [accountNumb],function(err,result) {
+                done(); // closing the connection;
+                if(err){
+                    console.log(err);
+                    res.status(400).send(err);
+                } else {
+                return res.send({
+                 status : 200 ,   
+                 data : result.rows});
+                }
+            });
+         });
+     };
+
+     // get specific transaction detail
+    static viewTransactionid(req, res){
+        console.log(req.params.transactionid)
+        pg.connect(process.env.connectionString,function(err,client,done) {
+            if(err){
+                console.log("not able to get connection "+ err);
+                res.status(400).send(err);
+            } 
+            var TranId = parseInt(req.params.transactionid);
+            console.log(TranId)
+            client.query('SELECT * FROM transactions where transactions.transactionid = $1', [TranId],function(err,result) {
+                done(); // closing the connection;
+                if(err){
+                    console.log(err);
+                    res.status(400).send(err);
+                } else {
+                return res.send({
+                 status : 200 ,   
+                 data : result.rows});
+                }
+            });
+         });
+     };
 
     static debitAccount(req, res){
         if(!req.body.amount ) {
