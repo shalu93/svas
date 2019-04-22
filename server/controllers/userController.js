@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import {userDb} from '../Db/userDb';
+import {userDb} from '../db/userDb';
 import validation from '../validation/userValidation';
 import dotenv from 'dotenv';
-import pg from 'pg';
+const db = require('../db');
 
 dotenv.config();
 
@@ -12,13 +12,7 @@ const UserInfo = userDb;
 export default class authUsers{
     // get all users details 
     static getAll(req, res){
-        pg.connect(process.env.connectionString,function(err,client,done) {
-           if(err){
-               console.log("not able to get connection "+ err);
-               res.status(400).send(err);
-           } 
-           client.query('SELECT * FROM users',function(err,result) {
-               done(); // closing the connection;
+           db.query('SELECT * FROM users',function(err,result) {
                if(err){
                    console.log(err);
                    res.status(400).send(err);
@@ -29,7 +23,6 @@ export default class authUsers{
                 data : result.rows});
                }
            });
-        });
     };
 
     static SignupUser(req, res){
@@ -48,31 +41,42 @@ export default class authUsers{
                         });
                     } else {
                         const user = {
-                            id:UserInfo.length +1,
-                            firstName: req.body.firstName,
-                            lastName: req.body.lastName,
-                            email: req.body.email.trim(),
-                            AcctType:'client'
+                            id:Math.floor(Math.random() * 1000),
+                            firstName: '{'+req.body.firstName+ '}',
+                            lastName: '{'+req.body.lastName+'}',
+                            email:'{'+ req.body.email.trim() + '}',
+                            password:'{'+ req.body.password + '}',
+                            UserType:'{client}'
                         };
+
                         UserInfo.push(user);
                         // eslint-disable-next-line 
                         const token = jwt.sign(user, process.env.JWTSECRETKEY);
-                        let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,type=user.type;
-                        return res.status(201).json({
-                            status :201,
-                            data: {token,id,firstName,lastName,email,type}
-                        });
-                    }
-                });
+                           const text = 'INSERT INTO users(userid,firstname,lastname,email,password,usertype) VALUES($1,$2,$3,$4,$5,$6)'
+                           const values = [user.id,user.firstName,user.lastName,user.email,user.password,user.UserType]
+                            db.query(text, values ,function(err,result) {
+                                if(err){
+                                    console.log(err);
+                                    res.status(400).send(err);
+                                } else {
+                                    let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,UserType=user.UserType;
+                                return res.send({
+                                 status : 200 ,   
+                                 data : {token,id,firstName,lastName,email,UserType}});
+                                 
+                                }
+                            }); 
+                        }  
+                    })
+                
+                }
+                catch(err){
+                    return res.status(400).json({
+                        status:400,
+                        message: err.message
+                    });
+                }
             }
-        
-        catch(err){
-            return res.status(400).json({
-                status:400,
-                message: err.message
-            });
-        }
-    }
 
     static SigninUser (req, res){
         try{
@@ -82,8 +86,6 @@ export default class authUsers{
                     message: 'Please fill in  email and password as inputs of the form'});
             }
 
-            const UserInfo = userDb;
-            let oneUser;
             if(validation.Login(req, res)){
                 bcrypt.hash(req.body.password, 10, (err) =>{
                     if(err) {
@@ -91,51 +93,41 @@ export default class authUsers{
                             error: err
                         });
                     } else {
-                        oneUser = {
-                            email: req.body.email
+                        let email= '{'+req.body.email+'}';          
+                        const text = 'SELECT * FROM users WHERE users.email = $1'
+                        const values = [email]
+                        db.query(text, values ,function(err,result) {
+                        if(err){
+                            console.log(err);
+                            res.status(400).send(err);
+                        } else {
                             
-                        };
-                        
-                        const users = UserInfo.filter(user =>user.email==oneUser.email);
-                        if(users.length<1){
-                            return res.status(204).json({
-                                status:204,
-                                message: 'Incorrect email or password'
-                            });
-                        }
-                        const userPassword = UserInfo.find(user => user.email == req.body.email);
-                        bcrypt.compare(req.body.password, userPassword.password, function (err, result) {
-                            if (result == false) {
-                                return res.status(204).json({
-                                    status:204,
-                                    message: 'Incorrect email or password'
-                                });
-                            } else {
                                 const user = {
-                                    id: users[0].id,
-                                    firstName: users[0].firstName,
-                                    lastName: users[0].lastName,
+                                    id: result.rows[0].userid,
+                                    firstName: result.rows[0].firstname,
+                                    lastName: result.rows[0].lastname,
                                     email: req.body.email.trim(),
-                                    AcctType:users[0].AcctType
+                                    UserType:result.rows[0].usertype
                                 };
                                 // eslint-disable-next-line
-                                const token = jwt.sign(user, process.env.JWTSECRETKEY);
-                                let email=req.body.email;
-                                return res.status(200).json({
-                                    status:200,
-                                    data: {token,email}
-
-                                });
-                            }
-                        });
+                            const token = jwt.sign(user, process.env.JWTSECRETKEY);
+                            let email=user.email;
+                                        return res.send({
+                                         status : 200 ,   
+                                         data : {token,email}});
+                                        }
+                                    });
+                        
+                             };    
+                            })
+                        }
                     }
-                });
-            }
-        } catch(err){
-            res.status(400).json({
-                status:400,
-                message: err.message
-            });
-        }
-    }
-}
+                
+                    catch(err){
+                            return res.status(400).json({
+                                status:400,
+                                message: err.message
+                            });
+                        }
+                    }
+                }
