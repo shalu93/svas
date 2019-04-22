@@ -17,25 +17,25 @@ describe('Bank account validations', () => {
             .get('/api/v1/accounts')
             .send()
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
     });
 
     //should be able to create a bank account
-    //    it('create a bank account', (done) => {
-    //       chai.request(server)
-    //            .post('/api/v1/accounts')
-    //            .send({
-    //                type: 'saving'
-    //            })
-    //            .end((err, res) => {
-    //                expect(res).to.have.status(201);
-    //                expect(res.body).to.be.an('object');
-    //                done();
-    //            });
-    //    });
+    it('create a bank account', (done) => {
+        chai.request(server)
+            .post('/api/v1/accounts')
+            .send({
+                type: 'saving'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
     //should not create a bank account if user email does not exist
     it('user email does not exist', (done) => {
@@ -63,7 +63,7 @@ describe('Bank account validations', () => {
                 status: 'active'
             })
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -76,7 +76,7 @@ describe('Bank account validations', () => {
             .delete('/api/v1/accounts/8')
             .send()
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -90,7 +90,7 @@ describe('Bank account validations', () => {
                 status: 'active'
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -103,7 +103,7 @@ describe('Bank account validations', () => {
             .delete('/api/v1/accounts/1')
             .send()
             .end((err, res) => {
-                expect(res).to.have.status(200);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });

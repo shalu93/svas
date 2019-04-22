@@ -1,58 +1,112 @@
-import {accountDb} from '../Db/accountsDb';
-import {transactionDb} from '../Db/transactionDb';
+import dotenv from 'dotenv';
+const db = require('../db');
 
+dotenv.config();
 
-const AcctInfo = accountDb;
-const TranInfo= transactionDb;
 
 export default class transaction{
 
+    // get all transaction details 
+    static viewTransaction(req, res){
+        if(req.Info.UserType == 'client'){
+            return res.status(400).json({ 
+                status: 400,
+                message: 'You are not authorized to perform this transaction'
+            });
+        }
+        var accountNumb = parseInt(req.params.accountNumber);
+        db.query('SELECT * FROM transactions where transactions.accountnumber = $1', [accountNumb],function(err,result) {
+            if(err){
+                res.status(400).send(err);
+            } else {
+                return res.send({
+                    status : 200 ,   
+                    data : result.rows});
+            }
+        });
+    }
+
+    // get specific transaction detail
+    static viewTransactionid(req, res){
+        if(req.Info.UserType !== 'client'){
+            return res.status(400).json({ 
+                status: 400,
+                message: 'You are not authorized to perform this transaction'
+            });
+        }
+        var TranId = parseInt(req.params.transactionid);
+        db.query('SELECT * FROM transactions where transactions.transactionid = $1', [TranId],function(err,result) {
+            if(err){
+                res.status(400).send(err);
+            } else {
+                return res.send({
+                    status : 200 ,   
+                    data : result.rows});
+            }
+        });
+    }
+
     static debitAccount(req, res){
+        
         if(!req.body.amount ) {
             return res.status(400).json({
                 status:400,
                 message: 'Please fill in amount as input of the form'});
         }
-
-        const accountNumb=req.params.accountNumber;
-        let toDay = new Date();
-        const accounts = AcctInfo.filter(account => account.accountNumber == accountNumb);
-        if(accounts.length==1){
-            if(accounts[0].status ==='draft' || accounts[0].status==='dormant'){
-                return res.status(404).json({
-                    status :404,
-                    message: 'You have to activate this account first'
-                }); 
-
-
-            } else {
-                const transaction = TranInfo.filter(transaction => transaction.accountNumber == accountNumb);
-                const debit = {
-                    id : TranInfo.length + 1,
-                    createdOn : toDay,
-                    type : 'debit',
-                    accountNumber : accountNumb,
-                    amount : req.body.amount ,
-                    oldBalance : transaction[0].oldBalance,
-                    newBalance : (transaction[0].oldBalance + +req.body.amount) ,
-                };
-                transaction[0].oldBalance=debit.newBalance;
-                TranInfo.push(debit);
-                let transactionId = debit.id, accountNumber = debit.accountNumber, amount = debit.amount, transactionType = debit.type, accountBalance = debit.newBalance;
-                return res.status(201).json({
-                    status :201,
-                    data: {transactionId,accountNumber,amount,transactionType,accountBalance}
+        
+        if(req.Info.UserType !== 'client'){
+            if(req.Info.UserType !== 'admin'){
+                return res.status(400).json({ 
+                    status: 400,
+                    message: 'You are not authorized to perform this transaction'
                 });
             }
         }
-            
-        if(accounts.length==0){
-            return res.status(404).json({
-                status :404,
-                message: 'The bank account entered does not exist!'
-            }); 
-        }
+        let toDay = new Date();
+        const debits = {
+            createdOn : toDay,
+            accountNumber : req.params.accountNumber,
+            amount : req.body.amount 
+        };
+        const text = 'select * from  accounts where accounts.accountnumber =$1';
+        const values= [debits.accountNumber];
+        db.query(text, values ,function(err,result) { 
+            const debit = {
+                Owneruserid:req.info.UserId,
+                accountNumber:result.rows[0].accountnumber ,
+                createdOn:toDay,
+                TransactionType:'{debit}',
+                TransactionAmt:req.body.amount,
+                oldBalance: result.rows[0].currentbalance,
+                newBalance: (result.rows[0].currentbalance + +req.body.amount),
+                TransactionId:Math.floor(Math.random() * 1000)
+            };               
+            let Owneruserid = debit.Owneruserid,transactionId = debit.TransactionId, accountNumber = debit.accountNumber, amount = debit.TransactionAmt, transactionType = debit.TransactionType, accountBalance = debit.newBalance;
+            const text = 'update accounts set currentbalance =$1 where accountnumber =$2';
+            const values= [debit.newBalance , debit.accountNumber];
+            db.query(text, values ,function(err) {
+                if(err){
+                    res.status(400).send(err);
+                } else {
+                    // eslint-disable-next-line 
+                    console.log('accounts table current balance updated');
+                    const text2 = 'INSERT INTO transactions(owneruserid,accountnumber,transactionid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
+                    const values2= [debit.Owneruserid,debit.accountNumber,debit.TransactionId,debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
+                    db.query(text2, values2 ,function(err) {
+                        if(err){
+                            res.status(400).send(err);
+                        } else {                  
+                            return res.status(201).json({
+                                status :201,
+                                data: {transactionId,accountNumber,amount,Owneruserid,transactionType,accountBalance}
+                            });
+                        }
+                    });
+                }
+            });
+        });
     }
+   
 
     static creditAccount(req, res){
 
@@ -61,53 +115,58 @@ export default class transaction{
                 status:400,
                 message: 'Please fill in amount as input of the form'});
         }
-        const accountNumb=req.params.accountNumber;
+
+        if(req.Info.UserType !== 'client'){
+            if(req.Info.UserType !== 'admin'){
+                return res.status(400).json({ 
+                    status: 400,
+                    message: 'You are not authorized to perform this transaction'
+                });
+            }
+        }
+
         let toDay = new Date();
-        const accounts = AcctInfo.filter(account => account.accountNumber == accountNumb);
-        if(accounts.length==1){
-            if(accounts[0].status ==='draft' || accounts[0].status==='dormant'){
-                return res.status(404).json({
-                    status :404,
-                    message: 'You have to activate this account first'
-                });
-    
-    
-            }
-            if(accounts[0].balance < req.body.amount ){
-                return res.status(500).json({
-                    status :409,
-                    message: 'You dont have that amount on your account'
-                });
-            }
-                    
-            else {
-                const transaction = TranInfo.filter(transaction => transaction.accountNumber == accountNumb);
-                const credit = {
-                    id : TranInfo.length + 1,
-                    createdOn : toDay,
-                    type : 'credit',
-                    accountNumber : accountNumb,
-                    amount : req.body.amount ,
-                    oldBalance : transaction[0].oldBalance,
-                    newBalance : (+transaction[0].oldBalance - +req.body.amount) ,
-                };
-                transaction[0].oldBalance=credit.newBalance;
-                TranInfo.push(credit);
-                let transactionId = credit.id, accountNumber = credit.accountNumber, amount = credit.amount, transactionType = credit.type, accountBalance = credit.newBalance;
-                return res.status(201).json({
-                    status :201,
-                    data: {transactionId,accountNumber,amount,transactionType,accountBalance}
-                });
-            }
-        }
-                
-        if(accounts.length==0){
-            return res.status(404).json({
-                status :404,
-                message: 'The bank account entered does not exist!'
+        const debits = {
+            createdOn : toDay,
+            accountNumber : req.params.accountNumber,
+            amount : req.body.amount 
+        };
+        const text = 'select * from  accounts where accounts.accountnumber =$1';
+        const values= [debits.accountNumber];
+        db.query(text, values ,function(err,result) { 
+            const debit = {
+                Owneruserid:req.info.UserId,
+                accountNumber:result.rows[0].accountnumber ,
+                createdOn:toDay,
+                TransactionType:'{credit}',
+                TransactionAmt:req.body.amount,
+                oldBalance: result.rows[0].currentbalance,
+                newBalance: (result.rows[0].currentbalance - +req.body.amount),
+                TransactionId:Math.floor(Math.random() * 1000)
+            };               
+            let Owneruserid = debit.Owneruserid,transactionId = debit.TransactionId, accountNumber = debit.accountNumber, amount = debit.TransactionAmt, transactionType = debit.TransactionType, accountBalance = debit.newBalance;
+            const text = 'update accounts set currentbalance =$1 where accountnumber =$2';
+            const values= [debit.newBalance , debit.accountNumber];
+            db.query(text, values ,function(err) {
+                if(err){
+                    res.status(400).send(err);
+                } else {
+                    // eslint-disable-next-line 
+                    console.log('accounts table current balance updated');
+                    const text2 = 'INSERT INTO transactions(owneruserid,accountnumber,transactionid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
+                    const values2= [debit.Owneruserid,debit.accountNumber,debit.TransactionId,debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
+                    db.query(text2, values2 ,function(err) {
+                        if(err){
+                            res.status(400).send(err);
+                        } else {                  
+                            return res.status(201).json({
+                                status :201,
+                                data: {transactionId,accountNumber,amount,Owneruserid,transactionType,accountBalance}
+                            });
+                        }
+                    });
+                }
             });
-        }
+        });
     }
-
-
 }

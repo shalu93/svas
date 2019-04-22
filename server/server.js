@@ -6,8 +6,7 @@ import authRouter from './routes/authRoutes';
 import tranRouter from './routes/tranRoutes';
 
 dotenv.config();
-
-
+ 
 const app=express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -17,8 +16,7 @@ app.use('/api/v1', tranRouter);
 
 // eslint-disable-next-line
 const port=process.env.PORT||3001;
-
-// eslint-disable-next-line 
+// eslint-disable-next-line
 const server=app.listen(port, ()=>console.log(`The server is up on port ${port}`));
 
 module.exports = server;
