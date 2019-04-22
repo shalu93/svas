@@ -14,7 +14,7 @@ export default class validation {
             throw Error('Last Name is required');
         }
 
-        if (validator.isEmpty(req.body.email.trim())) {
+        if (validator.isEmpty(req.body.email)) {
             
             throw Error('Email should not be empty');
         }
@@ -23,7 +23,7 @@ export default class validation {
             throw Error('Password is required');
         }
 
-        if (typeof req.body.email.trim() ==='number') {
+        if (typeof req.body.email ==='number') {
             
             throw Error(' email can not be an integer');
         }
@@ -34,7 +34,7 @@ export default class validation {
             throw Error('Password should be at least 10 characters');
         }
 
-        if (!validator.isEmail(req.body.email.trim())) {
+        if (!validator.isEmail(req.body.email)) {
 
             throw Error('email should look like this : google@gmail.com');
         }
@@ -52,15 +52,15 @@ export default class validation {
         
     static Login (req){
 
-        if (typeof req.body.email.trim() == 'number') {
+        if (typeof req.body.email == 'number') {
             throw Error('email should not be an integer');
         }
 
-        if (validator.isEmpty(req.body.email.trim())) {
+        if (validator.isEmpty(req.body.email)) {
             throw Error('Email should not be empty');
         }
                
-        if (!validator.isEmail(req.body.email.trim())) {
+        if (!validator.isEmail(req.body.email)) {
             throw Error('Your email should look like this : example@email.com');
         }
         if (validator.isEmpty(req.body.password)) {

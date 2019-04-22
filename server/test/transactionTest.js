@@ -19,7 +19,7 @@ describe('Debit bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -33,7 +33,7 @@ describe('Debit bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -47,7 +47,7 @@ describe('Debit bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -64,7 +64,7 @@ describe('Credit a bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -78,7 +78,7 @@ describe('Credit a bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -92,7 +92,7 @@ describe('Credit a bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(404);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
@@ -106,7 +106,7 @@ describe('Credit a bank account', () => {
                 amount : 9000
             })
             .end((err, res) => {
-                expect(res).to.have.status(500);
+                expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
             });
