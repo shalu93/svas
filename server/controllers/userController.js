@@ -10,11 +10,6 @@ export default class authUsers{
     // get all users details 
     static getAll(req, res){
         db.query('SELECT * FROM users',function(err,result) {
-            if (result.rowCount  == 0) {
-                return res.status(404).json({ 
-                    status:404,
-                    message: 'no records found'});
-            }
             if(err){
                 res.status(400).send(err);
             } else { 

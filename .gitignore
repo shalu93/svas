@@ -5,3 +5,4 @@ travis.rb
 javascript/
 .env
 build
+template
