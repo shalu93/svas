@@ -23,22 +23,22 @@ export default class authUsers{
     static SignupUser(req, res){
         try{
 
-            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password ) {
+            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.confirmPassword ) {
                 return res.status(400).json({ 
                     status:400,
-                    message: 'Please fill in firstName , lastName , email and password as inputs of the form'});
+                    message: 'Please fill in firstName , lastName , email , password and confirmPassword as inputs of the form'});
             }
 
             if(validation.Signup(req, res)){
                 let email= '{'+req.body.email+'}';          
-                const text1 = 'SELECT email FROM users WHERE users.email = ($1)';
+                const text1 = 'SELECT * FROM users WHERE users.email =$1';
                 const values1 = [email];
-                db.query(text1, values1 ,function(err,result) {
-                    if (result.rows[0].email === values1){
-                        return res.status(400).json({ 
-                            status:400,
-                            message: 'This email is already present in our database'});
-                    }
+                db.query(text1, values1 ,function(result) {
+            //        if (result.rows.email == req.body.email){
+            //            return res.status(400).json({ 
+            //                status:400,
+            //                message: 'This email is already present in our database'});
+            //        }
                 });
             }
             bcrypt.hash(req.body.password, 10, (err) =>{

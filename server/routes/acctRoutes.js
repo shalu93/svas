@@ -12,7 +12,4 @@ AcctRouter.delete('/accounts/:accountNumber',auth.authorization,accounts.deleteA
 AcctRouter.get('/user/:useremail/accounts',auth.authorization,accounts.getAcctInfoOfUser);
 AcctRouter.get('/accounts/:accountNumber',auth.authorization,accounts.getSpecificAcctInfo);
 
-
-
-
 export default AcctRouter;

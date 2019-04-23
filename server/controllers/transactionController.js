@@ -28,7 +28,7 @@ export default class transaction{
 
     // get specific transaction detail
     static viewTransactionid(req, res){
-        if(req.Info.UserType !== 'client'){
+        if(req.Info.UserType != 'client'){
             return res.status(400).json({ 
                 status: 400,
                 message: 'You are not authorized to perform this transaction'
@@ -54,8 +54,8 @@ export default class transaction{
                 message: 'Please fill in amount as input of the form'});
         }
         
-        if(req.Info.UserType !== 'client'){
-            if(req.Info.UserType !== 'admin'){
+        if(req.Info.UserType != 'client'){
+            if(req.Info.UserType != 'admin'){
                 return res.status(400).json({ 
                     status: 400,
                     message: 'You are not authorized to perform this transaction'
@@ -116,8 +116,8 @@ export default class transaction{
                 message: 'Please fill in amount as input of the form'});
         }
 
-        if(req.Info.UserType !== 'client'){
-            if(req.Info.UserType !== 'admin'){
+        if(req.Info.UserType != 'client'){
+            if(req.Info.UserType != 'admin'){
                 return res.status(400).json({ 
                     status: 400,
                     message: 'You are not authorized to perform this transaction'

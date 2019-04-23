@@ -1,5 +1,6 @@
 import dotenv from 'dotenv';
 const db = require('../db');
+var querystring = require('querystring');
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ export default class authUsers{
                 message: 'You are not authorized to perform this transaction'
             });
         }
+        const {status} =  req.query
+        if (!status){
         db.query('SELECT * FROM accounts',function(err,result) {
             if (result.rowCount  == 0) {
                 return res.status(404).json({ 
@@ -26,11 +29,26 @@ export default class authUsers{
                     data : result.rows});
             }
         });
+        }
+        else {
+            var stat = '{' + status + '}';
+            const text = 'SELECT * FROM accounts WHERE accounts.accountstatus = ($1)';
+            const values= [stat];
+            db.query(text, values ,function(err,result) {
+                if(err){
+                    res.status(400).send(err);
+                } else {
+                    return res.status(200).send({
+                        status : 200 ,   
+                        data : result.rows});
+                }
+            });      
+        }
     }
 
     // get specific account detail
     static getSpecificAcctInfo(req, res){
-        if(req.Info.UserType !== 'client'){
+        if(req.Info.UserType != 'client'){
             return res.status(400).json({ 
                 status: 400,
                 message: 'You are not authorized to perform this transaction'
@@ -50,7 +68,7 @@ export default class authUsers{
 
     // get all account details of user filtered by email 
     static getAcctInfoOfUser(req, res){
-        if(req.Info.UserType !== 'client'){
+        if(req.Info.UserType != 'client'){
             return res.status(400).json({ 
                 status: 400,
                 message: 'You are not authorized to perform this transaction'
@@ -73,9 +91,9 @@ export default class authUsers{
     static createAccount(req, res){
         try{
 
-            if(req.body.type !== 'saving') {
-                if(req.body.type !== 'current') {
-                    if(req.body.type !== 'dormant') {
+            if(req.body.type != 'saving') {
+                if(req.body.type != 'current') {
+                    if(req.body.type != 'dormant') {
                         return res.status(400).json({ 
                             status: 400,
                             message: 'Sorry your account type can be either saving ,current or dormant'
@@ -84,8 +102,10 @@ export default class authUsers{
                 }
             } 
 
-            if(req.Info.UserType !== 'client'){
+            if(req.Info.UserType != 'client'){
+                console.log(req.Info.UserType)
                 return res.status(400).json({ 
+                    
                     status: 400,
                     message: 'You are not authorized to perform this transaction'
                 });
@@ -139,8 +159,8 @@ export default class authUsers{
                     message: 'Please fill in status as inputs of the form'});
             }
 
-            if(req.body.status !== 'active') {
-                if(req.body.status !== 'inactive') {
+            if(req.body.status != 'active') {
+                if(req.body.status != 'inactive') {
                     return res.status(400).json({ 
                         status: 400,
                         message: 'Sorry your account status can be either active or inactive'
@@ -217,8 +237,5 @@ export default class authUsers{
             }
         });
     } 
-
-
-    // get all active account details 
 
 }

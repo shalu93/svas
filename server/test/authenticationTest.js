@@ -194,7 +194,7 @@ describe('User login validation', () => {
             .get('/api/v1/users')
             .send()
             .end((err, res) => {
-                expect(res).to.have.status(400);
+                expect(res).to.have.status(200);
                 expect(res.body).to.be.an('object');
                 done();
             });
