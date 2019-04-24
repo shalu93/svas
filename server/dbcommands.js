@@ -38,6 +38,7 @@ const createAccountTables = () => {
             lastname VARCHAR(50) NOT NULL,
             email VARCHAR(225) NOT NULL,
             accounttype VARCHAR(7) NOT NULL,
+            userid INT NOT NULL,
             accountstatus VARCHAR(7),
             openingbalance FLOAT,
             createdon FLOAT,
@@ -59,7 +60,8 @@ const createTransactionTables = () => {
         transactions(
             transactionid SERIAL PRIMARY KEY,
             accountnumber INT NOT NULL,
-            owneruserid INT NOT NULL,
+            staffid INT NOT NULL,
+            userid INT NOT NULL,
             createdon FLOAT,
             transactiontype VARCHAR(7) NOT NULL,
             transactionamount FLOAT,
