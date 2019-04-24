@@ -15,14 +15,16 @@ describe('Debit bank account', () => {
 
         //It should sign in user with the credentials
         it('signin user with right credentials', (done) => {
+            console.log("Hello ==========")
             chai.request(server)
                 .post('/api/v1/auth/signin')
                 .send(
                     {
-                        email: 'sakshichandwani@rocketmail.com',
-                        password: 'sakshi@1993'
+                        email: 'shaluchandwani@rocketmail.com',
+                        password: 'shalu@1993'
                     })
                 .end((err, res) => {
+                    console.log("App breaks here ======>", err)
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an('object');
                     usertoken = res.body.data.token; 

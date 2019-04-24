@@ -35,6 +35,9 @@ I have tried to use various functions of html to showcase , so this page will sh
 i. Create a bank account. ii. View bank account profile (dashboard). iii. View account transaction_history. iv. Change Password -> additional option that was given in optional.
 
 # API ENDPOINTS ROUTES
+
+The app is hosted on heroku link for the same is : https://svas123.herokuapp.com/
+
 ## Documentation
 | Methods | Endpoints | Actions |
 | :----- | :----- | ----- |
@@ -47,6 +50,11 @@ i. Create a bank account. ii. View bank account profile (dashboard). iii. View a
 | /DELETE | /api/v1/account/:accountNumber | Delete specified account |
 | /POST | /api/v1/transactions/:accountNumber/debit | debit specified account |
 | /POST | /api//v1/transactions/:accountNumber/credit | credit specified account |
+| /GET | /api/v1//user/:useremail/accounts | Get account info of user via email |
+| /GET | /api/v1//accounts/:accountNumber | Get account info of user via particular account |
+| /POST | /api/v1/auth/signup/AdminClient | creating admin/staff user |
+| /GET | /api/v1/accounts/:accountNumber/transactions | get transaction inquiry of a particular account |
+| /GET | /api/v1/transactions/:transactionid | Get transaction inquiry via transaction id |
 
 
 # Setting up Dev
@@ -59,26 +67,6 @@ git clone https://github.com/shalu93/svas.git
 ## Install dependencies <br/>
 ``` 
 npm install
-npm install express
-npm install --save-dev nodemon
-npm install body-parser
-npm install validator
-npm install eslint --save-dev
-npm install --save-dev @babel/core @babel/node
-npm install --save-dev @babel/register
-npm install --save-dev @babel/cli
-npm install --save-dev @babel/preset-env
-npm install bcrypt
-npm install jsonwebtoken
-npm i --save lodash.isempty
-npm install chai
-npm install chai-http
-npm install dotenv
-npm install --save-dev mocha
-npm i nyc --save-dev
-npm install coveralls --save-dev
-npm install mocha-lcov-reporter --save-dev
-npm install -g heroku
 ```
 
 ## Starting development server <br/> 
