@@ -6,16 +6,22 @@ dotenv.config();
 
 export default class transaction{
 
+    
     // get all transaction details 
     static viewTransaction(req, res){
         if(req.Info.UserType == 'client'){
             return res.status(400).json({ 
                 status: 400,
-                message: 'You are not authorized to perform this transaction'
+                message: 'You are not authorized to perform this transaction only admin/staff can'
             });
         }
         var accountNumb = parseInt(req.params.accountNumber);
         db.query('SELECT * FROM transactions where transactions.accountnumber = $1', [accountNumb],function(err,result) {
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found in transactions'});
+            }
             if(err){
                 res.status(400).send(err);
             } else {
@@ -31,11 +37,16 @@ export default class transaction{
         if(req.Info.UserType != 'client'){
             return res.status(400).json({ 
                 status: 400,
-                message: 'You are not authorized to perform this transaction'
+                message: 'You are not authorized to perform this transaction only client can'
             });
         }
         var TranId = parseInt(req.params.transactionid);
         db.query('SELECT * FROM transactions where transactions.transactionid = $1', [TranId],function(err,result) {
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found for the transaction id'});
+            }
             if(err){
                 res.status(400).send(err);
             } else {
@@ -54,15 +65,13 @@ export default class transaction{
                 message: 'Please fill in amount as input of the form'});
         }
         
-        if(req.Info.UserType != 'client'){
-            if(req.Info.UserType != 'admin'){
+        if(req.Info.UserType != 'staff'){
                 return res.status(400).json({ 
                     status: 400,
-                    message: 'You are not authorized to perform this transaction'
+                    message: 'You are not authorized to perform this transaction only staff can'
                 });
-            }
         }
-        let toDay = new Date();
+        let toDay = Date.now();
         const debits = {
             createdOn : toDay,
             accountNumber : req.params.accountNumber,
@@ -71,28 +80,43 @@ export default class transaction{
         const text = 'select * from  accounts where accounts.accountnumber =$1';
         const values= [debits.accountNumber];
         db.query(text, values ,function(err,result) { 
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found to perform the transaction'});
+            }
+            if (result.rows[0].accountstatus != 'active'){
+                return res.status(400).send({ 
+                    status:400,
+                    message: 'your accounts should be active to perform the transaction'});
+            }
             const debit = {
-                Owneruserid:req.info.UserId,
+                Owneruserid:req.Info.UserId,
                 accountNumber:result.rows[0].accountnumber ,
                 createdOn:toDay,
-                TransactionType:'{debit}',
+                TransactionType:'debit',
                 TransactionAmt:req.body.amount,
                 oldBalance: result.rows[0].currentbalance,
-                newBalance: (result.rows[0].currentbalance + +req.body.amount),
+                newBalance: (result.rows[0].currentbalance - +req.body.amount),
                 TransactionId:Math.floor(Math.random() * 1000)
             };               
+            if (result.rows[0].currentbalance < req.body.amount){
+                return res.status(400).send({ 
+                    status:400,
+                    message: 'your accounts doesnot have enough funds'}); 
+            } else {
             let Owneruserid = debit.Owneruserid,transactionId = debit.TransactionId, accountNumber = debit.accountNumber, amount = debit.TransactionAmt, transactionType = debit.TransactionType, accountBalance = debit.newBalance;
             const text = 'update accounts set currentbalance =$1 where accountnumber =$2';
             const values= [debit.newBalance , debit.accountNumber];
-            db.query(text, values ,function(err) {
+            db.query(text, values ,function(err,result) {
                 if(err){
                     res.status(400).send(err);
                 } else {
                     // eslint-disable-next-line 
                     console.log('accounts table current balance updated');
-                    const text2 = 'INSERT INTO transactions(owneruserid,accountnumber,transactionid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
-                    const values2= [debit.Owneruserid,debit.accountNumber,debit.TransactionId,debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
-                    db.query(text2, values2 ,function(err) {
+                    const text2 = 'INSERT INTO transactions(transactionid,accountnumber,owneruserid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
+                    const values2= [debit.TransactionId,debit.accountNumber,debit.Owneruserid,debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
+                    db.query(text2, values2 ,function(err,result) {
                         if(err){
                             res.status(400).send(err);
                         } else {                  
@@ -104,6 +128,7 @@ export default class transaction{
                     });
                 }
             });
+        }
         });
     }
    
@@ -116,16 +141,14 @@ export default class transaction{
                 message: 'Please fill in amount as input of the form'});
         }
 
-        if(req.Info.UserType != 'client'){
-            if(req.Info.UserType != 'admin'){
-                return res.status(400).json({ 
-                    status: 400,
-                    message: 'You are not authorized to perform this transaction'
-                });
-            }
+        if(req.Info.UserType != 'staff'){
+            return res.status(400).json({ 
+                status: 400,
+                message: 'You are not authorized to perform this transaction only staff can'
+            });
         }
 
-        let toDay = new Date();
+        let toDay = Date.now();
         const debits = {
             createdOn : toDay,
             accountNumber : req.params.accountNumber,
@@ -134,28 +157,33 @@ export default class transaction{
         const text = 'select * from  accounts where accounts.accountnumber =$1';
         const values= [debits.accountNumber];
         db.query(text, values ,function(err,result) { 
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found to perform the transaction'});
+            }
             const debit = {
-                Owneruserid:req.info.UserId,
+                Owneruserid:req.Info.UserId,
                 accountNumber:result.rows[0].accountnumber ,
                 createdOn:toDay,
-                TransactionType:'{credit}',
+                TransactionType:'credit',
                 TransactionAmt:req.body.amount,
                 oldBalance: result.rows[0].currentbalance,
-                newBalance: (result.rows[0].currentbalance - +req.body.amount),
+                newBalance: (result.rows[0].currentbalance + +req.body.amount),
                 TransactionId:Math.floor(Math.random() * 1000)
             };               
             let Owneruserid = debit.Owneruserid,transactionId = debit.TransactionId, accountNumber = debit.accountNumber, amount = debit.TransactionAmt, transactionType = debit.TransactionType, accountBalance = debit.newBalance;
             const text = 'update accounts set currentbalance =$1 where accountnumber =$2';
             const values= [debit.newBalance , debit.accountNumber];
-            db.query(text, values ,function(err) {
+            db.query(text, values ,function(err,result) {
                 if(err){
                     res.status(400).send(err);
                 } else {
                     // eslint-disable-next-line 
                     console.log('accounts table current balance updated');
-                    const text2 = 'INSERT INTO transactions(owneruserid,accountnumber,transactionid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
-                    const values2= [debit.Owneruserid,debit.accountNumber,debit.TransactionId,debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
-                    db.query(text2, values2 ,function(err) {
+                    const text2 = 'INSERT INTO transactions(transactionid,accountnumber,owneruserid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
+                    const values2= [debit.TransactionId,debit.accountNumber,debit.Owneruserid,debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
+                    db.query(text2, values2 ,function(err,result) {
                         if(err){
                             res.status(400).send(err);
                         } else {                  

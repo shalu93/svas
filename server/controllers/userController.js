@@ -13,9 +13,15 @@ export default class authUsers{
             if(err){
                 res.status(400).send(err);
             } else { 
+                if (result.rows.length == 0){
+                    return res.status(404).send({
+                        status : 404 ,   
+                        message: "no records found"});  
+                } else {
                 return res.send({
                     status : 200 ,   
                     data : result.rows});
+                }
             }
         });
     }
@@ -29,18 +35,20 @@ export default class authUsers{
                     message: 'Please fill in firstName , lastName , email , password and confirmPassword as inputs of the form'});
             }
 
+
             if(validation.Signup(req, res)){
-                let email= '{'+req.body.email+'}';          
+                let email= req.body.email;          
                 const text1 = 'SELECT * FROM users WHERE users.email =$1';
                 const values1 = [email];
-                db.query(text1, values1 ,function(result) {
-            //        if (result.rows.email == req.body.email){
-            //            return res.status(400).json({ 
-            //                status:400,
-            //                message: 'This email is already present in our database'});
-            //        }
+                db.query(text1, values1 ,function(err,result) {
+                        if (result.rows.length != 0){
+                            return res.status(409).json({
+                                status : 409 ,   
+                                message: "this email already exists"});  
+                        }
                 });
             }
+
             bcrypt.hash(req.body.password, 10, (err) =>{
                 if(err) {
                     return res.status(500).json({
@@ -49,11 +57,11 @@ export default class authUsers{
                 } else {
                     const user = {
                         id:Math.floor(Math.random() * 1000),
-                        firstName: '{'+req.body.firstName+ '}',
-                        lastName: '{'+req.body.lastName+'}',
-                        email:'{'+ req.body.email + '}',
-                        password:'{'+ req.body.password + '}',
-                        UserType:'{client}'
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email ,
+                        password: req.body.password ,
+                        UserType:'client'
                     };
                     // eslint-disable-next-line 
                         const token = jwt.sign(user, process.env.JWTSECRETKEY);
@@ -88,16 +96,30 @@ export default class authUsers{
                 return res.status(400).json({
                     status:400,
                     message: 'Please fill in  email and password as inputs of the form'});
-            }
+            } 
 
             if(validation.Login(req, res)){
+                let email= req.body.email; 
+                let pass = req.body.password ;    
+                const text1 = 'SELECT * FROM users WHERE users.email =$1 and users.password =$2';
+                const values1 = [email,pass];
+                db.query(text1, values1 ,function(err,result) {
+                        if (result.rows.length == 0)
+                        {
+                            return res.status(400).send({
+                                status : 400 ,   
+                                message: "Invalid Credentials"});  
+                        }
+                else {
+            
+             if(validation.Login(req, res)){
                 bcrypt.hash(req.body.password, 10, (err) =>{
                     if(err) {
                         return res.status(500).json({
                             error: err
                         });
                     } else {
-                        let email= '{'+req.body.email+'}';          
+                        let email= req.body.email;          
                         const text = 'SELECT * FROM users WHERE users.email = $1';
                         const values = [email];
                         db.query(text, values ,function(err,result) {
@@ -123,6 +145,9 @@ export default class authUsers{
                     }    
                 });
             }
+            }
+        });
+        }
         }
                 
         catch(err){
@@ -132,4 +157,68 @@ export default class authUsers{
             });
         }
     }
+
+    static SignupAdminClient(req, res){
+        try{
+
+            if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.confirmPassword || !req.body.UserType ) {
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in firstName , lastName , email , password , confirmPassword and UserType as inputs of the form'});
+            }
+
+
+            if(validation.Signup(req, res)){
+                let email= req.body.email;          
+                const text1 = 'SELECT * FROM users WHERE users.email =$1';
+                const values1 = [email];
+                db.query(text1, values1 ,function(err,result) {
+                        if (result.rows.length != 0){
+                            return res.status(409).json({
+                                status : 409 ,   
+                                message: "this email already exists"});  
+                        }
+                });
+            }
+
+            bcrypt.hash(req.body.password, 10, (err) =>{
+                if(err) {
+                    return res.status(500).json({
+                        error: err
+                    });
+                } else {
+                    const user = {
+                        id:Math.floor(Math.random() * 1000),
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        email: req.body.email ,
+                        password: req.body.password ,
+                        UserType: req.body.UserType
+                    };
+                    // eslint-disable-next-line 
+                        const token = jwt.sign(user, process.env.JWTSECRETKEY);
+                    const text = 'INSERT INTO users(userid,firstname,lastname,email,password,usertype) VALUES($1,$2,$3,$4,$5,$6)';
+                    const values = [user.id,user.firstName,user.lastName,user.email,user.password,user.UserType];
+                    db.query(text, values ,function(err) {
+                        if(err){
+                            res.status(400).send(err);
+                        } else {
+                            let id=user.id,firstName=user.firstName,lastName=user.lastName,email=user.email,UserType=user.UserType;
+                            return res.send({
+                                status : 200 ,   
+                                data : {token,id,firstName,lastName,email,UserType}});
+                                 
+                        }
+                    }); 
+                }  
+            });
+                
+        }
+        catch(err){
+            return res.status(400).json({
+                status:400,
+                message: err.message
+            });
+        }
+    }    
 }
