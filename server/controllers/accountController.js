@@ -200,7 +200,7 @@ export default class authUsers{
                     if(req.body.status.toLowerCase() != 'dormant') {
                     return res.status(400).json({ 
                         status: 400,
-                        message: 'Sorry your account status can be either active or inactive'
+                        message: 'Sorry your account status can be either active/draft/dormant'
                     });
                 }
               }

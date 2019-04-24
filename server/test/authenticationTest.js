@@ -45,6 +45,24 @@ describe('User signup validations', () => {
             });
     });
 
+    
+    it('password should have at least 1 digit,special character,upper and lower case English letter and a Min 10 characters', (done) => {
+        chai.request(server)
+            .post('/api/v1/auth/signup')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@mail.com',
+                password: 'shaluuuuuu',
+                confirmPassword: 'shaluuuuuu'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
     //It Should create a user with right signup credentials
     it('create a user with right signup credentials', (done) => {
         chai.request(server)

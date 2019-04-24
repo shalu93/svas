@@ -48,6 +48,64 @@ describe('Bank account validations', () => {
             });
     });
 
+    it('fetch all active bank accounts', (done) => {
+        chai.request(server)
+            .get('/api/v1/accounts?status=active')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+
+    it('fetch all dormant bank accounts', (done) => {
+        chai.request(server)
+            .get('/api/v1/accounts?status=dormant')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+
+    it('only numbers are allowed in the account number field', (done) => {
+        chai.request(server)
+            .get('/api/v1/accounts/badc1235')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('only numbers are allowed in the account number field', (done) => {
+        chai.request(server)
+            .get('/api/v1/user/davidmathenge123@gmail.com/accounts')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
 
     //should not create a bank account if user email does not exist
     it('user email does not exist', (done) => {
@@ -57,7 +115,7 @@ describe('Bank account validations', () => {
                 firstName: 'shalu',
                 lastName : 'chandwani',
                 email: '',
-                type: 'savings'
+                type: 'saving'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -66,14 +124,62 @@ describe('Bank account validations', () => {
             });
     });
 
+    it('Sorry your account type can be either saving ,current or dormant', (done) => {
+        chai.request(server)
+            .post('/api/v1/accounts')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@gmail.com',
+                type: 'sssssssss'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('create bank account', (done) => {
+        chai.request(server)
+            .post('/api/v1/accounts')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@gmail.com',
+                type: 'Saving'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });   
+
+
     //it should let a staff/admin be able to activate/deactivate a bank account
 
-    it('activate or deactivate a bank account', (done) => {
+    it('The status is already active', (done) => {
         chai.request(server)
-            .patch('/api/v1/account/553')
+            .patch('/api/v1/account/586')
             .set('Authorization',usertoken)
             .send({
                 status: 'active',
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('activate or deactivate a bank account', (done) => {
+        chai.request(server)
+            .patch('/api/v1/account/586')
+            .set('Authorization',usertoken)
+            .send({
+                status: 'dormant',
                 Authorization:usertoken
             })
             .end((err, res) => {
@@ -82,6 +188,38 @@ describe('Bank account validations', () => {
                 done();
             });
     });
+
+    it('only numbers are allowed in the account number field', (done) => {
+        chai.request(server)
+            .patch('/api/v1/account/5ssewd53')
+            .set('Authorization',usertoken)
+            .send({
+                status: 'active',
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('Sorry your account status can be either active/draft/dormant', (done) => {
+        chai.request(server)
+            .patch('/api/v1/account/586')
+            .set('Authorization',usertoken)
+            .send({
+                status: 'oopsesssss',
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+
 
 
     //should notify the staff/admin when the bank account is not found
@@ -116,6 +254,20 @@ describe('Bank account validations', () => {
             });
     });
 
+    it('only numbers are allowed in the account number field', (done) => {
+        chai.request(server)
+            .delete('/api/v1/accounts/1hdvs30')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
 
     //should not create a bank account when the account type is empty
     it('account type is empty', (done) => {
@@ -133,5 +285,7 @@ describe('Bank account validations', () => {
                 done();
             });
     });
+
+
 
 });
