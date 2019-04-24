@@ -136,7 +136,7 @@ export default class authUsers{
                     lastName:  req.Info.lastName ,
                     email:  req.Info.email ,
                     type:  req.body.type ,
-                    Status:'Active',
+                    Status:'active',
                     openingBalance:0.0,
                     createdOn : toDay,
                     currentbalance: 0.0

@@ -23,8 +23,8 @@ describe('Bank account validations', () => {
             .post('/api/v1/auth/signin')
             .send(
                 {
-                    email: 'pankajvaswani555@rocketmail.com',
-                    password: 'pankaj@1993'
+                    email: 'shaluchandwani@rocketmail.com',
+                    password: 'shalu@1993'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(200);
@@ -70,7 +70,7 @@ describe('Bank account validations', () => {
 
     it('activate or deactivate a bank account', (done) => {
         chai.request(server)
-            .patch('/api/v1/account/266')
+            .patch('/api/v1/account/553')
             .set('Authorization',usertoken)
             .send({
                 status: 'active',
@@ -104,14 +104,13 @@ describe('Bank account validations', () => {
     // it should let a staff/admin delete a specific bank account
     it('deleted a bank account', (done) => {
         chai.request(server)
-            .delete('/api/v1/accounts/128')
+            .delete('/api/v1/accounts/130')
             .set('Authorization',usertoken)
             .send({
                 Authorization:usertoken
             })
             .end((err, res) => {
                 expect(res).to.have.status(200);
-                console.log(res);
                 expect(res.body).to.be.an('object');
                 done();
             });
