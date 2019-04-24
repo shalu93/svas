@@ -1,7 +1,8 @@
 import dotenv from 'dotenv';
 const db = require('../db');
-
+import Joi from 'joi';
 dotenv.config();
+import numvalidation from '../validation/numvalidation';
 
 export default class authUsers{
     // get all account details 
@@ -58,6 +59,16 @@ export default class authUsers{
                 message: 'You are not authorized to perform this transaction only client can'
             });
         }
+        const num = {
+            inputparamnumber: req.params.accountNumber
+        }
+        const result = Joi.validate(num, numvalidation);
+        if (result.error){
+            return res.status(400).send({
+                status: 400,
+                message: 'only numbers are allowed in the account number field'
+            });
+        }
         var AcctId = parseInt(req.params.accountNumber);
         db.query('SELECT * FROM accounts where accounts.accountnumber = $1', [AcctId],function(err,result) {
             if (result.rowCount  == 0) {
@@ -80,7 +91,7 @@ export default class authUsers{
         if(req.Info.UserType == 'client'){
             return res.status(400).json({ 
                 status: 400,
-                message: 'You are not authorized to perform this transaction'
+                message: 'You are not authorized to perform this transaction only admin/staff can'
             });
         }
         var UserMailId =  req.params.useremail;
@@ -105,9 +116,9 @@ export default class authUsers{
     static createAccount(req, res){
         try{
 
-            if(req.body.type != 'saving') {
-                if(req.body.type != 'current') {
-                    if(req.body.type != 'dormant') {
+            if(req.body.type.toLowerCase() != 'saving') {
+                if(req.body.type.toLowerCase() != 'current') {
+                    if(req.body.type.toLowerCase() != 'dormant') {
                         return res.status(400).json({ 
                             status: 400,
                             message: 'Sorry your account type can be either saving ,current or dormant'
@@ -119,7 +130,7 @@ export default class authUsers{
             if(req.Info.UserType != 'client'){
                 return res.status(400).json({ 
                     status: 400,
-                    message: 'You are not authorized to perform this transaction'
+                    message: 'You are not authorized to perform this transaction only client can'
                 });
             }
 
@@ -135,14 +146,15 @@ export default class authUsers{
                     firstName:  req.Info.firstName ,
                     lastName:  req.Info.lastName ,
                     email:  req.Info.email ,
-                    type:  req.body.type ,
+                    type:  req.body.type.toLowerCase() ,
+                    userid:req.Info.UserId,
                     Status:'active',
                     openingBalance:0.0,
                     createdOn : toDay,
                     currentbalance: 0.0
                 };
-                const text = 'INSERT INTO accounts(accountnumber, firstname, lastname, email, accounttype, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)';
-                const values= [account.accountNumber,account.firstName,account.lastName,account.email,account.type,account.Status,account.openingBalance,account.createdOn,account.currentbalance];
+                const text = 'INSERT INTO accounts(accountnumber, firstname, lastname, email, accounttype,userid, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
+                const values= [account.accountNumber,account.firstName,account.lastName,account.email,account.type,account.userid, account.Status,account.openingBalance,account.createdOn,account.currentbalance];
                 db.query(text, values ,function(err,result) {
                     console.log(err)
                     if(err){
@@ -172,10 +184,20 @@ export default class authUsers{
                     status:400,
                     message: 'Please fill in status as inputs of the form'});
             }
+            const num = {
+                inputparamnumber: req.params.accountNumber
+            }
+            const result = Joi.validate(num, numvalidation);
+            if (result.error){
+                return res.status(400).send({
+                    status: 400,
+                    message: 'only numbers are allowed in the account number field'
+                });
+            }
 
-            if(req.body.status != 'active') {
-                if(req.body.status != 'draft') {
-                    if(req.body.status != 'dormant') {
+            if(req.body.status.toLowerCase() != 'active') {
+                if(req.body.status.toLowerCase() != 'draft') {
+                    if(req.body.status.toLowerCase() != 'dormant') {
                     return res.status(400).json({ 
                         status: 400,
                         message: 'Sorry your account status can be either active or inactive'
@@ -187,7 +209,7 @@ export default class authUsers{
             if(req.Info.UserType == 'client'){
                 return res.status(400).json({ 
                     status: 400,
-                    message: 'You are not authorized to perform this transaction'
+                    message: 'You are not authorized to perform this transaction only admin/staff can'
                 });
             }
 
@@ -197,7 +219,7 @@ export default class authUsers{
                 lastName:req.Info.lastName,
                 email:req.Info.email,
                 UserType : req.Info.UserType,
-                Status :req.body.status
+                Status :req.body.status.toLowerCase()
             }; 
             const text = 'select * from  accounts where accountnumber =$1';
             const values= [accounts.accountNumber];
@@ -207,13 +229,18 @@ export default class authUsers{
                         status:404,
                         message: 'no accounts found to update'});
                 }
+                if (req.body.status == result.rows[0].accountstatus){
+                    return res.status(400).send({ 
+                    status:400,
+                    message: `The status is already ${req.body.status}`});  
+                }
                 const account = {
                     accountNumber: result.rows[0].accountnumber,
                     firstName:result.rows[0].firstname ,
                     lastName:result.rows[0].lastname,
                     email:result.rows[0].email,
                     type:result.rows[0].accounttype,
-                    Status:req.body.status
+                    Status:req.body.status.toLowerCase()
                 };            
                 let accountNumber=account.accountNumber,firstName=account.firstName,lastName=account.lastName,email=account.email,type=account.type,status=account.Status;
                 const text = 'update accounts set accountstatus = ($1) where accountnumber =($2)';
@@ -247,7 +274,17 @@ export default class authUsers{
         if(req.Info.UserType == 'client'){
             return res.status(400).send({ 
                 status: 400,
-                message: 'You are not authorized to perform this transaction'
+                message: 'You are not authorized to perform this transaction only admin/staff can'
+            });
+        }
+        const num = {
+            inputparamnumber: req.params.accountNumber
+        }
+        const result = Joi.validate(num, numvalidation);
+        if (result.error){
+            return res.status(400).send({
+                status: 400,
+                message: 'only numbers are allowed in the account number field'
             });
         }
         const accountNumber=req.params.accountNumber;

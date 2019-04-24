@@ -3,6 +3,9 @@ import jwt from 'jsonwebtoken';
 import validation from '../validation/userValidation';
 import dotenv from 'dotenv';
 const db = require('../db');
+import Joi from 'joi';
+import passwordvalidation from '../validation/passwordvalidation';
+
 
 dotenv.config();
 
@@ -49,6 +52,7 @@ export default class authUsers{
                 });
             }
 
+            
             bcrypt.hash(req.body.password, 10, (err) =>{
                 if(err) {
                     return res.status(500).json({
@@ -63,6 +67,14 @@ export default class authUsers{
                         password: req.body.password ,
                         UserType:'client'
                     };
+
+                    const result = Joi.validate(user, passwordvalidation);
+                    if (result.error){
+                        return res.status(400).send({
+                            status: 400,
+                            message: result.error.details[0].message
+                        });
+                    }
                     // eslint-disable-next-line 
                         const token = jwt.sign(user, process.env.JWTSECRETKEY);
                     const text = 'INSERT INTO users(userid,firstname,lastname,email,password,usertype) VALUES($1,$2,$3,$4,$5,$6)';
@@ -160,7 +172,13 @@ export default class authUsers{
 
     static SignupAdminClient(req, res){
         try{
-
+            if(req.Info.UserType != 'admin'){
+                return res.status(400).json({ 
+                    status: 400,
+                    message: 'You are not authorized to perform this transaction only admin can'
+                });
+            }
+            
             if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.confirmPassword || !req.body.UserType ) {
                 return res.status(400).json({ 
                     status:400,
@@ -195,6 +213,14 @@ export default class authUsers{
                         password: req.body.password ,
                         UserType: req.body.UserType
                     };
+
+                    const result = Joi.validate(user, passwordvalidation);
+                    if (result.error){
+                        return res.status(400).send({
+                            status: 400,
+                            message: result.error.details[0].message
+                        });
+                    }
                     // eslint-disable-next-line 
                         const token = jwt.sign(user, process.env.JWTSECRETKEY);
                     const text = 'INSERT INTO users(userid,firstname,lastname,email,password,usertype) VALUES($1,$2,$3,$4,$5,$6)';
