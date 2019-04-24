@@ -26,7 +26,6 @@ describe('Debit bank account', () => {
                     expect(res).to.have.status(200);
                     expect(res.body).to.be.an('object');
                     usertoken = res.body.data.token; 
-                    console.log(usertoken);
                     done();
                 });
         });
@@ -48,7 +47,7 @@ describe('Debit bank account', () => {
     });
 
     //should give an error when the bank account is not found
-    it('bank account is not found', (done) => {
+    it('no accounts found to perform the transaction', (done) => {
         chai.request(server)
             .post('/api/v1/transactions/8/debit')
             .set('Authorization',usertoken)
@@ -114,7 +113,7 @@ describe('Credit a bank account', () => {
     });
 
     //should give an error if the bank account is not found
-    it('bank account is not found', (done) => {
+    it('no accounts found to perform the transaction', (done) => {
         chai.request(server)
             .post('/api/v1/transactions/8/credit')
             .set('Authorization',usertoken)
