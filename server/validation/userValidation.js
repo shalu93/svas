@@ -23,9 +23,9 @@ export default class validation {
             throw Error('Password is required');
         }
 
-        if (typeof req.body.email ==='number') {
+        if (typeof req.body.email =='number') {
             
-            throw Error(' email can not be an integer');
+            throw Error('email can not be an integer');
         }
 
         if (!validator.isLength(req.body.password, {
@@ -40,7 +40,7 @@ export default class validation {
         }
         
         if (!validator.equals(req.body.password, req.body.confirmPassword)) {
-            throw Error('Passwords should match');
+            throw Error('your Password and confirm password should match');
         }
 
         if (validator.isEmpty(req.body.confirmPassword)) {

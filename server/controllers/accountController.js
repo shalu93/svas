@@ -9,35 +9,62 @@ export default class authUsers{
         if(req.Info.UserType == 'client'){
             return res.status(400).json({ 
                 status: 400,
-                message: 'You are not authorized to perform this transaction'
+                message: 'only Admin/staff is authorized to perform this transaction'
             });
         }
-        db.query('SELECT * FROM accounts',function(err,result) {
-            if (result.rowCount  == 0) {
-                return res.status(404).json({ 
-                    status:404,
-                    message: 'no records found'});
-            }
-            if(err){
-                res.status(400).send(err);
-            } else {
-                return res.status(200).send({
-                    status : 200 ,   
-                    data : result.rows});
-            }
-        });
+        const {status} =  req.query;
+        if (!status){
+            db.query('SELECT * FROM accounts',function(err,result) {
+                if (result.rowCount  == 0) {
+                    return res.status(404).send({ 
+                        status:404,
+                        message: 'no accounts found'});
+                }
+                if(err){
+                    res.status(400).json(err);
+                } else {
+                    return res.status(200).send({
+                        status : 200 ,   
+                        data : result.rows});
+                }
+            });
+        }
+        else {
+            var stat =  status ;
+            const text = 'SELECT * FROM accounts WHERE accounts.accountstatus = ($1)';
+            const values= [stat];
+            db.query(text, values ,function(err,result) {
+                if (result.rowCount  == 0) {
+                    return res.status(404).send({ 
+                        status:404,
+                        message: 'no accounts found'});
+                }
+                if(err){
+                    res.status(400).json(err);
+                } else {
+                    return res.status(200).send({
+                        status : 200 ,   
+                        data : result.rows});
+                }
+            });      
+        }
     }
 
     // get specific account detail
     static getSpecificAcctInfo(req, res){
-        if(req.Info.UserType !== 'client'){
+        if(req.Info.UserType != 'client'){
             return res.status(400).json({ 
                 status: 400,
-                message: 'You are not authorized to perform this transaction'
+                message: 'You are not authorized to perform this transaction only client can'
             });
         }
         var AcctId = parseInt(req.params.accountNumber);
         db.query('SELECT * FROM accounts where accounts.accountnumber = $1', [AcctId],function(err,result) {
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found'});
+            }            
             if(err){
                 res.status(400).send(err);
             } else {
@@ -50,16 +77,21 @@ export default class authUsers{
 
     // get all account details of user filtered by email 
     static getAcctInfoOfUser(req, res){
-        if(req.Info.UserType !== 'client'){
+        if(req.Info.UserType == 'client'){
             return res.status(400).json({ 
                 status: 400,
                 message: 'You are not authorized to perform this transaction'
             });
         }
-        var UserMailId = '{' + req.params.useremail +'}';
+        var UserMailId =  req.params.useremail;
         const text = 'SELECT * FROM accounts WHERE accounts.email = ($1)';
         const values= [UserMailId];
         db.query(text, values ,function(err,result) {
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found for the particular user email address'});
+            }
             if(err){
                 res.status(400).send(err);
             } else {
@@ -73,9 +105,9 @@ export default class authUsers{
     static createAccount(req, res){
         try{
 
-            if(req.body.type !== 'saving') {
-                if(req.body.type !== 'current') {
-                    if(req.body.type !== 'dormant') {
+            if(req.body.type != 'saving') {
+                if(req.body.type != 'current') {
+                    if(req.body.type != 'dormant') {
                         return res.status(400).json({ 
                             status: 400,
                             message: 'Sorry your account type can be either saving ,current or dormant'
@@ -84,7 +116,7 @@ export default class authUsers{
                 }
             } 
 
-            if(req.Info.UserType !== 'client'){
+            if(req.Info.UserType != 'client'){
                 return res.status(400).json({ 
                     status: 400,
                     message: 'You are not authorized to perform this transaction'
@@ -97,27 +129,29 @@ export default class authUsers{
                     message: 'Please fill in type as inputs of the form'});
             }
             else{
-                let toDay = new Date();
+                let toDay = Date.now();
                 const account = {
                     accountNumber: Math.floor(Math.random() * 1000),
-                    firstName: '{' + req.Info.firstName + '}',
-                    lastName: '{' + req.Info.lastName + '}',
-                    email: '{' + req.Info.email + '}',
-                    type: '{' + req.body.type + '}',
-                    Status:'{Active}',
-                    openingBalance:0,
-                    createdOn : toDay
+                    firstName:  req.Info.firstName ,
+                    lastName:  req.Info.lastName ,
+                    email:  req.Info.email ,
+                    type:  req.body.type ,
+                    Status:'active',
+                    openingBalance:0.0,
+                    createdOn : toDay,
+                    currentbalance: 0.0
                 };
-                const text = 'INSERT INTO accounts(accountnumber, firstname, lastname, email, accounttype, accountstatus, openingbalance, createdon) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
-                const values= [account.accountNumber,account.firstName,account.lastName,account.email,account.type,account.Status,account.openingBalance,account.createdOn];
-                db.query(text, values ,function(err) {
+                const text = 'INSERT INTO accounts(accountnumber, firstname, lastname, email, accounttype, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9)';
+                const values= [account.accountNumber,account.firstName,account.lastName,account.email,account.type,account.Status,account.openingBalance,account.createdOn,account.currentbalance];
+                db.query(text, values ,function(err,result) {
+                    console.log(err)
                     if(err){
                         res.status(400).send(err);
                     } else {
-                        let accountNumber=account.accountNumber,firstName=account.firstName,lastName=account.lastName,email=account.email,type=account.type,status=account.status,openingBalance=account.openingBalance,createdOn=account.createdOn;    
+                        let accountNumber=account.accountNumber,firstName=account.firstName,lastName=account.lastName,email=account.email,type=account.type,status=account.status,openingBalance=account.openingBalance;    
                         return res.status(200).send({
                             status : 200 ,   
-                            data : {accountNumber,firstName,lastName,email,type,status,openingBalance,createdOn}});
+                            data : {accountNumber,firstName,lastName,email,type,status,openingBalance}});
                     }
                 });
             }    
@@ -139,13 +173,15 @@ export default class authUsers{
                     message: 'Please fill in status as inputs of the form'});
             }
 
-            if(req.body.status !== 'active') {
-                if(req.body.status !== 'inactive') {
+            if(req.body.status != 'active') {
+                if(req.body.status != 'draft') {
+                    if(req.body.status != 'dormant') {
                     return res.status(400).json({ 
                         status: 400,
                         message: 'Sorry your account status can be either active or inactive'
                     });
                 }
+              }
             }
 
             if(req.Info.UserType == 'client'){
@@ -161,23 +197,33 @@ export default class authUsers{
                 lastName:req.Info.lastName,
                 email:req.Info.email,
                 UserType : req.Info.UserType,
-                Status :'{'+req.body.status+'}'
+                Status :req.body.status
             }; 
             const text = 'select * from  accounts where accountnumber =$1';
             const values= [accounts.accountNumber];
-            db.query(text, values ,function(result) {
+            db.query(text, values ,function(err,result) {
+                if (result.rowCount  == 0) {
+                    return res.status(404).send({ 
+                        status:404,
+                        message: 'no accounts found to update'});
+                }
                 const account = {
                     accountNumber: result.rows[0].accountnumber,
                     firstName:result.rows[0].firstname ,
                     lastName:result.rows[0].lastname,
                     email:result.rows[0].email,
                     type:result.rows[0].accounttype,
-                    Status:'{'+req.body.status+'}'
-                };             
+                    Status:req.body.status
+                };            
                 let accountNumber=account.accountNumber,firstName=account.firstName,lastName=account.lastName,email=account.email,type=account.type,status=account.Status;
                 const text = 'update accounts set accountstatus = ($1) where accountnumber =($2)';
                 const values= [account.Status,account.accountNumber];
-                db.query(text, values ,function(err) {
+                db.query(text, values ,function(err,result) {
+                    if (result.rowCount  == 0) {
+                        return res.status(404).send({ 
+                            status:404,
+                            message: 'no accounts found to update'});
+                    }
                     if(err){
                         res.status(400).send(err);
                     } else {
@@ -199,7 +245,7 @@ export default class authUsers{
     static deleteAccount(req, res){
 
         if(req.Info.UserType == 'client'){
-            return res.status(400).json({ 
+            return res.status(400).send({ 
                 status: 400,
                 message: 'You are not authorized to perform this transaction'
             });
@@ -207,7 +253,13 @@ export default class authUsers{
         const accountNumber=req.params.accountNumber;
         const text = 'delete from accounts where accountnumber =($1)';
         const values= [accountNumber];
-        db.query(text, values ,function(err) {
+        db.query(text, values ,function(err,result) {
+            console.log(result.rowCount)
+            if (result.rowCount  == 0) {
+                return res.status(404).send({ 
+                    status:404,
+                    message: 'no accounts found to delete'});
+            }
             if(err){
                 res.status(400).send(err);
             } else {
@@ -217,8 +269,5 @@ export default class authUsers{
             }
         });
     } 
-
-
-    // get all active account details 
 
 }
