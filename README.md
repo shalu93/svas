@@ -45,7 +45,7 @@ The app is hosted on heroku link for the same is : https://svas123.herokuapp.com
 | /POST | /api/v1/auth/signup | Creating a User |
 | /POST | /api/v1/auth/signin | Admin/Staff/Client Login |
 | /GET | /api/v1/accounts | Get list of all accounts |
-| /POST | /api/v1/accounts | Create a neW account |
+| /POST | /api/v1/accounts | Create a new account |
 | /PATCH | /api/v1/account/:accountNumber | Update specified account |
 | /DELETE | /api/v1/account/:accountNumber | Delete specified account |
 | /POST | /api/v1/transactions/:accountNumber/debit | debit specified account |

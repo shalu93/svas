@@ -69,8 +69,8 @@ export default class authUsers{
                 message: 'only numbers are allowed in the account number field'
             });
         } else {
-        var AcctId = parseInt(req.params.accountNumber);
-        db.query('SELECT * FROM accounts where accounts.accountnumber = $1', [AcctId],function(err,result) {
+        var AccountNumber = parseInt(req.params.accountNumber);
+        db.query('SELECT * FROM accounts where accounts.accountnumber = $1', [AccountNumber],function(err,result) {
             if (result.rowCount  == 0) {
                 return res.status(404).send({ 
                     status:404,
@@ -122,24 +122,18 @@ export default class authUsers{
     static createAccount(req, res){
         try{
 
-            if(req.body.type.toLowerCase() != 'saving') {
-                if(req.body.type.toLowerCase() != 'current') {
-                    if(req.body.type.toLowerCase() != 'dormant') {
+            if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current' && req.body.type.toLowerCase() != 'dormant') {
                         return res.status(400).json({ 
                             status: 400,
                             message: 'Sorry your account type can be either saving ,current or dormant'
                         });
-                    }
-                }
-            } 
-
+            } else {
             if(req.Info.UserType != 'client'){
                 return res.status(400).json({ 
                     status: 400,
                     message: 'You are not authorized to perform this transaction only client can'
                 });
-            }
-
+            } else {
             if( !req.body.type ) { 
                 return res.status(400).json({ 
                     status:400,
@@ -173,7 +167,9 @@ export default class authUsers{
                     }
                 });
             }    
-        }
+        }                                  
+    } 
+}
         catch(err){
             return res.status(400).json({
                 status:400,
@@ -189,7 +185,7 @@ export default class authUsers{
                 return res.status(400).json({ 
                     status:400,
                     message: 'Please fill in status as inputs of the form'});
-            }
+            } else {
             const num = {
                 inputparamnumber: req.params.accountNumber
             }
@@ -200,16 +196,11 @@ export default class authUsers{
                     message: 'only numbers are allowed in the account number field'
                 });
             } else {
-
-            if(req.body.status.toLowerCase() != 'active') {
-                if(req.body.status.toLowerCase() != 'draft') {
-                    if(req.body.status.toLowerCase() != 'dormant') {
+            if(req.body.status.toLowerCase() != 'active' && req.body.status.toLowerCase() != 'draft' && req.body.status.toLowerCase() != 'dormant') {
                     return res.status(400).json({ 
                         status: 400,
                         message: 'Sorry your account status can be either active/draft/dormant'
                     });
-                }
-              }
             }
             else {
             if(req.Info.UserType == 'client'){
@@ -264,12 +255,10 @@ export default class authUsers{
                             data : {accountNumber,firstName,lastName,email,type,status}});
                     }
                 });
-            });
-            
-        }
-                            
-    }
-                        
+            });  
+        }                      
+    }                   
+  }
 }
         }
         catch(err){
@@ -287,7 +276,7 @@ export default class authUsers{
                 status: 400,
                 message: 'You are not authorized to perform this transaction only admin/staff can'
             });
-        }
+        } else{
         const num = {
             inputparamnumber: req.params.accountNumber
         }
@@ -316,7 +305,7 @@ export default class authUsers{
                     data : ` ${accountNumber} Account sucessfully deleted`});
             }
         });             
-    }
+      }
     } 
-
+  }
 }
