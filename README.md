@@ -55,8 +55,8 @@ The app is hosted on heroku link for the same is : https://svas123.herokuapp.com
 | /POST | /api/v2/auth/signup/AdminClient | creating admin/staff user |
 | /GET | /api/v2/accounts/:accountNumber/transactions | get transaction inquiry of a particular account |
 | /GET | /api/v2/transactions/:transactionid | Get transaction inquiry via transaction id |
-| /GET | /api/v2/accounts?status=active | Get list of all active accounts |
-| /GET | /api/v2/accounts?status=dormant | Get list of all dormant accounts |
+| /GET | /api/v1/accounts?status=active | Get list of all active accounts |
+| /GET | /api/v1/accounts?status=dormant | Get list of all dormant accounts |
 
 
 # Setting up Dev

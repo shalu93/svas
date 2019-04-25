@@ -84,7 +84,6 @@ describe('Bank account creation validation', () => {
     });
 });
     
-describe('creation validation', () => {
       //should not create a bank account if user email does not exist
       it('It should allow create saving account with Uppercase letters', (done) => {
         chai.request(server)
@@ -156,10 +155,6 @@ describe('creation validation', () => {
             done();
           });
       });
-
-    });
-
-    describe('Bank account Admin validation', () => {
 
     //It should sign in user with the credentials
     it('signin Admin with right credentials', (done) => {
@@ -306,6 +301,4 @@ describe('creation validation', () => {
                     expect(res.body).to.be.an('object');
                     done();
                 });
-        });
-
-    });
+});
