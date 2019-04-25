@@ -1,8 +1,9 @@
 const dotenv = require('dotenv');
 dotenv.config();
 const { Pool } = require('pg');
+const config = require('../config');
 
-const pool = new Pool({connectionString: process.env.connectionString});
+const pool = new Pool({connectionString: process.env.NODE_ENV==='test' ? config.test.dbPath : config.dev.dbPath});
 
 pool.on('connect', () => {
     console.log('connected to the Database');

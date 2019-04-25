@@ -33,7 +33,7 @@
     "nyc": "^14.0.0"
   },
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 3000 server/test/*.js --exit",
+    "test": "npm run droptest && npm run createtest && npm run addadmintest && NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register --timeout 3000 server/test/*.js --exit",
     "dev": "nodemon --exec babel-node server/server.js",
     "build": "npm run clear && babel server --out-dir build",
     "clear": "rm -rf build",
@@ -41,7 +41,10 @@
     "coveralls": "npm test  && nyc report --reporter=text-lcov | coveralls",
     "create": "node server/dbcommands createUserTables && node server/dbcommands createAccountTables && node server/dbcommands createTransactionTables",
     "drop": "node server/dbcommands dropTables",
-    "addadmin": "node server/addAdmin addAdminuser"
+    "addadmin": "node server/addAdmin addAdminuser",
+    "droptest": "NODE_ENV=test node server/dbcommands dropTables",
+    "addadmintest": "NODE_ENV=test node server/addAdmin addAdminuser",
+    "createtest": "NODE_ENV=test node server/dbcommands createUserTables && NODE_ENV=test node server/dbcommands createAccountTables && NODE_ENV=test node server/dbcommands createTransactionTables"
   },
   "engines": {
     "node": "10.15.3"

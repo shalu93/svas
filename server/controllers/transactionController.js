@@ -23,7 +23,7 @@ export default class transaction{
             if (result.rowCount  == 0) {
                 return res.status(404).send({ 
                     status:404,
-                    message: 'no accounts found in transactions'});
+                    message: 'no records found'});
             }
             if(err){
                 res.status(400).send(err);
@@ -119,7 +119,7 @@ export default class transaction{
             if (result.rows[0].accountstatus != 'active'){
                 return res.status(400).send({ 
                     status:400,
-                    message: 'your accounts should be active to perform the transaction'});
+                    message: 'your accounts should be active to perform the debit transaction'});
             }
             const debit = {
                 staffid:req.Info.UserId,
@@ -188,7 +188,7 @@ export default class transaction{
         if (result.error){
             return res.status(400).send({
                 status: 400,
-                message: 'only numbers will be accepted for account number and amount'
+                message: 'only numbers will be accepted for account number and amount field'
             });
         }
 
@@ -209,7 +209,7 @@ export default class transaction{
             if (result.rows[0].accountstatus != 'active'){
                 return res.status(400).send({ 
                     status:400,
-                    message: 'your accounts should be active to perform the transaction'});
+                    message: 'your account should be active to perform the credit transaction'});
             }
             const debit = {
                 staffid:req.Info.UserId,

@@ -45,16 +45,18 @@ The app is hosted on heroku link for the same is : https://svas123.herokuapp.com
 | /POST | /api/v1/auth/signup | Creating a User |
 | /POST | /api/v1/auth/signin | Admin/Staff/Client Login |
 | /GET | /api/v1/accounts | Get list of all accounts |
-| /POST | /api/v1/accounts | Create a net account |
+| /POST | /api/v1/accounts | Create a neW account |
 | /PATCH | /api/v1/account/:accountNumber | Update specified account |
 | /DELETE | /api/v1/account/:accountNumber | Delete specified account |
 | /POST | /api/v1/transactions/:accountNumber/debit | debit specified account |
 | /POST | /api//v1/transactions/:accountNumber/credit | credit specified account |
-| /GET | /api/v1//user/:useremail/accounts | Get account info of user via email |
-| /GET | /api/v1//accounts/:accountNumber | Get account info of user via particular account |
-| /POST | /api/v1/auth/signup/AdminClient | creating admin/staff user |
-| /GET | /api/v1/accounts/:accountNumber/transactions | get transaction inquiry of a particular account |
-| /GET | /api/v1/transactions/:transactionid | Get transaction inquiry via transaction id |
+| /GET | /api/v2/user/:useremail/accounts | Get account info of user via email |
+| /GET | /api/v2/accounts/:accountNumber | Get account info of user via particular account |
+| /POST | /api/v2/auth/signup/AdminClient | creating admin/staff user |
+| /GET | /api/v2/accounts/:accountNumber/transactions | get transaction inquiry of a particular account |
+| /GET | /api/v2/transactions/:transactionid | Get transaction inquiry via transaction id |
+| /GET | /api/v1/accounts?status=active | Get list of all active accounts |
+| /GET | /api/v1/accounts?status=dormant | Get list of all dormant accounts |
 
 
 # Setting up Dev

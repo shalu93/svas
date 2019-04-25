@@ -49,10 +49,8 @@ export default class authUsers{
                                 status : 409 ,   
                                 message: "this email already exists"});  
                         }
-                });
-            }
-
-            
+                        else{
+         
             bcrypt.hash(req.body.password, 10, (err) =>{
                 if(err) {
                     return res.status(500).json({
@@ -92,6 +90,9 @@ export default class authUsers{
                     }); 
                 }  
             });
+        }
+        });
+        }
                 
         }
         catch(err){
