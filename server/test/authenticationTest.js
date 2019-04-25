@@ -15,7 +15,7 @@ describe('User signup validations', () => {
     //no rows found
     it('no data in users table', (done) => {
         chai.request(server)
-            .post('/api/v1//users')
+            .post('/api/v1/users')
             .send({
     
             })
@@ -25,6 +25,25 @@ describe('User signup validations', () => {
                 done();
             });
     }); 
+
+        //It Should create a user with right signup credentials
+        it('create a user with right signup credentials', (done) => {
+            chai.request(server)
+                .post('/api/v1/auth/signup')
+                .send(
+                    {
+                        firstName: 'mahesh',
+                        lastName : 'chandwani',
+                        email: 'maheshchandwani@svassvasbanka.com',
+                        password: 'Mahesh@1993',
+                        confirmPassword: 'Mahesh@1993'
+                    })
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
 
     // should not register a user with an integer email  
 
@@ -45,42 +64,6 @@ describe('User signup validations', () => {
             });
     });
 
-    
-    it('password should have at least 1 digit,special character,upper and lower case English letter and a Min 10 characters', (done) => {
-        chai.request(server)
-            .post('/api/v1/auth/signup')
-            .send({
-                firstName: 'shalu',
-                lastName : 'chandwani',
-                email: 'shaluchandwani@mail.com',
-                password: 'shaluuuuuu',
-                confirmPassword: 'shaluuuuuu'
-            })
-            .end((err, res) => {
-                expect(res).to.have.status(400);
-                expect(res.body).to.be.an('object');
-                done();
-            });
-    });
-
-    //It Should create a user with right signup credentials
-    it('create a user with right signup credentials', (done) => {
-        chai.request(server)
-            .post('/api/v1/auth/signup')
-            .send(
-                {
-                    firstName: 'shalu',
-                    lastName : 'chandwani',
-                    email: 'shaluchandwani@svassvasbanka.com',
-                    password: 'Shalu@1993',
-                    confirmPassword: 'Shalu@1993'
-                })
-            .end((err, res) => {
-                expect(res).to.have.status(200);
-                expect(res.body).to.be.an('object');
-                done();
-            });
-    });
 
     // should not register a user with empty email field
     it('email is required', (done) => {
@@ -107,7 +90,7 @@ describe('User signup validations', () => {
             .send({
                 firstName: 'Shalu',
                 lastName : 'chandwani',
-                email: 'shaluvaswani555@rocketmail.com',
+                email: 'shaluchandwani@rocketmail.com',
                 password: 'Shalu@1993',
                 confirmPassword: 'Shalu@1993'
             })
@@ -183,6 +166,57 @@ describe('User signup validations', () => {
                 email: 'shaluchandwani@svasbanka.com',
                 password: 'Shalu@1993',
                 confirmPassword: 'Shalu@1993'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('Last Name cannot have numerals', (done) => {
+        chai.request(server)
+            .post('/api/v1/auth/signup')
+            .send({
+                firstName: 'Shalu',
+                lastName : '21',
+                email: 'shaluchandwani@svasbanka.com',
+                password: 'Shalu@1993',
+                confirmPassword: 'Shalu@1993'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('First Name cannot have numerals', (done) => {
+        chai.request(server)
+            .post('/api/v1/auth/signup')
+            .send({
+                firstName: '21',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@svasbanka.com',
+                password: 'Shalu@1993',
+                confirmPassword: 'Shalu@1993'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('white spaces in the password is not allowed', (done) => {
+        chai.request(server)
+            .post('/api/v1/auth/signup')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@svasbanka.com',
+                password: 'Shal  u@1993',
+                confirmPassword: 'Shal  u@1993'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);

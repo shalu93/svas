@@ -68,14 +68,19 @@ export default class authUsers{
                 status: 400,
                 message: 'only numbers are allowed in the account number field'
             });
-        }
+        } else {
         var AcctId = parseInt(req.params.accountNumber);
         db.query('SELECT * FROM accounts where accounts.accountnumber = $1', [AcctId],function(err,result) {
             if (result.rowCount  == 0) {
                 return res.status(404).send({ 
                     status:404,
                     message: 'no accounts found'});
-            }            
+            }         
+            if(result.rows[0].userid !=req.Info.UserId ){
+                return res.status(404).send({ 
+                status:404,
+                message: 'This account number doesnot belong to user'}); 
+            }   
             if(err){
                 res.status(400).send(err);
             } else {
@@ -84,6 +89,7 @@ export default class authUsers{
                     data : result.rows});
             }
         });
+    }
     }    
 
     // get all account details of user filtered by email 
@@ -193,7 +199,7 @@ export default class authUsers{
                     status: 400,
                     message: 'only numbers are allowed in the account number field'
                 });
-            }
+            } else {
 
             if(req.body.status.toLowerCase() != 'active') {
                 if(req.body.status.toLowerCase() != 'draft') {
@@ -205,14 +211,13 @@ export default class authUsers{
                 }
               }
             }
-
+            else {
             if(req.Info.UserType == 'client'){
                 return res.status(400).json({ 
                     status: 400,
                     message: 'You are not authorized to perform this transaction only admin/staff can'
                 });
-            }
-
+            } else {
             const accounts = {
                 accountNumber: req.params.accountNumber,
                 firstName:req.Info.firstName ,
@@ -260,6 +265,12 @@ export default class authUsers{
                     }
                 });
             });
+            
+        }
+                            
+    }
+                        
+}
         }
         catch(err){
             return res.status(404).json({
@@ -286,7 +297,7 @@ export default class authUsers{
                 status: 400,
                 message: 'only numbers are allowed in the account number field'
             });
-        }
+        } else {
         const accountNumber=req.params.accountNumber;
         const text = 'delete from accounts where accountnumber =($1)';
         const values= [accountNumber];
@@ -302,9 +313,10 @@ export default class authUsers{
             } else {
                 return res.status(200).send({
                     status : 200 ,   
-                    data : 'Account sucessfully deleted'});
+                    data : ` ${accountNumber} Account sucessfully deleted`});
             }
-        });
+        });             
+    }
     } 
 
 }

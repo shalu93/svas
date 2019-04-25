@@ -3,6 +3,8 @@ import validator from 'validator';
 export default class validation {
 
     static Signup (req){
+        let whiteSpace = /\s/;
+        let validLetters = /^[A-Za-z]+$/;
 
         if (validator.isEmpty(req.body.firstName)) {
            
@@ -25,7 +27,7 @@ export default class validation {
 
         if (typeof req.body.email =='number') {
             
-            throw Error('email can not be an integer');
+            throw Error('only integers cannot be entered in email');
         }
 
         if (!validator.isLength(req.body.password, {
@@ -45,6 +47,17 @@ export default class validation {
 
         if (validator.isEmpty(req.body.confirmPassword)) {
             throw Error('confirm your password');
+        }
+        if(whiteSpace.test(req.body.password)) {
+            throw Error("Password should not contain white spaces");
+        }
+        if (!validLetters.test(req.body.firstName)) {
+           
+            throw Error("First Name should contain only letters"); 
+        }
+        if (!validLetters.test(req.body.lastName)) {
+           
+            throw Error("Last Name should contain only letters"); 
         }
         return true;
     }

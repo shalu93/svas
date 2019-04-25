@@ -1,0 +1,331 @@
+---
+swagger: '2.0'
+info:
+  version: 2.0.0
+  title: 'Project: BANKA'
+  description: BANKA API Documentation
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+  contact:
+    Author: shalu
+host: svas123.herokuapp.com
+basePath: "/api/v1"
+tags:
+- name: User
+  description: Sign up and log in user
+- name: Account
+  description: Users can perform inquiry transactions on account, it requires token be sent in header
+- name: Transaction
+  description: Users can debit/credit account, it requires token be sent
+    in header
+- name: create account
+  description: Users can create a account, it requires Bearer be sent in header
+schemes:
+- https
+- http
+paths:
+  "/users":
+    get:
+      tags:
+      - User
+      summary: Get a list of all users
+      produces:
+      - application/json
+      responses:
+        '200':
+          description: Get list of users
+        '404':
+          description: User not found
+        default:
+          description: Sorry, error occured
+  "/auth/signup":
+    post:
+      tags:
+      - User
+      summary: Sign up a new user
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User details to be registered as
+        required: true
+        schema:
+          "$ref": "#/definitions/User"
+      responses:
+        '200':
+          description: User created succesfully as cllient
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              data:
+                "$ref": "#/definitions/token"
+        '400':
+          description: Error is returned when any of the request values are invalid
+        '409':
+          description: Error is returned if user email already exists i.e conflict
+  "/auth/login":
+    post:
+      tags:
+      - User
+      summary: Logs in a user
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Email and password required to login
+        required: true
+        schema:
+          "$ref": "#/definitions/UserLogin"
+      responses:
+        '200':
+          description: Login was successfull
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              data:
+                "$ref": "#/definitions/token"
+        '400':
+          description: Error in login details
+        '404':
+          description: User could not be found
+  "/accounts":
+    post:
+      tags:
+      - Account Create
+      summary: creates a Account
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: Bearer
+        type: string
+        description: 'Token gotten from login or sign up is placed in Bearer '
+        required: true
+      - in: body
+        name: body
+        description: inputs to be created
+        required: true
+        schema:
+          "$ref": "#/definitions/Createaccount"
+      responses:
+        '200':
+          description: account has been created,
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              data:
+                "$ref": "#/definitions/Createaccount"
+        '400':
+          description: Error in account creation
+    get:
+      tags:
+      - get all account details
+      summary: Fetch all accounts in BANKA
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: Bearer
+        type: string
+        description: Token gotten from login or sign up is placed in Bearer
+        required: true
+      responses:
+        '200':
+          description: returns all accounts
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              data:
+                "$ref": "#/definitions/"
+        '400':
+          description: Token is not provided
+  "/user/{useremail}/accounts":
+    get:
+      tags:
+      - Get User accounts
+      summary: fetch all user accounts via email search
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: Bearer
+        type: string
+        description: 'Token gotten from login or sign up is placed in Bearer '
+        required: true
+      - name: email
+        in: path
+        description: email of account to be retrieved
+        required: true
+        type: string
+        format: char
+      responses:
+        '200':
+          description: returns all accounts
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              data:
+                "$ref": "#/definitions/getAllBankAcctViaemail"
+        '400':
+          description: Token is not provided
+"/accounts/{accountNumber}":
+    delete:
+      tags:
+      - Delete the account
+      summary: Delete specific account
+      description: ''
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - in: header
+        name: Bearer
+        type: string
+        description: 'Token gotten from login or sign up is placed in Bearer '
+        required: true
+      - name: account number
+        in: path
+        description: account number to delete
+        required: true
+        type: integer
+        format: int64
+      responses:
+        '200':
+          description: delete's a specific message
+          schema:
+            type: object
+            properties:
+              status:
+                type: integer
+                example: 200
+              data:
+                "$ref": "#/definitions/DeleteAcct"
+        '400':
+          description: Token is not provided
+definitions:
+  token:
+    type: array
+    items:
+      type: object
+      properties:
+        token:
+          type: string
+        message:
+          type: string
+  User:
+    type: object
+    properties:
+      email:
+        type: string
+      firstname:
+        type: string
+      lastname:
+        type: string
+      password:
+        type: string
+  UserLogin:
+    type: object
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+  Createaccount:
+    type: array
+    items:
+      type: object
+      properties:
+        accountNumber:
+          type: integer
+          example: 1
+        createdOn:
+          type: string
+          format: date
+        firstName:
+          type: string
+        lastName:
+          type: string
+        userid:
+          type: integer
+        email:
+          type: string
+        type:
+          type: string
+        Status:
+          type: string
+        openingBalance:
+          type: integer
+        currentbalance:
+          type: integer    
+  getAllBankAcctViaemail:
+    type: array
+    items:
+      type: object
+      properties:
+        accountNumber:
+          type: integer
+          example: 1
+        createdOn:
+          type: string
+          format: date
+        firstName:
+          type: string
+        lastName:
+          type: string
+        userid:
+          type: integer
+        email:
+          type: string
+        type:
+          type: string
+        Status:
+          type: string
+        example: active  
+        openingBalance:
+          type: integer
+        currentbalance:
+          type: integer
+  DeleteAcct:
+    type: array
+    items:
+      type: object
+      properties:
+        accountnumber:
+          type: string
+externalDocs:
+  description: Find out more about Swagger
+  url: http://swagger.io

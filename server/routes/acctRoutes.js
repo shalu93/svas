@@ -4,12 +4,12 @@ import auth from '../authorization/auth';
 
 const AcctRouter=Router();
 
-AcctRouter.get('/accounts',auth.authorization,accounts.getAcctInfo);
-AcctRouter.post('/accounts',auth.authorization,accounts.createAccount);
-AcctRouter.patch('/account/:accountNumber',auth.authorization,accounts.updateAccount);
-AcctRouter.delete('/accounts/:accountNumber',auth.authorization,accounts.deleteAccount);
+AcctRouter.get('/v1/accounts',auth.authorization,accounts.getAcctInfo);
+AcctRouter.post('/v1/accounts',auth.authorization,accounts.createAccount);
+AcctRouter.patch('/v1/account/:accountNumber',auth.authorization,accounts.updateAccount);
+AcctRouter.delete('/v1/accounts/:accountNumber',auth.authorization,accounts.deleteAccount);
 
-AcctRouter.get('/user/:useremail/accounts',auth.authorization,accounts.getAcctInfoOfUser);
-AcctRouter.get('/accounts/:accountNumber',auth.authorization,accounts.getSpecificAcctInfo);
+AcctRouter.get('/v2/user/:useremail/accounts',auth.authorization,accounts.getAcctInfoOfUser);
+AcctRouter.get('/v2/accounts/:accountNumber',auth.authorization,accounts.getSpecificAcctInfo);
 
 export default AcctRouter;
