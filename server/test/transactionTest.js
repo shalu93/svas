@@ -18,7 +18,7 @@ describe('Bank account creation validation', () => {
             .send(
                 {
                     email: 'pankajvaswani@rocketmail.com',
-                    password: 'Pankaj@1993'
+                    password: 'Pankaj@2019'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(200);
@@ -53,7 +53,7 @@ it('saving account created successfully', (done) => {
             .send(
                 {
                     email: 'sakshichandwani@rocketmail.com',
-                    password: 'Sakshi@1993'
+                    password: 'Pankaj@2019'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(200);
@@ -74,6 +74,22 @@ it('saving account created successfully', (done) => {
                 })
                 .end((err, res) => {
                     expect(res).to.have.status(201);
+                    console.log(AcctNum)
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
+
+        it('only positive values accepted for amount field', (done) => {
+            chai.request(server)
+                .post(`/api/v1/transactions/${AcctNum}/credit`)
+                .set('Authorization',usertoken)
+                .send({
+                    amount : -1120,
+                    Authorization:usertoken
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
                     console.log(AcctNum)
                     expect(res.body).to.be.an('object');
                     done();
@@ -143,6 +159,22 @@ it('saving account created successfully', (done) => {
                     done();
                 });
         });
+
+        it('only positive values are accepted for amount field', (done) => {
+            chai.request(server)
+                .post(`/api/v1/transactions/${AcctNum}/debit`)
+                .set('Authorization',usertoken)
+                .send({
+                    amount : -20000,
+                    Authorization:usertoken
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
+
     it('only numbers will be accepted for account number and amount', (done) => {
         chai.request(server)
             .post('/api/v1/transactions/ds129c/credit')

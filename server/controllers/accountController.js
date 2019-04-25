@@ -10,16 +10,16 @@ export default class authUsers{
         if(req.Info.UserType == 'client'){
             return res.status(400).json({ 
                 status: 400,
-                message: 'only Admin/staff is authorized to perform this transaction'
+                message: 'You are not authorized to perform this transaction only admin/staff can'
             });
-        }
+        } else {
         const {status} =  req.query;
         if (!status){
             db.query('SELECT * FROM accounts',function(err,result) {
                 if (result.rowCount  == 0) {
                     return res.status(404).send({ 
                         status:404,
-                        message: 'no accounts found'});
+                        message: 'No accounts found'});
                 }
                 if(err){
                     res.status(400).json(err);
@@ -29,8 +29,7 @@ export default class authUsers{
                         data : result.rows});
                 }
             });
-        }
-        else {
+        } else {
             var stat =  status ;
             const text = 'SELECT * FROM accounts WHERE accounts.accountstatus = ($1)';
             const values= [stat];
@@ -38,7 +37,7 @@ export default class authUsers{
                 if (result.rowCount  == 0) {
                     return res.status(404).send({ 
                         status:404,
-                        message: 'no accounts found'});
+                        message: `No accounts found for ${stat} status`});
                 }
                 if(err){
                     res.status(400).json(err);
@@ -48,8 +47,7 @@ export default class authUsers{
                         data : result.rows});
                 }
             });      
-        }
-    }
+        } } }
 
     // get specific account detail
     static getSpecificAcctInfo(req, res){
@@ -58,7 +56,7 @@ export default class authUsers{
                 status: 400,
                 message: 'You are not authorized to perform this transaction only client can'
             });
-        }
+        } else {
         const num = {
             inputparamnumber: req.params.accountNumber
         }
@@ -66,7 +64,7 @@ export default class authUsers{
         if (result.error){
             return res.status(400).send({
                 status: 400,
-                message: 'only numbers are allowed in the account number field'
+                message: 'only positive numbers are allowed in the account number field'
             });
         } else {
         var AccountNumber = parseInt(req.params.accountNumber);
@@ -74,12 +72,12 @@ export default class authUsers{
             if (result.rowCount  == 0) {
                 return res.status(404).send({ 
                     status:404,
-                    message: 'no accounts found'});
+                    message: `Account Number: ${AccountNumber} doesnot exists`});
             }         
             if(result.rows[0].userid !=req.Info.UserId ){
                 return res.status(404).send({ 
                 status:404,
-                message: 'This account number doesnot belong to user'}); 
+                message: `This account number doesnot belong to user: ${req.Info.UserId}`}); 
             }   
             if(err){
                 res.status(400).send(err);
@@ -89,8 +87,7 @@ export default class authUsers{
                     data : result.rows});
             }
         });
-    }
-    }    
+    } } }
 
     // get all account details of user filtered by email 
     static getAcctInfoOfUser(req, res){
@@ -99,7 +96,7 @@ export default class authUsers{
                 status: 400,
                 message: 'You are not authorized to perform this transaction only admin/staff can'
             });
-        }
+        } else {
         var UserMailId =  req.params.useremail;
         const text = 'SELECT * FROM accounts WHERE accounts.email = ($1)';
         const values= [UserMailId];
@@ -107,7 +104,7 @@ export default class authUsers{
             if (result.rowCount  == 0) {
                 return res.status(404).send({ 
                     status:404,
-                    message: 'no accounts found for the particular user email address'});
+                    message:`No accounts found for the user email address: ${UserMailId}`});
             }
             if(err){
                 res.status(400).send(err);
@@ -117,16 +114,14 @@ export default class authUsers{
                     data : result.rows});
             }
         });
-    }    
+    } }    
 
     static createAccount(req, res){
         try{
-
-            if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current' && req.body.type.toLowerCase() != 'dormant') {
-                        return res.status(400).json({ 
-                            status: 400,
-                            message: 'Sorry your account type can be either saving ,current or dormant'
-                        });
+            if( !req.body.type ) { 
+                return res.status(400).json({ 
+                    status:400,
+                    message: 'Please fill in type as inputs of the form'});
             } else {
             if(req.Info.UserType != 'client'){
                 return res.status(400).json({ 
@@ -134,12 +129,12 @@ export default class authUsers{
                     message: 'You are not authorized to perform this transaction only client can'
                 });
             } else {
-            if( !req.body.type ) { 
-                return res.status(400).json({ 
-                    status:400,
-                    message: 'Please fill in type as inputs of the form'});
-            }
-            else{
+            if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current' && req.body.type.toLowerCase() != 'dormant') {
+                    return res.status(400).json({ 
+                        status: 400,
+                        message: 'Sorry your account type can be either saving ,current or dormant'
+                    });
+            } else{
                 let toDay = Date.now();
                 const account = {
                     accountNumber: Math.floor(Math.random() * 1000),
@@ -153,8 +148,8 @@ export default class authUsers{
                     createdOn : toDay,
                     currentbalance: 0.0
                 };
-                const text = 'INSERT INTO accounts(accountnumber, firstname, lastname, email, accounttype,userid, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)';
-                const values= [account.accountNumber,account.firstName,account.lastName,account.email,account.type,account.userid, account.Status,account.openingBalance,account.createdOn,account.currentbalance];
+                const text = 'INSERT INTO accounts(accountnumber, email, accounttype,userid, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
+                const values= [account.accountNumber,account.email,account.type,account.userid, account.Status,account.openingBalance,account.createdOn,account.currentbalance];
                 db.query(text, values ,function(err,result) {
                     console.log(err)
                     if(err){
@@ -193,7 +188,7 @@ export default class authUsers{
             if (result.error){
                 return res.status(400).send({
                     status: 400,
-                    message: 'only numbers are allowed in the account number field'
+                    message: 'only positive numbers are allowed in the account number field'
                 });
             } else {
             if(req.body.status.toLowerCase() != 'active' && req.body.status.toLowerCase() != 'draft' && req.body.status.toLowerCase() != 'dormant') {
@@ -223,7 +218,7 @@ export default class authUsers{
                 if (result.rowCount  == 0) {
                     return res.status(404).send({ 
                         status:404,
-                        message: 'no accounts found to update'});
+                        message: `Account Number:${accounts.accountNumber} doesnot exists`});
                 }
                 if (req.body.status == result.rows[0].accountstatus){
                     return res.status(400).send({ 
@@ -232,20 +227,18 @@ export default class authUsers{
                 }
                 const account = {
                     accountNumber: result.rows[0].accountnumber,
-                    firstName:result.rows[0].firstname ,
-                    lastName:result.rows[0].lastname,
                     email:result.rows[0].email,
                     type:result.rows[0].accounttype,
                     Status:req.body.status.toLowerCase()
                 };            
-                let accountNumber=account.accountNumber,firstName=account.firstName,lastName=account.lastName,email=account.email,type=account.type,status=account.Status;
+                let accountNumber=account.accountNumber,firstName=accounts.firstName,lastName=accounts.lastName,email=account.email,type=account.type,status=account.Status;
                 const text = 'update accounts set accountstatus = ($1) where accountnumber =($2)';
                 const values= [account.Status,account.accountNumber];
                 db.query(text, values ,function(err,result) {
                     if (result.rowCount  == 0) {
                         return res.status(404).send({ 
                             status:404,
-                            message: 'no accounts found to update'});
+                            message: 'No records found to update'});
                     }
                     if(err){
                         res.status(400).send(err);
@@ -256,11 +249,7 @@ export default class authUsers{
                     }
                 });
             });  
-        }                      
-    }                   
-  }
-}
-        }
+        }  }  }  }  }                  
         catch(err){
             return res.status(404).json({
                 status:404,
@@ -284,7 +273,7 @@ export default class authUsers{
         if (result.error){
             return res.status(400).send({
                 status: 400,
-                message: 'only numbers are allowed in the account number field'
+                message: 'only positive numbers are allowed in the account number field'
             });
         } else {
         const accountNumber=req.params.accountNumber;
@@ -295,17 +284,15 @@ export default class authUsers{
             if (result.rowCount  == 0) {
                 return res.status(404).send({ 
                     status:404,
-                    message: 'no accounts found to delete'});
+                    message: 'No Record found to delete'});
             }
             if(err){
                 res.status(400).send(err);
             } else {
                 return res.status(200).send({
                     status : 200 ,   
-                    data : ` ${accountNumber} Account sucessfully deleted`});
+                    data : `Account: ${accountNumber} sucessfully deleted`});
             }
         });             
-      }
-    } 
-  }
-}
+      } } } 
+    }     

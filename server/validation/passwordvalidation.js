@@ -1,7 +1,6 @@
 import Joi from 'joi';
 
 const passwordvalidation = Joi.object().keys({
-    id:Joi.number().required(),
     firstName: Joi.string().trim().alphanum().min(3).max(50).required(),
     lastName: Joi.string().trim().alphanum().min(3).max(50).required(),
     email: Joi.string().email().regex(/^[A-Za-z\._\-0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/).required(),

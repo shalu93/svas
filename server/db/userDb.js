@@ -4,7 +4,7 @@ const userDb = [
         firstName: 'shalu',
         lastName : 'chandwani',
         email: 'shaluchandwani@svasbanka.com',
-        password : 'Shalu@1993',
+        password : '$2b$10$jVCLG5FrtrXen/gQDs4ikOBWz5izs0iAfKspkPDm8UiNQ/yHBX4tG',
         AcctType: 'client'
     },
     {
@@ -12,7 +12,7 @@ const userDb = [
         firstName: 'pankaj',
         lastName : 'vaswani',
         email: 'pankajvaswani@svasbanka.com',
-        password : 'Pankaj@1993',
+        password : '$2b$10$jVCLG5FrtrXen/gQDs4ikOBWz5izs0iAfKspkPDm8UiNQ/yHBX4tG',
         AcctType: 'client'
     },
 

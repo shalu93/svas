@@ -6,7 +6,7 @@ class Authorization {
         if (!token || token === ' ') {
             return res.status(400).json ({
                 status : 400,
-                message : 'you are not authorised to do the transaction please enter the token',
+                message : 'You are not authorized to do the transaction please enter the Authorization token',
             });
         }
         // eslint-disable-next-line
@@ -14,7 +14,7 @@ class Authorization {
             if(err) {
                 res.status(400).json({
                     status: 400,
-                    message : 'token is not valid',
+                    message : 'The entered token is not valid , Please enter the correct Authorization token',
                 });
             
             } else {

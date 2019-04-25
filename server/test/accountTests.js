@@ -22,7 +22,7 @@ describe('Bank account creation validation', () => {
                 .send(
                     {
                         email: 'pankajvaswani@rocketmail.com',
-                        password: 'Pankaj@1993'
+                        password: 'Pankaj@2019'
                     })
                 .end((err, res) => {
                     expect(res).to.have.status(200);
@@ -60,7 +60,6 @@ describe('Bank account creation validation', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           accountnumb1 = res.body.data.accountNumber;
-          console.log(accountnumb1)
           expect(res.body).to.be.an('object');
           done();
         });
@@ -149,7 +148,7 @@ describe('Bank account creation validation', () => {
             .send(
                 {
                     email: 'shaluchandwani@rocketmail.com',
-                    password: 'Shalu@1993'
+                    password: 'Pankaj@2019'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(200);
@@ -231,12 +230,41 @@ describe('Bank account creation validation', () => {
             });
     });
 
+    it('only positive numbers are allowed in the account number field', (done) => {
+        chai.request(server)
+            .get('/api/v2/accounts/-851')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
     it('Sorry your account status can be either active/draft/dormant', (done) => {
         chai.request(server)
             .patch('/api/v1/account/586')
             .set('Authorization',usertoken)
             .send({
                 status: 'oopsesssss',
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('The account status is already active', (done) => {
+        chai.request(server)
+            .patch(`/api/v1/account/${accountnumb}`)
+            .set('Authorization',usertoken)
+            .send({
+                status: 'active',
                 Authorization:usertoken
             })
             .end((err, res) => {
@@ -275,7 +303,7 @@ describe('Bank account creation validation', () => {
                 });
         });
 
-        it('the token is not provided', (done) => {
+        it(`Sucessfully deleted account ${accountnumb}`, (done) => {
             chai.request(server)
                 .delete(`/api/v1/accounts/${accountnumb}`)
                 .set('Authorization',usertoken)
