@@ -191,70 +191,6 @@
           }
         }
       },
-    "/staff/auth/signin": {
-      "post": {
-        "tags": [
-          "Staff Module"
-        ],
-        "description": "Create Bank account",
-        "parameters": [
-           {
-            "name":"log in",
-            "in": "body",
-            "description" :"Staff log in",
-            "schema": {
-                "$ref": "#/definitions/signin"
-          }
-        }
-      ],
-      "produces": [
-        "application/json"
-      ],
-      "responses": {
-        "200": {
-          "description": "Bank account created successfully",
-          "schema": {
-            "$ref": "#/definitions/signin"
-          }
-        }
-      }
-    }
-  },
-  "/staff/auth/signup": {
-    "post": {
-      "tags": [
-        "Staff Module"
-      ],
-      "description": "Create a staff account",
-      "parameters": [
-        {
-          "name":"Authorization",
-          "in": "header",
-          "description" :"The admin login token",
-          "required":true
-        },
-        {
-          "name":"staff",
-          "in": "body",
-          "description" :"Staff sign up",
-          "schema": {
-              "$ref": "#/definitions/staffsignup"
-            }
-          }
-        ],
-        "produces": [
-          "application/json"
-        ],
-        "responses": {
-          "200": {
-            "description": "Welcome to Banka, Your staff account has been created",
-            "schema": {
-              "$ref": "#/definitions/staffsignup"
-            }
-          }
-        }
-      }
-    },
     "/v1/accounts": {
         "get": {
           "tags": [
@@ -282,7 +218,7 @@
        
         }
       },
-      "/accounts": {
+      "/v1/accounts": {
         "post": {
           "tags": [
             "Accounts Module"

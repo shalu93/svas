@@ -122,62 +122,7 @@ paths:
           description: Welcome to Banka, Your user account has been created
           schema:
             "$ref": "#/definitions/signup"
-  "/staff/auth/signin":
-    post:
-      tags:
-      - Staff Module
-      description: Create Bank account
-      parameters:
-      - name: log in
-        in: body
-        description: Staff log in
-        schema:
-          "$ref": "#/definitions/signin"
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: Bank account created successfully
-          schema:
-            "$ref": "#/definitions/signin"
-  "/staff/auth/signup":
-    post:
-      tags:
-      - Staff Module
-      description: Create a staff account
-      parameters:
-      - name: Authorization
-        in: header
-        description: The admin login token
-        required: true
-      - name: staff
-        in: body
-        description: Staff sign up
-        schema:
-          "$ref": "#/definitions/staffsignup"
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: Welcome to Banka, Your staff account has been created
-          schema:
-            "$ref": "#/definitions/staffsignup"
   "/v1/accounts":
-    get:
-      tags:
-      - Accounts Module
-      description: View all Bank accounts
-      parameters:
-      - name: Authorization
-        in: header
-        description: The admin login token
-        required: true
-      produces:
-      - application/json
-      responses:
-        '200':
-          description: The list of all Bank accounts
-  "/accounts":
     post:
       tags:
       - Accounts Module
@@ -281,7 +226,7 @@ paths:
       - application/json
       responses:
         '200': {}
-  "/accounts?status=active":
+  "/v1/accounts?status=active":
     get:
       tags:
       - Accounts Module
@@ -300,7 +245,7 @@ paths:
       responses:
         '200':
           description: ''
-  "/accounts?status=dormant":
+  "/v1/accounts?status=dormant":
     get:
       tags:
       - Accounts Module
