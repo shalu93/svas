@@ -3,7 +3,7 @@
 [![npm version](https://badge.fury.io/js/heroku-api-plugin.svg)](http://badge.fury.io/js/heroku-api-plugin)
 [![Build Status](https://travis-ci.com/shalu93/svas.svg?branch=master)](https://travis-ci.com/shalu93/svas)
 [![Coverage Status](https://coveralls.io/repos/github/shalu93/svas/badge.svg?branch=testing-tests-travis-ci)](https://coveralls.io/github/shalu93/svas)  
-[![Maintainability](https://api.codeclimate.com/v1/badges/6f9d176365640932903b/maintainability)](https://codeclimate.com/github/shalu93/svas)
+[![Maintainability](https://api.codeclimate.com/v2/badges/6f9d176365640932903b/maintainability)](https://codeclimate.com/github/shalu93/svas)
  
 Svas - Banka challenge - A core Banking Solution Product
 
@@ -41,22 +41,22 @@ The app is hosted on heroku link for the same is : https://svas123.herokuapp.com
 ## Documentation
 | Methods | Endpoints | Actions |
 | :----- | :----- | ----- |
-| /GET | /api/v1/users | to get all users |
-| /POST | /api/v1/auth/signup | Creating a User |
-| /POST | /api/v1/auth/signin | Admin/Staff/Client Login |
-| /GET | /api/v1/accounts | Get list of all accounts |
-| /POST | /api/v1/accounts | Create a new account |
-| /PATCH | /api/v1/account/:accountNumber | Update specified account |
-| /DELETE | /api/v1/account/:accountNumber | Delete specified account |
-| /POST | /api/v1/transactions/:accountNumber/debit | debit specified account |
-| /POST | /api//v1/transactions/:accountNumber/credit | credit specified account |
+| /GET | /api/v2/users | to get all users |
+| /POST | /api/v2/auth/signup | Creating a User |
+| /POST | /api/v2/auth/signin | Admin/Staff/Client Login |
+| /GET | /api/v2/accounts | Get list of all accounts |
+| /POST | /api/v2/accounts | Create a new account |
+| /PATCH | /api/v2/account/:accountNumber | Update specified account |
+| /DELETE | /api/v2/account/:accountNumber | Delete specified account |
+| /POST | /api/v2/transactions/:accountNumber/debit | debit specified account |
+| /POST | /api//v2/transactions/:accountNumber/credit | credit specified account |
 | /GET | /api/v2/user/:useremail/accounts | Get account info of user via email |
 | /GET | /api/v2/accounts/:accountNumber | Get account info of user via particular account |
 | /POST | /api/v2/auth/signup/AdminClient | creating admin/staff user |
 | /GET | /api/v2/accounts/:accountNumber/transactions | get transaction inquiry of a particular account |
 | /GET | /api/v2/transactions/:transactionid | Get transaction inquiry via transaction id |
-| /GET | /api/v1/accounts?status=active | Get list of all active accounts |
-| /GET | /api/v1/accounts?status=dormant | Get list of all dormant accounts |
+| /GET | /api/v2/accounts?status=active | Get list of all active accounts |
+| /GET | /api/v2/accounts?status=dormant | Get list of all dormant accounts |
 
 
 # Setting up Dev

@@ -91,7 +91,7 @@ export default class transaction{
         if(!req.body.amount ) {
             return res.status(400).json({
                 status:400,
-                message: 'Please fill in amount as input of the form'});
+                message: 'Please fill in amount'});
         } else{
         if(req.Info.UserType != 'staff'){
                 return res.status(400).json({ 
@@ -178,7 +178,7 @@ export default class transaction{
         if(!req.body.amount ) {
             return res.status(400).json({ 
                 status:400,
-                message: 'Please fill in amount as input of the form'});
+                message: 'Please fill in amount'});
         } else {
         if(req.Info.UserType != 'staff'){
             return res.status(400).json({ 

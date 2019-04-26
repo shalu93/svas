@@ -14,9 +14,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-app.use('/api', AccountRouter);
-app.use('/api', authRouter);
-app.use('/api', tranRouter);
+app.use('/api/v2', AccountRouter);
+app.use('/api/v2', authRouter);
+app.use('/api/v2', tranRouter);
 
 // eslint-disable-next-line
 const port=process.env.PORT||3001;

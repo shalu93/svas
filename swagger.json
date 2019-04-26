@@ -104,7 +104,7 @@
       }
     }, 
     "paths": {
-      "/v1/auth/signup": {
+      "/v2/auth/signup": {
         "post": {
           "tags": [
             "User Module"
@@ -133,7 +133,7 @@
           }
         }
       },
-    "/v1/auth/signin": {
+    "/v2/auth/signin": {
       "post": {
         "tags": [
           "User Module"
@@ -191,7 +191,7 @@
           }
         }
       },
-    "/v1/accounts": {
+    "/v2/accounts": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -218,7 +218,7 @@
        
         }
       },
-      "/v1/accounts": {
+      "/v2/accounts": {
         "post": {
           "tags": [
             "Accounts Module"
@@ -253,7 +253,7 @@
           }
         }
       },   
-    "/v1/account/{accountNumber}": {
+    "/v2/account/{accountNumber}": {
       "patch": {
         "tags": [
           "Accounts Module"
@@ -294,7 +294,7 @@
           }
         }
       },
-    "/v1/accounts/{accountNumber}": {
+    "/v2/accounts/{accountNumber}": {
         "delete": {
           "tags": [
             "Accounts Module"
@@ -390,7 +390,7 @@
        
         }
       },     
-      "/v1/accounts?status=active": {
+      "/v2/accounts?status=active": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -424,7 +424,7 @@
      
       }
     },
-    "/v1/accounts?status=dormant": {
+    "/v2/accounts?status=dormant": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -458,7 +458,7 @@
      
       }
     },
-    "/v1/transactions/{accountNumber}/debit": {
+    "/v2/transactions/{accountNumber}/debit": {
       "post": {
         "tags": [
           "Transactions Module"
@@ -499,7 +499,7 @@
         }
       }
     },
-    "/v1/transactions/{accountNumber}/credit}": {
+    "/v2/transactions/{accountNumber}/credit": {
       "post": {
         "tags": [
           "Transactions Module"
