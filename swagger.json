@@ -454,7 +454,7 @@
        
         }
       },     
-      "/accounts?status=active": {
+      "/v1/accounts?status=active": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -488,7 +488,7 @@
      
       }
     },
-    "/accounts?status=dormant": {
+    "/v1/accounts?status=dormant": {
         "get": {
           "tags": [
             "Accounts Module"
