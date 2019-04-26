@@ -37,7 +37,7 @@
     "dev": "nodemon --exec babel-node server/server.js",
     "build": "npm run clear && babel server --out-dir build",
     "clear": "rm -rf build",
-    "start": "node build/server.js",
+    "start": "npm run create && npm run addadmin && nodemon --exec babel-node server/server.js",
     "coveralls": "npm test  && nyc report --reporter=text-lcov | coveralls",
     "create": "node server/dbcommands createUserTables && node server/dbcommands createAccountTables && node server/dbcommands createTransactionTables",
     "drop": "node server/dbcommands dropTables",

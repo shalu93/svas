@@ -1,0 +1,667 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "2",
+      "title": "Banka Application API Endpoints"
+    },
+    "host": "localhost:3001",
+    "basePath": "/api",
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "Authorization",
+        "in": "header"
+      }
+    },
+    "schemes": [
+        "http"
+      ],
+      
+      "consumes": [
+        "application/json"
+      ],
+      "produces": [
+        "application/json"
+     ],
+    "definitions": {
+      "signup": {
+        "type": "object",
+        "properties" : {
+          "firstName": {
+              "type": "string"
+          },
+          "lastName": {
+              "type": "string"
+          },
+          "email": {
+              "type": "string"
+          },
+          "password": {
+              "type": "string"
+          },
+          "confirmPassword": {
+              "type": "string"
+          }
+        }
+      },
+    "Admin/Staff-Signup": {
+        "type": "object",
+        "properties" : {
+          "firstName": {
+              "type": "string"
+          },
+          "lastName": {
+              "type": "string"
+          },
+          "email": {
+              "type": "string"
+          },
+          "password": {
+              "type": "string"
+          },
+          "confirmPassword": {
+              "type": "string"
+          },
+          "UserType": {
+              "type": "string"
+          }
+        }
+      },
+      "signin": {
+        "type": "object",
+        "properties" : { 
+          "email": {
+              "type": "string"
+          },
+          "password": {
+              "type": "string"
+          }
+        }
+      },
+      "account": {
+        "type": "object",
+        "properties" : {
+          "type": {
+            "type": "string" 
+          }
+        }
+      },
+      "accountstatus": {
+        "type": "object",
+        "properties" : {
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "transaction": {
+        "type": "object",
+        "properties" : {
+          "amount": {
+              "type": "number"
+          }
+        }
+      }
+    }, 
+    "paths": {
+      "/v1/auth/signup": {
+        "post": {
+          "tags": [
+            "User Module"
+          ],
+          "description": "User Sign up",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "New User that we want to signup",
+              "schema": {
+                "$ref": "#/definitions/signup"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Welcome to Banka, Your user account has been created",
+              "schema": {
+                "$ref": "#/definitions/signup"
+              }
+            }
+          }
+        }
+      },
+    "/v1/auth/signin": {
+      "post": {
+        "tags": [
+          "User Module"
+        ],
+        "description": "Sign in User",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "Sign in the user",
+            "schema": {
+              "$ref": "#/definitions/signin"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/signin"
+            }
+          }
+        }
+      }
+    },   
+      "/v2/auth/signup/AdminClient": {
+        "post": {
+          "tags": [
+            "User Module"
+          ],
+          "description": "Admin/Staff Sign up",
+          "parameters": [
+            {
+              "name": "user",
+              "in": "body",
+              "description": "New Admin/USer that we want to signup",
+              "schema": {
+                "$ref": "#/definitions/Admin/Staff-Signup"
+              }
+            }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Welcome to Banka, Your user account has been created",
+              "schema": {
+                "$ref": "#/definitions/signup"
+              }
+            }
+          }
+        }
+      },
+    "/staff/auth/signin": {
+      "post": {
+        "tags": [
+          "Staff Module"
+        ],
+        "description": "Create Bank account",
+        "parameters": [
+           {
+            "name":"log in",
+            "in": "body",
+            "description" :"Staff log in",
+            "schema": {
+                "$ref": "#/definitions/signin"
+          }
+        }
+      ],
+      "produces": [
+        "application/json"
+      ],
+      "responses": {
+        "200": {
+          "description": "Bank account created successfully",
+          "schema": {
+            "$ref": "#/definitions/signin"
+          }
+        }
+      }
+    }
+  },
+  "/staff/auth/signup": {
+    "post": {
+      "tags": [
+        "Staff Module"
+      ],
+      "description": "Create a staff account",
+      "parameters": [
+        {
+          "name":"Authorization",
+          "in": "header",
+          "description" :"The admin login token",
+          "required":true
+        },
+        {
+          "name":"staff",
+          "in": "body",
+          "description" :"Staff sign up",
+          "schema": {
+              "$ref": "#/definitions/staffsignup"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Welcome to Banka, Your staff account has been created",
+            "schema": {
+              "$ref": "#/definitions/staffsignup"
+            }
+          }
+        }
+      }
+    },
+    "/v1/accounts": {
+        "get": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "View all Bank accounts",
+          "parameters": [
+            {
+              "name":"Authorization",
+              "in": "header",
+              "description" :"The admin login token",
+              "required":true
+              
+            } 
+          ],
+            "produces": [
+              "application/json"
+            ],
+            "responses": {
+              "200": {
+                  "description": "The list of all Bank accounts"
+                
+              }
+            }
+       
+        }
+      },
+      "/accounts": {
+        "post": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "Create Bank account",
+          "parameters": [
+            {
+              "name":"Authorization",
+              "in": "header",
+              "description" :"The client login token",
+              "required":true
+            },
+            {
+              "name":"account type",
+              "in": "body",
+              "description" :"Bank Account type(current or savings)",
+              "schema": {
+                  "$ref": "#/definitions/account"
+                }
+              }
+            ],
+            "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Bank account created successfully",
+              "schema": {
+                "$ref": "#/definitions/account"
+              }
+            }
+          }
+        }
+      },   
+    "/v1/account/{accountNumber}": {
+      "patch": {
+        "tags": [
+          "Accounts Module"
+        ],
+        "description": "Activate or deactivate a Bank account",
+        "parameters": [
+          {
+            "name":"accountNumber",
+            "in": "path",
+            "description" :"account Number",
+            "required":true
+          },
+          {
+            "name":"Authorization",
+            "in": "header",
+            "description" :"Admin login token",
+            "required":true
+          },
+          {
+            "name":"account status",
+            "in": "body",
+            "description" :"Bank Account status(active , draft or dormant)",
+            "schema": {
+              "$ref": "#/definitions/accountstatus"
+            }
+          }
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Operation Successful",
+              "schema": {
+                "$ref": "#/definitions/accountstatus"
+              }
+            }
+          }
+        }
+      },
+    "/v1/accounts/{accountNumber}": {
+        "delete": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "delete the account number",
+          "parameters": [
+            {
+                "name":"accountnumber",
+                "in": "path",
+                "description" :"The account number to delete",
+                "required":true
+              
+            },
+           
+            {
+                "name":"Authorization",
+                "in": "header",
+                "description" :"The admin login token",
+                "required":true
+              
+            }  
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "Bank account successfully deleted"
+              
+            }
+          }
+     
+      }
+    },
+    "/v2/user/{useremail}/accounts": {
+        "get": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "View accounts searched via specific user mail",
+          "parameters": [
+            {
+              "name":"user-email-address",
+              "in": "path",
+              "description" :"The email address of the client",
+              "required":true 
+            },
+            {
+              "name":"Authorization",
+              "in": "header",
+              "description" :"The admin login token",
+              "required":true
+            } 
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              "description": "{user-email-address} Bank accounts"
+            }
+          }
+        }
+      },
+      "/v2/accounts/{accountNumber}": {
+        "get": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "View all accounts searched via specific account number",
+          "parameters": [
+            {
+              "name":"account-number",
+              "in": "path",
+              "description" :"Specific account search",
+              "required":true 
+            },
+            {
+              "name":"Authorization",
+              "in": "header",
+              "description" :"The client login token",
+              "required":true
+            } 
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+              
+            }
+          }
+       
+        }
+      },     
+      "/accounts?status=active": {
+        "get": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "View all active Bank accounts",
+          "parameters": [
+            {
+                "name":"status",
+                "in": "query",
+                "description" :"The admin login token",
+                "required":true
+              
+            },
+            {
+                "name":"Authorization",
+                "in": "header",
+                "description" :"The admin login token",
+                "required":true
+              
+            } 
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+                "description": ""
+              
+            }
+          }
+     
+      }
+    },
+    "/accounts?status=dormant": {
+        "get": {
+          "tags": [
+            "Accounts Module"
+          ],
+          "description": "View all dormant Bank accounts",
+          "parameters": [
+            {
+                "name":"status",
+                "in": "query",
+                "description" :"The admin login token",
+                "required":true
+              
+            },
+            {
+                "name":"Authorization",
+                "in": "header",
+                "description" :"The admin login token",
+                "required":true
+              
+            } 
+          ],
+          "produces": [
+            "application/json"
+          ],
+          "responses": {
+            "200": {
+                "description": ""
+              
+            }
+          }
+     
+      }
+    },
+    "/v1/transactions/{accountNumber}/debit": {
+      "post": {
+        "tags": [
+          "Transactions Module"
+        ],
+        "description": "Debit a Bank Acoount",
+        "parameters": [
+          {
+            "name":"accountNumber",
+            "in": "path",
+            "description" :"The account number to debit",
+            "required":true
+          },
+          {
+            "name":"Authorization",
+            "in": "header",
+            "description" :"The admin login token",
+            "required":true
+          },
+          {
+            "name":"Amount",
+            "in": "body",
+            "description" :"The amount of money to debit",
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction sucessful",
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            } 
+          }
+        }
+      }
+    },
+    "/v1/transactions/{accountNumber}/credit}": {
+      "post": {
+        "tags": [
+          "Transactions Module"
+        ],
+        "description": "Credit a Bank Acoount",
+        "parameters": [
+          {
+            "name":"accountNumber",
+            "in": "path",
+            "description" :"The account number to credit",
+            "required":true
+          },
+          {
+            "name":"Authorization",
+            "in": "header",
+            "description" :"The staff login token",
+            "required":true
+          },
+          {
+            "name":"Amount",
+            "in": "body",
+            "description" :"The amount of money to credit",
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction sucessful",
+            "schema": {
+              "$ref": "#/definitions/transaction"
+            }
+          }
+        }
+      }
+    },
+    "/v2/accounts/{accountNumber}/transactions": {
+      "get": {
+        "tags": [
+          "Transactions Module"
+        ],
+        "description": "View an account’s transaction history",
+        "parameters": [
+          {
+            "name":"accountNumber",
+            "in": "path",
+            "description" :"The account number to view",
+            "required":true,
+            "type":"integer"
+          },
+          {
+            "name":"Authorization",
+            "in": "header",
+            "description" :"The client login token",
+            "required":true
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+
+          }
+        }
+      }
+    },
+    "/v2/transactions/{transactionid}": {
+      "get": {
+        "tags": [
+          "Transactions Module"
+        ],
+        "description": "View a specific transaction via transaction id search",
+        "parameters": [
+          {
+            "name":"transactionId",
+            "in": "path",
+            "description" :"The transaction id to view",
+            "required":true 
+          },
+          {
+            "name":"Authorization",
+            "in": "header",
+            "description" :"The client login token",
+            "required":true
+          } 
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+
+          }
+        }
+      }
+    } } } 
