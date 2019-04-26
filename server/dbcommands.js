@@ -35,8 +35,6 @@ const createAccountTables = () => {
     const accountsTable = `CREATE TABLE IF NOT EXISTS
         accounts(
             accountnumber SERIAL PRIMARY KEY,
-            firstname VARCHAR(50) NOT NULL,
-            lastname VARCHAR(50) NOT NULL,
             email VARCHAR(225) NOT NULL,
             accounttype VARCHAR(7) NOT NULL,
             userid INT NOT NULL,

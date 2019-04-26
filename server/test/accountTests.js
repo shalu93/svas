@@ -15,29 +15,13 @@ let usertoken ;let accountnumb;let accountnumb1;
 
 //should be able to fetch all bank accounts
 describe('Bank account creation validation', () => {
-        it('signup user', (done) => {
-            chai.request(server)
-            .post('/api/v1/auth/signup')
-            .send({
-              firstName: 'pankaj',
-              lastName: 'vaswani',
-              email: 'pankajvaswani@gmail.com',
-              password: 'Pankaj@2019',
-              confirmPassword: 'Pankaj@2019',
-            })
-            .end((err, res) => {
-              expect(res).to.have.status(200);
-              expect(res.body).to.be.an('object');
-              done();
-            });
-        });
   
         it('signin client with right credentials', (done) => {
             chai.request(server)
                 .post('/api/v1/auth/signin')
                 .send(
                     {
-                        email: 'pankajvaswani@gmail.com',
+                        email: 'pankajvaswani@rocketmail.com',
                         password: 'Pankaj@2019'
                     })
                 .end((err, res) => {
@@ -60,7 +44,6 @@ describe('Bank account creation validation', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           accountnumb = res.body.data.accountNumber;
-          console.log(accountnumb)
           expect(res.body).to.be.an('object');
           done();
         });
@@ -77,12 +60,10 @@ describe('Bank account creation validation', () => {
         .end((err, res) => {
           expect(res).to.have.status(200);
           accountnumb1 = res.body.data.accountNumber;
-          console.log(accountnumb1)
           expect(res.body).to.be.an('object');
           done();
         });
     });
-});
     
       //should not create a bank account if user email does not exist
       it('It should allow create saving account with Uppercase letters', (done) => {
@@ -156,6 +137,10 @@ describe('Bank account creation validation', () => {
           });
       });
 
+    });
+    
+    
+    describe('Bank account admin validation', () => {
     //It should sign in user with the credentials
     it('signin Admin with right credentials', (done) => {
         chai.request(server)
@@ -163,7 +148,7 @@ describe('Bank account creation validation', () => {
             .send(
                 {
                     email: 'shaluchandwani@rocketmail.com',
-                    password: 'shalu@1993'
+                    password: 'Pankaj@2019'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(200);
@@ -245,12 +230,41 @@ describe('Bank account creation validation', () => {
             });
     });
 
+    it('only positive numbers are allowed in the account number field', (done) => {
+        chai.request(server)
+            .get('/api/v2/accounts/-851')
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
     it('Sorry your account status can be either active/draft/dormant', (done) => {
         chai.request(server)
             .patch('/api/v1/account/586')
             .set('Authorization',usertoken)
             .send({
                 status: 'oopsesssss',
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('The account status is already active', (done) => {
+        chai.request(server)
+            .patch(`/api/v1/account/${accountnumb}`)
+            .set('Authorization',usertoken)
+            .send({
+                status: 'active',
                 Authorization:usertoken
             })
             .end((err, res) => {
@@ -288,17 +302,20 @@ describe('Bank account creation validation', () => {
                     done();
                 });
         });
-    
-        it('only numbers are allowed in the account number field', (done) => {
+
+        it(`Sucessfully deleted account ${accountnumb}`, (done) => {
             chai.request(server)
-                .delete('/api/v2/accounts/1hdvs30')
+                .delete(`/api/v1/accounts/${accountnumb}`)
                 .set('Authorization',usertoken)
                 .send({
                     Authorization:usertoken
                 })
                 .end((err, res) => {
-                    expect(res).to.have.status(400);
+                    expect(res).to.have.status(200);
                     expect(res.body).to.be.an('object');
                     done();
                 });
+        });
+    
+
 });

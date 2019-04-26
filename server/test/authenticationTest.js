@@ -6,6 +6,8 @@ import chai from 'chai';
 let expect = chai.expect;
 chai.use(chaiHttp);
 
+let usertoken;
+
 /*global it*/
 /*global describe*/
 /*eslint no-undef: "error"*/
@@ -54,8 +56,8 @@ describe('User signup validations', () => {
                 firstName: 'shalu',
                 lastName : 'chandwani',
                 email: 9,
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -73,8 +75,8 @@ describe('User signup validations', () => {
                 firstName: 'shalu',
                 lastName : 'chandwani',
                 email: '',
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -91,8 +93,8 @@ describe('User signup validations', () => {
                 firstName: 'Shalu',
                 lastName : 'chandwani',
                 email: 'shaluchandwani@rocketmail.com',
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(409);
@@ -109,8 +111,8 @@ describe('User signup validations', () => {
                 firstName: 'Shalu',
                 lastName : 'chandwani',
                 email: 'shaluchandwanisvasbanka.com',
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -128,8 +130,8 @@ describe('User signup validations', () => {
                     firstName: '',
                     lastName : 'chandwani',
                     email: 'shaluchandwani@svasbanka.com',
-                    password: 'Shalu@1993',
-                    confirmPassword: 'Shalu@1993'
+                    password: 'Pankaj@2019',
+                    confirmPassword: 'Pankaj@2019'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -164,8 +166,8 @@ describe('User signup validations', () => {
                 firstName: 'Shalu',
                 lastName : '',
                 email: 'shaluchandwani@svasbanka.com',
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -181,8 +183,8 @@ describe('User signup validations', () => {
                 firstName: 'Shalu',
                 lastName : '21',
                 email: 'shaluchandwani@svasbanka.com',
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -198,8 +200,8 @@ describe('User signup validations', () => {
                 firstName: '21',
                 lastName : 'chandwani',
                 email: 'shaluchandwani@svasbanka.com',
-                password: 'Shalu@1993',
-                confirmPassword: 'Shalu@1993'
+                password: 'Pankaj@2019',
+                confirmPassword: 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -231,13 +233,28 @@ describe('User signup validations', () => {
 
 //should login a user without the correct credentials
 describe('User login validation', () => {
-    it('Incorrect credentials', (done) => {
+    it('Incorrect Email Id', (done) => {
         chai.request(server)
             .post('/api/v1/auth/signin')
             .send(
                 {
                     email: 'shalu@svasbanka.com',
-                    password : 'Shalu@1993'
+                    password : 'Pankaj@2019'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+           });
+    });
+
+    it('Incorrect password', (done) => {
+        chai.request(server)
+            .post('/api/v1/auth/signin')
+            .send(
+                {
+                    email: 'shaluchandwani@rocketmail.com',
+                    password : 'Pankaj@20192154'
                 })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -259,7 +276,7 @@ describe('User login validation', () => {
     });
 
     //should not login user without password
-    it('Incorrect password', (done) => {
+    it('password is required', (done) => {
         chai.request(server)
             .post('/api/v1/auth/signin')
             .send({
@@ -293,7 +310,7 @@ describe('User login validation', () => {
             .post('/api/v1/auth/signin')
             .send({
                 email: 'shalulkhag.com',
-                password : 'Shalu@1993'
+                password : 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -303,12 +320,12 @@ describe('User login validation', () => {
     });
     
     //should not login user without email address
-    it('Invalid email address', (done) => {
+    it('email address is required', (done) => {
         chai.request(server)
             .post('/api/v1/auth/signin')
             .send({
                 email: '',
-                password : 'Shalu@1993'
+                password : 'Pankaj@2019'
             })
             .end((err, res) => {
                 expect(res).to.have.status(400);
@@ -317,6 +334,102 @@ describe('User login validation', () => {
             });
     });
 
+    it('signin Admin with right credentials', (done) => {
+        chai.request(server)
+            .post('/api/v1/auth/signin')
+            .send(
+                {
+                    email: 'shaluchandwani@rocketmail.com',
+                    password: 'Pankaj@2019'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                usertoken = res.body.data.token; 
+                done();
+            });
+    });
+
+    //It Should create a staff/admin with right signup credentials
+        it('create a user with right signup credentials', (done) => {
+            chai.request(server)
+                .post('/api/v2/auth/signup/AdminClient')
+                .set('Authorization',usertoken)
+                .send(
+                    {
+                        firstName: 'Michael',
+                        lastName : 'jackson',
+                        email: 'michalj@svassvasbanka.com',
+                        password: 'Pankaj@2019',
+                        confirmPassword: 'Pankaj@2019',
+                        UserType:'admin'
+                    })
+                .end((err, res) => {
+                    expect(res).to.have.status(200);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
+
+        it('FirstName cannot be empty', (done) => {
+            chai.request(server)
+                .post('/api/v2/auth/signup/AdminClient')
+                .set('Authorization',usertoken)
+                .send(
+                    {
+                        firstName: '',
+                        lastName : 'jackson',
+                        email: 'michalj@svassvasbanka.com',
+                        password: 'Pankaj@2019',
+                        confirmPassword: 'Pankaj@2019',
+                        UserType:'admin'
+                    })
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });  
+        
+        it('LastName cannot be empty', (done) => {
+            chai.request(server)
+                .post('/api/v2/auth/signup/AdminClient')
+                .set('Authorization',usertoken)
+                .send(
+                    {
+                        firstName: 'michael',
+                        lastName : '',
+                        email: 'michalj@svassvasbanka.com',
+                        password: 'Pankaj@2019',
+                        confirmPassword: 'Pankaj@2019',
+                        UserType:'admin'
+                    })
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
+
+        it('email already exists', (done) => {
+            chai.request(server)
+                .post('/api/v2/auth/signup/AdminClient')
+                .set('Authorization',usertoken)
+                .send(
+                    {
+                        firstName: 'michael',
+                        lastName : 'jackson',
+                        email: 'michalj@svassvasbanka.com',
+                        password: 'Pankaj@2019',
+                        confirmPassword: 'Pankaj@2019',
+                        UserType:'admin'
+                    })
+                .end((err, res) => {
+                    expect(res).to.have.status(409);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
 
 });
         
