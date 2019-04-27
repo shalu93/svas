@@ -121,7 +121,7 @@ export default class authUsers{
             if( !req.body.type ) { 
                 return res.status(400).json({ 
                     status:400,
-                    message: 'Please fill in type as inputs of the form'});
+                    message: 'Please fill in type'});
             } else {
             if(req.Info.UserType != 'client'){
                 return res.status(400).json({ 
@@ -129,10 +129,10 @@ export default class authUsers{
                     message: 'You are not authorized to perform this transaction only client can'
                 });
             } else {
-            if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current' && req.body.type.toLowerCase() != 'dormant') {
+            if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current') {
                     return res.status(400).json({ 
                         status: 400,
-                        message: 'Sorry your account type can be either saving ,current or dormant'
+                        message: 'Sorry your account type can be either saving ,current'
                     });
             } else{
                 let toDay = Date.now();
@@ -143,13 +143,13 @@ export default class authUsers{
                     email:  req.Info.email ,
                     type:  req.body.type.toLowerCase() ,
                     userid:req.Info.UserId,
-                    Status:'active',
+                    status:'active',
                     openingBalance:0.0,
                     createdOn : toDay,
                     currentbalance: 0.0
                 };
                 const text = 'INSERT INTO accounts(accountnumber, email, accounttype,userid, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
-                const values= [account.accountNumber,account.email,account.type,account.userid, account.Status,account.openingBalance,account.createdOn,account.currentbalance];
+                const values= [account.accountNumber,account.email,account.type,account.userid, account.status,account.openingBalance,account.createdOn,account.currentbalance];
                 db.query(text, values ,function(err,result) {
                     console.log(err)
                     if(err){
@@ -172,14 +172,19 @@ export default class authUsers{
             });
         }
     }
-
+    /**
+     * 
+     * @param {*} req 
+     * @param {*} res 
+     * 
+     */
     static updateAccount(req, res){
         try{
             
             if(!req.body.status ) {
                 return res.status(400).json({ 
                     status:400,
-                    message: 'Please fill in status as inputs of the form'});
+                    message: 'Please fill in status'});
             } else {
             const num = {
                 inputparamnumber: req.params.accountNumber
@@ -210,7 +215,7 @@ export default class authUsers{
                 lastName:req.Info.lastName,
                 email:req.Info.email,
                 UserType : req.Info.UserType,
-                Status :req.body.status.toLowerCase()
+                status :req.body.status.toLowerCase()
             }; 
             const text = 'select * from  accounts where accountnumber =$1';
             const values= [accounts.accountNumber];
@@ -220,7 +225,7 @@ export default class authUsers{
                         status:404,
                         message: `Account Number:${accounts.accountNumber} doesnot exists`});
                 }
-                if (req.body.status == result.rows[0].accountstatus){
+                if (req.body.status.toLowerCase() == result.rows[0].accountstatus){
                     return res.status(400).send({ 
                     status:400,
                     message: `The status is already ${req.body.status}`});  
@@ -229,11 +234,11 @@ export default class authUsers{
                     accountNumber: result.rows[0].accountnumber,
                     email:result.rows[0].email,
                     type:result.rows[0].accounttype,
-                    Status:req.body.status.toLowerCase()
+                    status:req.body.status.toLowerCase()
                 };            
-                let accountNumber=account.accountNumber,firstName=accounts.firstName,lastName=accounts.lastName,email=account.email,type=account.type,status=account.Status;
+                let accountNumber=account.accountNumber,firstName=accounts.firstName,lastName=accounts.lastName,email=account.email,type=account.type,status=account.status;
                 const text = 'update accounts set accountstatus = ($1) where accountnumber =($2)';
-                const values= [account.Status,account.accountNumber];
+                const values= [account.status,account.accountNumber];
                 db.query(text, values ,function(err,result) {
                     if (result.rowCount  == 0) {
                         return res.status(404).send({ 

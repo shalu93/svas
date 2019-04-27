@@ -35,7 +35,7 @@ export default class authUsers{
             if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.confirmPassword ) {
                 return res.status(400).json({ 
                     status:400,
-                    message: 'Please fill in firstName , lastName , email , password and confirmPassword as inputs of the form'});
+                    message: 'Please fill in firstName , lastName , email , password and confirmPassword'});
             } else{
             if(validation.Signup(req, res)){
                 let email= req.body.email;          
@@ -99,7 +99,7 @@ export default class authUsers{
             if(!req.body.email ||  !req.body.password ) {
                 return res.status(400).json({
                     status:400,
-                    message: 'Please fill in  email and password as inputs of the form'});
+                    message: 'Please fill in  email and password'});
             } else {
             if(validation.Login(req, res)){
                 let email= req.body.email;   
@@ -165,7 +165,7 @@ export default class authUsers{
                 if(!req.body.email || !req.body.firstName || !req.body.lastName || !req.body.password || !req.body.confirmPassword || !req.body.UserType) {
                     return res.status(400).json({ 
                         status:400,
-                        message: 'Please fill in firstName , lastName , email , password, confirmPassword and UserType as inputs of the form'});
+                        message: 'Please fill in firstName , lastName , email , password, confirmPassword and UserType'});
                 } else{
                 if(validation.Signup(req, res)){
                     let email= req.body.email;          
