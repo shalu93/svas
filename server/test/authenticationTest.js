@@ -226,6 +226,23 @@ describe('User signup validations', () => {
                 done();
             });
     });
+
+    it('password should have at least 1 digit,special character,upper and lower case English letter and a Min 10 characters', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@svasbanka.com',
+                password: 'shalu@1993',
+                confirmPassword: 'shalu@1993'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
   
 });
 
