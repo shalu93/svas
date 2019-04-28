@@ -202,7 +202,6 @@ export default class authUsers{
                         const text = 'INSERT INTO accounts(accountnumber, email, accounttype,userid, accountstatus, openingbalance, createdon, currentbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
                         const values= [account.accountNumber,account.email,account.type,account.userid, account.status,account.openingBalance,account.createdOn,account.currentbalance];
                         db.query(text, values ,function(err,result) {
-                            console.log(err);
                             if(err){
                                 res.status(400).send(err);
                             } else {
@@ -336,7 +335,6 @@ export default class authUsers{
                 const text = 'delete from accounts where accountnumber =($1)';
                 const values= [accountNumber];
                 db.query(text, values ,function(err,result) {
-                    console.log(result.rowCount);
                     if (result.rowCount  == 0) {
                         return res.status(404).send({ 
                             status:404,

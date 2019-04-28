@@ -178,8 +178,6 @@ export default class transaction{
                                 if(err){
                                     res.status(400).send(err);
                                 } else {
-                                    // eslint-disable-next-line 
-                    console.log('accounts table current balance updated');
                                     const text2 = 'INSERT INTO transactions(accountnumber,staffid,userid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
                                     const values2= [debit.accountNumber,debit.staffId,debit.userid, debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
                                     db.query(text2, values2 ,function(err,result) {
@@ -260,8 +258,6 @@ export default class transaction{
                             if(err){
                                 res.status(400).send(err);
                             } else {
-                                // eslint-disable-next-line 
-                    console.log('accounts table current balance updated');
                                 const text2 = 'INSERT INTO transactions(accountnumber,staffid,userid, createdon, transactiontype, transactionamount, oldbalance, newbalance) VALUES($1,$2,$3,$4,$5,$6,$7,$8)';
                                 const values2= [debit.accountNumber,debit.staffId,debit.userid, debit.createdOn,debit.TransactionType,debit.TransactionAmt, debit.oldBalance,debit.newBalance];
                                 db.query(text2, values2 ,function(err,result) {
