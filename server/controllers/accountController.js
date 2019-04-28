@@ -34,7 +34,7 @@ export default class authUsers{
                                     userId:accounts.userid,
                                     accountStatus: accounts.accountstatus,
                                     openingBalance: accounts.openingbalance,
-                                    createdOn:accounts.createdon,
+                                    createdOn:new Date(accounts.createdon),
                                     currentBalance: accounts.currentbalance
                                 }; 
                             }
@@ -42,7 +42,7 @@ export default class authUsers{
                         );}
                 });
             } else {
-                var stat =  status ;
+                var stat =  status.toLowerCase() ;
                 const text = 'SELECT * FROM accounts WHERE accounts.accountstatus = ($1)';
                 const values= [stat];
                 db.query(text, values ,function(err,result) {
@@ -64,7 +64,7 @@ export default class authUsers{
                                     userId:accounts.userid,
                                     accountStatus: accounts.accountstatus,
                                     openingBalance: accounts.openingbalance,
-                                    createdOn:accounts.createdon,
+                                    createdOn:new Date(accounts.createdon),
                                     currentBalance: accounts.currentbalance
                                 }; 
                             }
@@ -117,7 +117,7 @@ export default class authUsers{
                                     userId:accounts.userid,
                                     accountStatus: accounts.accountstatus,
                                     openingBalance: accounts.openingbalance,
-                                    createdOn:accounts.createdon,
+                                    createdOn:new Date(accounts.createdon),
                                     currentBalance: accounts.currentbalance
                                 }; 
                             }
@@ -157,7 +157,7 @@ export default class authUsers{
                                 userId:accounts.userid,
                                 accountStatus: accounts.accountstatus,
                                 openingBalance: accounts.openingbalance,
-                                createdOn:accounts.createdon,
+                                createdOn:new Date(accounts.createdon),
                                 currentBalance: accounts.currentbalance
                             }; 
                         }
@@ -180,10 +180,10 @@ export default class authUsers{
                         message: 'You are not authorized to perform this transaction only client can'
                     });
                 } else {
-                    if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current') {
+                    if(req.body.type.toLowerCase() != 'saving' && req.body.type.toLowerCase() != 'current' && req.body.type.toLowerCase() != 'loan') {
                         return res.status(400).json({ 
                             status: 400,
-                            message: 'Sorry your account type can be either saving ,current'
+                            message: 'Sorry your account type can be either saving ,current and loan'
                         });
                     } else{
                         let toDay = Date.now();
