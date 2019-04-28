@@ -191,7 +191,7 @@ export default class authUsers{
                             lastName: req.body.lastName,
                             email: req.body.email ,
                             password: req.body.password ,
-                            userType:req.body.UserType
+                            UserType:req.body.UserType
                         };
     
                         const result = Joi.validate(user, passwordvalidation);
@@ -206,16 +206,16 @@ export default class authUsers{
                         // eslint-disable-next-line 
                         const token = jwt.sign(user, process.env.JWTSECRETKEY);
                         const text = 'INSERT INTO users(firstname,lastname,email,password,usertype) VALUES($1,$2,$3,$4,$5)';
-                        const values = [user.firstName,user.lastName,user.email,hash,user.userType];
+                        const values = [user.firstName,user.lastName,user.email,hash,user.UserType];
                         db.query(text, values ,function(err,result) {
                             if(err){
                                 res.status(400).send(err);
                             } else {
-                                let firstName=user.firstName,lastName=user.lastName,email=user.email,userType=user.userType;
+                                let firstName=user.firstName,lastName=user.lastName,email=user.email,UserType=user.UserType;
                                 return res.send({
                                     status : 200 ,   
                                     message: 'Welcome to Banka, Your user account has been created',
-                                    data : {token,firstName,lastName,email,userType}});
+                                    data : {token,firstName,lastName,email,UserType}});
                                      
                             }
                         });    
