@@ -7,7 +7,7 @@ const passwordvalidation = Joi.object().keys({
     password: Joi.string().regex(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{10,}$/).required().error( errors => {
         return {
             message: 'password should have at least 1 digit,special character,upper and lower case English letter and a Min 10 characters'
-        }
+        };
     }),
     UserType:Joi.string().required()
 });

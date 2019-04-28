@@ -82,15 +82,15 @@ const createTransactionTables = () => {
 const dropTables = () => {
     const deleteTables = 'DROP TABLE IF EXISTS users, accounts, transactions';
     pool.query(deleteTables)
-      .then((res) => {
-        console.log(res);
-        pool.end();
-      })
-      .catch((err) => {
-        console.log(err);
-        pool.end();
-      });
-  };
+        .then((res) => {
+            console.log(res);
+            pool.end();
+        })
+        .catch((err) => {
+            console.log(err);
+            pool.end();
+        });
+};
 
 pool.on('remove', () => {
     console.log('clients removed');

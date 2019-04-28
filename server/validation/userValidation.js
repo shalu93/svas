@@ -49,15 +49,15 @@ export default class validation {
             throw Error('confirm your password');
         }
         if(whiteSpace.test(req.body.password)) {
-            throw Error("Password should not contain white spaces");
+            throw Error('Password should not contain white spaces');
         }
         if (!validLetters.test(req.body.firstName)) {
            
-            throw Error("First Name should contain only letters"); 
+            throw Error('First Name should contain only letters'); 
         }
         if (!validLetters.test(req.body.lastName)) {
            
-            throw Error("Last Name should contain only letters"); 
+            throw Error('Last Name should contain only letters'); 
         }
         return true;
     }
