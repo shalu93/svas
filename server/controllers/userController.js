@@ -23,11 +23,19 @@ export default class authUsers{
                 } else {
                 return res.send({
                     status : 200 ,   
-                    data : result.rows});
-                }
+                    data : result.rows.map((users) => {
+                        return {
+                        userId : users.userid,
+                        firstName: users.firstname,
+                        lastName: users.lastname,
+                        email:users.email,
+                        userType: users.usertype} 
+                    }
+                )}
+                )}
             }
         });
-    }
+    } 
 
     static SignupUser(req, res){
         try{
