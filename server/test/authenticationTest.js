@@ -28,24 +28,24 @@ describe('User signup validations', () => {
             });
     }); 
 
-        //It Should create a user with right signup credentials
-        it('create a user with right signup credentials', (done) => {
-            chai.request(server)
-                .post('/api/v2/auth/signup')
-                .send(
-                    {
-                        firstName: 'mahesh',
-                        lastName : 'chandwani',
-                        email: 'maheshchandwani@svassvasbanka.com',
-                        password: 'Mahesh@1993',
-                        confirmPassword: 'Mahesh@1993'
-                    })
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    //It Should create a user with right signup credentials
+    it('create a user with right signup credentials', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup')
+            .send(
+                {
+                    firstName: 'mahesh',
+                    lastName : 'chandwani',
+                    email: 'maheshchandwani@svassvasbanka.com',
+                    password: 'Mahesh@1993',
+                    confirmPassword: 'Mahesh@1993'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
     // should not register a user with an integer email  
 
@@ -296,7 +296,7 @@ describe('User login validation', () => {
                 expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
-           });
+            });
     });
 
     it('Email should not be an Integer', (done) => {
@@ -311,7 +311,7 @@ describe('User login validation', () => {
                 expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
-           });
+            });
     });
 
     it('Email should not be empty', (done) => {
@@ -326,7 +326,7 @@ describe('User login validation', () => {
                 expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
-           });
+            });
     });
 
     it('Incorrect password', (done) => {
@@ -341,7 +341,7 @@ describe('User login validation', () => {
                 expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
-           });
+            });
     });
 
     it('password is required', (done) => {
@@ -356,7 +356,7 @@ describe('User login validation', () => {
                 expect(res).to.have.status(400);
                 expect(res.body).to.be.an('object');
                 done();
-           });
+            });
     });
 
     // should fetch all users
@@ -387,18 +387,18 @@ describe('User login validation', () => {
     });
 
     //should not login user with an incorrect email and password
-       it('Invalid email and password', (done) => {
-           chai.request(server)
-               .post('/api/v2/auth/signin')
-               .send({ 
-                   email: 'shalu@svasbanka.com',
-                   password : 'Shalu'})
-               .end((err, res) => {
-                   expect(res).to.have.status(400);
-                   expect(res.body).to.be.an('object');
-                   done();
-               });
-       });
+    it('Invalid email and password', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signin')
+            .send({ 
+                email: 'shalu@svasbanka.com',
+                password : 'Shalu'})
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
     
     //should not log in user with an integer email
     it('email format should be like google@gmail.com ', (done) => {
@@ -447,85 +447,85 @@ describe('User login validation', () => {
     });
 
     //It Should create a staff/admin with right signup credentials
-        it('create a user with right signup credentials', (done) => {
-            chai.request(server)
-                .post('/api/v2/auth/signup/AdminClient')
-                .set('Authorization',usertoken)
-                .send(
-                    {
-                        firstName: 'Michael',
-                        lastName : 'jackson',
-                        email: 'michalj@svassvasbanka.com',
-                        password: 'Pankaj@2019',
-                        confirmPassword: 'Pankaj@2019',
-                        UserType:'admin'
-                    })
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    it('create a user with right signup credentials', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup/AdminClient')
+            .set('Authorization',usertoken)
+            .send(
+                {
+                    firstName: 'Michael',
+                    lastName : 'jackson',
+                    email: 'michalj@svassvasbanka.com',
+                    password: 'Pankaj@2019',
+                    confirmPassword: 'Pankaj@2019',
+                    UserType:'admin'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
-        it('FirstName cannot be empty', (done) => {
-            chai.request(server)
-                .post('/api/v2/auth/signup/AdminClient')
-                .set('Authorization',usertoken)
-                .send(
-                    {
-                        firstName: '',
-                        lastName : 'jackson',
-                        email: 'michalj@svassvasbanka.com',
-                        password: 'Pankaj@2019',
-                        confirmPassword: 'Pankaj@2019',
-                        UserType:'admin'
-                    })
-                .end((err, res) => {
-                    expect(res).to.have.status(400);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });  
+    it('FirstName cannot be empty', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup/AdminClient')
+            .set('Authorization',usertoken)
+            .send(
+                {
+                    firstName: '',
+                    lastName : 'jackson',
+                    email: 'michalj@svassvasbanka.com',
+                    password: 'Pankaj@2019',
+                    confirmPassword: 'Pankaj@2019',
+                    UserType:'admin'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });  
         
-        it('LastName cannot be empty', (done) => {
-            chai.request(server)
-                .post('/api/v2/auth/signup/AdminClient')
-                .set('Authorization',usertoken)
-                .send(
-                    {
-                        firstName: 'michael',
-                        lastName : '',
-                        email: 'michalj@svassvasbanka.com',
-                        password: 'Pankaj@2019',
-                        confirmPassword: 'Pankaj@2019',
-                        UserType:'admin'
-                    })
-                .end((err, res) => {
-                    expect(res).to.have.status(400);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    it('LastName cannot be empty', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup/AdminClient')
+            .set('Authorization',usertoken)
+            .send(
+                {
+                    firstName: 'michael',
+                    lastName : '',
+                    email: 'michalj@svassvasbanka.com',
+                    password: 'Pankaj@2019',
+                    confirmPassword: 'Pankaj@2019',
+                    UserType:'admin'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
-        it('email already exists', (done) => {
-            chai.request(server)
-                .post('/api/v2/auth/signup/AdminClient')
-                .set('Authorization',usertoken)
-                .send(
-                    {
-                        firstName: 'michael',
-                        lastName : 'jackson',
-                        email: 'michalj@svassvasbanka.com',
-                        password: 'Pankaj@2019',
-                        confirmPassword: 'Pankaj@2019',
-                        UserType:'admin'
-                    })
-                .end((err, res) => {
-                    expect(res).to.have.status(409);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    it('email already exists', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup/AdminClient')
+            .set('Authorization',usertoken)
+            .send(
+                {
+                    firstName: 'michael',
+                    lastName : 'jackson',
+                    email: 'michalj@svassvasbanka.com',
+                    password: 'Pankaj@2019',
+                    confirmPassword: 'Pankaj@2019',
+                    UserType:'admin'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(409);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
 });
         

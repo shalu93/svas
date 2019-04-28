@@ -44,7 +44,7 @@
           }
         }
       },
-    "Admin/Staff-Signup": {
+    "AdminStaffSignup": {
         "type": "object",
         "properties" : {
           "firstName": {
@@ -174,7 +174,7 @@
               "in": "body",
               "description": "New Admin/USer that we want to signup",
               "schema": {
-                "$ref": "#/definitions/Admin/Staff-Signup"
+                "$ref": "#/definitions/AdminStaffSignup"
               }
             }
           ],
@@ -185,7 +185,7 @@
             "200": {
               "description": "Welcome to Banka, Your user account has been created",
               "schema": {
-                "$ref": "#/definitions/signup"
+                "$ref": "#/definitions/AdminStaffSignup"
               }
             }
           }
@@ -384,7 +384,7 @@
           ],
           "responses": {
             "200": {
-              
+              "description" : "account details"
             }
           }
        
@@ -417,7 +417,7 @@
           ],
           "responses": {
             "200": {
-                "description": ""
+                "description": "All active accounts"
               
             }
           }
@@ -451,7 +451,7 @@
           ],
           "responses": {
             "200": {
-                "description": ""
+                "description": "All dormant accounts"
               
             }
           }
@@ -566,7 +566,7 @@
         ],
         "responses": {
           "200": {
-
+              "description":"Transaction history of an account"
           }
         }
       }
@@ -596,7 +596,7 @@
         ],
         "responses": {
           "200": {
-
+              "description" :"transaction details"
           }
         }
       }

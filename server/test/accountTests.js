@@ -16,57 +16,57 @@ let usertoken ;let accountnumb;let accountnumb1;
 //should be able to fetch all bank accounts
 describe('Bank account creation validation', () => {
   
-        it('signin client with right credentials', (done) => {
-            chai.request(server)
-                .post('/api/v2/auth/signin')
-                .send(
-                    {
-                        email: 'pankajvaswani@rocketmail.com',
-                        password: 'Pankaj@2019'
-                    })
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    usertoken = res.body.data.token; 
-                    done();
-                });
-        });      
+    it('signin client with right credentials', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signin')
+            .send(
+                {
+                    email: 'pankajvaswani@rocketmail.com',
+                    password: 'Pankaj@2019'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                usertoken = res.body.data.token; 
+                done();
+            });
+    });      
   
-  //create bank account 
+    //create bank account 
   
-  it('saving account created successfully', (done) => {
-      chai.request(server)
-        .post('/api/v2/accounts')
-        .set('Authorization',usertoken)
-        .send({
-          type: 'saving',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          accountnumb = res.body.data.accountNumber;
-          expect(res.body).to.be.an('object');
-          done();
-        });
+    it('saving account created successfully', (done) => {
+        chai.request(server)
+            .post('/api/v2/accounts')
+            .set('Authorization',usertoken)
+            .send({
+                type: 'saving',
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                accountnumb = res.body.data.accountNumber;
+                expect(res.body).to.be.an('object');
+                done();
+            });
     });
   
   
     it('Current account created successfully', (done) => {
-      chai.request(server)
-        .post('/api/v2/accounts')
-        .set('Authorization',usertoken)
-        .send({
-          type: 'current',
-        })
-        .end((err, res) => {
-          expect(res).to.have.status(200);
-          accountnumb1 = res.body.data.accountNumber;
-          expect(res.body).to.be.an('object');
-          done();
-        });
+        chai.request(server)
+            .post('/api/v2/accounts')
+            .set('Authorization',usertoken)
+            .send({
+                type: 'current',
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                accountnumb1 = res.body.data.accountNumber;
+                expect(res.body).to.be.an('object');
+                done();
+            });
     });
     
-      //should not create a bank account if user email does not exist
-      it('It should allow create saving account with Uppercase letters', (done) => {
+    //should not create a bank account if user email does not exist
+    it('It should allow create saving account with Uppercase letters', (done) => {
         chai.request(server)
             .post('/api/v2/accounts')
             .set('Authorization',usertoken)
@@ -126,21 +126,21 @@ describe('Bank account creation validation', () => {
 
     it('the token is not provided', (done) => {
         chai.request(server)
-          .post('/api/v2/accounts')
-          .send({
-            type: 'saving',
-          })
-          .end((err, res) => {
-            expect(res).to.have.status(400);
-            expect(res.body).to.be.an('object');
-            done();
-          });
-      });
-
+            .post('/api/v2/accounts')
+            .send({
+                type: 'saving',
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
     });
+
+});
     
     
-    describe('Bank account admin validation', () => {
+describe('Bank account admin validation', () => {
     //It should sign in user with the credentials
     it('signin Admin with right credentials', (done) => {
         chai.request(server)
@@ -274,7 +274,7 @@ describe('Bank account creation validation', () => {
             });
     });
 
-//should notify the staff/admin when the bank account is not found
+    //should notify the staff/admin when the bank account is not found
     it('bank account is not found to delete', (done) => {
         chai.request(server)
             .delete('/api/v2/accounts/8')
@@ -289,61 +289,59 @@ describe('Bank account creation validation', () => {
             });
     });
 
-        // it should not let bank account to be deleted if token is not passed
-        it('the token is not provided', (done) => {
-            chai.request(server)
-                .delete('/api/v2/accounts/130')
-                .send({
-                    Authorization:usertoken
-                })
-                .end((err, res) => {
-                    expect(res).to.have.status(400);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    // it should not let bank account to be deleted if token is not passed
+    it('the token is not provided', (done) => {
+        chai.request(server)
+            .delete('/api/v2/accounts/130')
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
-        it('the token is incorrect', (done) => {
-            chai.request(server)
-                .delete('/api/v2/accounts/130')
-                .set('Authorization123',usertoken)
-                .send({
-                    Authorization:usertoken
-                })
-                .end((err, res) => {
-                    expect(res).to.have.status(400);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    it('the token is incorrect', (done) => {
+        chai.request(server)
+            .delete('/api/v2/accounts/130')
+            .set('Authorization','incorrecttoken')
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
-        it(`Sucessfully deleted account ${accountnumb}`, (done) => {
-            chai.request(server)
-                .delete(`/api/v2/accounts/-${accountnumb}`)
-                .set('Authorization',usertoken)
-                .send({
-                    Authorization:usertoken
-                })
-                .end((err, res) => {
-                    expect(res).to.have.status(400);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
+    it(`Sucessfully deleted account ${accountnumb}`, (done) => {
+        chai.request(server)
+            .delete(`/api/v2/accounts/-${accountnumb}`)
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 
-        it(`Sucessfully deleted account ${accountnumb}`, (done) => {
-            chai.request(server)
-                .delete(`/api/v2/accounts/${accountnumb}`)
-                .set('Authorization',usertoken)
-                .send({
-                    Authorization:usertoken
-                })
-                .end((err, res) => {
-                    expect(res).to.have.status(200);
-                    expect(res.body).to.be.an('object');
-                    done();
-                });
-        });
-    
-
+    it(`Sucessfully deleted account ${accountnumb}`, (done) => {
+        chai.request(server)
+            .delete(`/api/v2/accounts/${accountnumb}`)
+            .set('Authorization',usertoken)
+            .send({
+                Authorization:usertoken
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(200);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
 });

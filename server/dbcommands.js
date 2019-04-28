@@ -3,10 +3,11 @@ dotenv.config();
 const { Pool } = require('pg');
 const config = require('../config');
 
+/*global process*/
+
 const pool = new Pool({connectionString: process.env.NODE_ENV==='test' ? config.test.dbPath : config.dev.dbPath});
 
 pool.on('connect', () => {
-    console.log('connected to the Database');
 });
 
 
@@ -22,11 +23,9 @@ const createUserTables = () => {
         )`;
     pool.query(userTable)
         .then((res) => {
-            console.log(res);
             pool.end();
         })
         .catch((err) => {
-            console.log(err);
             pool.end();
         });
 };
@@ -45,11 +44,9 @@ const createAccountTables = () => {
         )`;
     pool.query(accountsTable)
         .then((res) => {
-            console.log(res);
             pool.end();
         })
         .catch((err) => {
-            console.log(err);
             pool.end();
         });
 };
@@ -69,11 +66,9 @@ const createTransactionTables = () => {
         )`;
     pool.query(transactionsTable)
         .then((res) => {
-            console.log(res);
             pool.end();
         })
         .catch((err) => {
-            console.log(err);
             pool.end();
         });
 };
@@ -82,18 +77,15 @@ const createTransactionTables = () => {
 const dropTables = () => {
     const deleteTables = 'DROP TABLE IF EXISTS users, accounts, transactions';
     pool.query(deleteTables)
-      .then((res) => {
-        console.log(res);
-        pool.end();
-      })
-      .catch((err) => {
-        console.log(err);
-        pool.end();
-      });
-  };
+        .then((res) => {
+            pool.end();
+        })
+        .catch((err) => {
+            pool.end();
+        });
+};
 
 pool.on('remove', () => {
-    console.log('clients removed');
     process.exit(0);
 });
 
