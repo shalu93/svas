@@ -303,6 +303,20 @@ describe('Bank account creation validation', () => {
                 });
         });
 
+        it('the token is incorrect', (done) => {
+            chai.request(server)
+                .delete('/api/v2/accounts/130')
+                .set('Authorization123',usertoken)
+                .send({
+                    Authorization:usertoken
+                })
+                .end((err, res) => {
+                    expect(res).to.have.status(400);
+                    expect(res.body).to.be.an('object');
+                    done();
+                });
+        });
+
         it(`Sucessfully deleted account ${accountnumb}`, (done) => {
             chai.request(server)
                 .delete(`/api/v2/accounts/-${accountnumb}`)

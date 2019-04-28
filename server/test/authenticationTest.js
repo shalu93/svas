@@ -243,6 +243,40 @@ describe('User signup validations', () => {
                 done();
             });
     });
+
+    it('Password and Confirm password should match', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@svasbanka.com',
+                password: 'Shalu@199323255',
+                confirmPassword: 'Shalu@1993'
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
+
+    it('Please enter Confirm Password', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signup')
+            .send({
+                firstName: 'shalu',
+                lastName : 'chandwani',
+                email: 'shaluchandwani@svasbanka.com',
+                password: 'Shalu@199323255',
+                confirmPassword: ''
+            })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+            });
+    });
   
 });
 
@@ -250,12 +284,42 @@ describe('User signup validations', () => {
 
 //should login a user without the correct credentials
 describe('User login validation', () => {
-    it('Incorrect Email Id', (done) => {
+    it('Incorrect Email', (done) => {
         chai.request(server)
             .post('/api/v2/auth/signin')
             .send(
                 {
                     email: 'shalu@svasbanka.com',
+                    password : 'Pankaj@2019'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+           });
+    });
+
+    it('Email should not be an Integer', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signin')
+            .send(
+                {
+                    email: '11',
+                    password : 'Pankaj@2019'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+           });
+    });
+
+    it('Email should not be empty', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signin')
+            .send(
+                {
+                    email: '',
                     password : 'Pankaj@2019'
                 })
             .end((err, res) => {
@@ -272,6 +336,21 @@ describe('User login validation', () => {
                 {
                     email: 'shaluchandwani@rocketmail.com',
                     password : 'Pankaj@20192154'
+                })
+            .end((err, res) => {
+                expect(res).to.have.status(400);
+                expect(res.body).to.be.an('object');
+                done();
+           });
+    });
+
+    it('password is required', (done) => {
+        chai.request(server)
+            .post('/api/v2/auth/signin')
+            .send(
+                {
+                    email: 'shaluchandwani@rocketmail.com',
+                    password : ''
                 })
             .end((err, res) => {
                 expect(res).to.have.status(400);

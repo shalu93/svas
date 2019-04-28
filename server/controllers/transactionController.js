@@ -8,7 +8,6 @@ dotenv.config();
 
 
 export default class transaction{
-
     
     // get all transaction details 
     static viewTransaction(req, res){
