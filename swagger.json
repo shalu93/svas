@@ -5,7 +5,7 @@
       "title": "Banka Application API Endpoints"
     },
     "host": "localhost:3001",
-    "basePath": "/api",
+    "basePath": "/api/v2",
     "securityDefinitions": {
       "Bearer": {
         "type": "apiKey",
@@ -104,7 +104,7 @@
       }
     }, 
     "paths": {
-      "/v2/auth/signup": {
+      "/auth/signup": {
         "post": {
           "tags": [
             "User Module"
@@ -133,7 +133,7 @@
           }
         }
       },
-    "/v2/auth/signin": {
+    "/auth/signin": {
       "post": {
         "tags": [
           "User Module"
@@ -162,7 +162,7 @@
         }
       }
     },   
-      "/v2/auth/signup/AdminClient": {
+      "/auth/signup/AdminClient": {
         "post": {
           "tags": [
             "User Module"
@@ -191,7 +191,7 @@
           }
         }
       },
-    "/v2/accounts": {
+    "/accounts": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -218,7 +218,7 @@
        
         }
       },
-      "/v2/accounts": {
+      "/accounts": {
         "post": {
           "tags": [
             "Accounts Module"
@@ -253,7 +253,7 @@
           }
         }
       },   
-    "/v2/account/{accountNumber}": {
+    "/account/{accountNumber}": {
       "patch": {
         "tags": [
           "Accounts Module"
@@ -294,7 +294,7 @@
           }
         }
       },
-    "/v2/accounts/{accountNumber}": {
+    "/accounts/{accountNumber}": {
         "delete": {
           "tags": [
             "Accounts Module"
@@ -329,7 +329,7 @@
      
       }
     },
-    "/v2/user/{useremail}/accounts": {
+    "/user/{useremail}/accounts": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -359,7 +359,7 @@
           }
         }
       },
-      "/v2/accounts/{accountNumber}": {
+      "/accounts/{accountNumber}": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -390,7 +390,7 @@
        
         }
       },     
-      "/v2/accounts?status=active": {
+      "/accounts?status=active": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -424,7 +424,7 @@
      
       }
     },
-    "/v2/accounts?status=dormant": {
+    "/accounts?status=dormant": {
         "get": {
           "tags": [
             "Accounts Module"
@@ -458,7 +458,7 @@
      
       }
     },
-    "/v2/transactions/{accountNumber}/debit": {
+    "/transactions/{accountNumber}/debit": {
       "post": {
         "tags": [
           "Transactions Module"
@@ -499,7 +499,7 @@
         }
       }
     },
-    "/v2/transactions/{accountNumber}/credit": {
+    "/transactions/{accountNumber}/credit": {
       "post": {
         "tags": [
           "Transactions Module"
@@ -540,7 +540,7 @@
         }
       }
     },
-    "/v2/accounts/{accountNumber}/transactions": {
+    "/accounts/{accountNumber}/transactions": {
       "get": {
         "tags": [
           "Transactions Module"
@@ -571,7 +571,7 @@
         }
       }
     },
-    "/v2/transactions/{transactionid}": {
+    "/transactions/{transactionid}": {
       "get": {
         "tags": [
           "Transactions Module"

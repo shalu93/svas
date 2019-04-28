@@ -8,7 +8,6 @@ dotenv.config();
 
 
 export default class transaction{
-
     
     // get all transaction details 
     static viewTransaction(req, res){
@@ -39,9 +38,23 @@ export default class transaction{
             } else {
                 return res.send({
                     status : 200 ,   
-                    data : result.rows});
+                    data : result.rows.map((transactions) => {
+                        return {
+                        transactionId : transactions.transactionid,
+                        accountNumber: transactions.accountnumber,
+                        staffId: transactions.staffid,
+                        userId:transactions.userid,
+                        createdOn: transactions.createdon,
+                        transactionType: transactions.transactiontype,
+                        transactionAmount:transactions.transactionamount,
+                        oldBalance: transactions.oldbalance,
+                        newBalance: transactions.newbalance
+                    } 
+                }
+                )}
+                )} 
             }
-        });
+        );
     } }
     }
 
@@ -79,10 +92,24 @@ export default class transaction{
                 } else {
                 return res.send({
                     status : 200 ,   
-                    data : result.rows});
+                    data : result.rows.map((transactions) => {
+                        return {
+                        transactionId : transactions.transactionid,
+                        accountNumber: transactions.accountnumber,
+                        staffId: transactions.staffid,
+                        userId:transactions.userid,
+                        createdOn: transactions.createdon,
+                        transactionType: transactions.transactiontype,
+                        transactionAmount:transactions.transactionamount,
+                        oldBalance: transactions.oldbalance,
+                        newBalance: transactions.newbalance
+                    } 
+                }
+                )}
+                )} 
                 }
             }
-        });
+        );
     } }
     }
 

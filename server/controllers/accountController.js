@@ -26,8 +26,20 @@ export default class authUsers{
                 } else {
                     return res.status(200).send({
                         status : 200 ,   
-                        data : result.rows});
-                }
+                        data : result.rows.map((accounts) => {
+                            return {
+                            accountNumber : accounts.accountnumber,
+                            email: accounts.email,
+                            accountType: accounts.accounttype,
+                            userId:accounts.userid,
+                            accountStatus: accounts.accountstatus,
+                            openingBalance: accounts.openingbalance,
+                            createdOn:accounts.createdon,
+                            currentBalance: accounts.currentbalance
+                        } 
+                        }
+                    )}
+                    )}
             });
         } else {
             var stat =  status ;
@@ -44,9 +56,22 @@ export default class authUsers{
                 } else {
                     return res.status(200).send({
                         status : 200 ,   
-                        data : result.rows});
+                        data : result.rows.map((accounts) => {
+                            return {
+                            accountNumber : accounts.accountnumber,
+                            email: accounts.email,
+                            accountType: accounts.accounttype,
+                            userId:accounts.userid,
+                            accountStatus: accounts.accountstatus,
+                            openingBalance: accounts.openingbalance,
+                            createdOn:accounts.createdon,
+                            currentBalance: accounts.currentbalance
+                        } 
+                    }
+                    )}
+                    )} 
                 }
-            });      
+            );      
         } } }
 
     // get specific account detail
@@ -84,9 +109,22 @@ export default class authUsers{
             } else {
                 return res.status(200).send({
                     status : 200 ,   
-                    data : result.rows});
+                    data : result.rows.map((accounts) => {
+                        return {
+                        accountNumber : accounts.accountnumber,
+                        email: accounts.email,
+                        accountType: accounts.accounttype,
+                        userId:accounts.userid,
+                        accountStatus: accounts.accountstatus,
+                        openingBalance: accounts.openingbalance,
+                        createdOn:accounts.createdon,
+                        currentBalance: accounts.currentbalance
+                    } 
+                }
+                )}
+                )} 
             }
-        });
+        );
     } } }
 
     // get all account details of user filtered by email 
@@ -111,9 +149,22 @@ export default class authUsers{
             } else {
                 return res.status(200).send({
                     status : 200 ,   
-                    data : result.rows});
+                    data : result.rows.map((accounts) => {
+                        return {
+                        accountNumber : accounts.accountnumber,
+                        email: accounts.email,
+                        accountType: accounts.accounttype,
+                        userId:accounts.userid,
+                        accountStatus: accounts.accountstatus,
+                        openingBalance: accounts.openingbalance,
+                        createdOn:accounts.createdon,
+                        currentBalance: accounts.currentbalance
+                    } 
+                }
+                )}
+                )} 
             }
-        });
+        );
     } }    
 
     static createAccount(req, res){
