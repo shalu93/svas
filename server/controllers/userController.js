@@ -211,11 +211,11 @@ export default class authUsers{
                             if(err){
                                 res.status(400).send(err);
                             } else {
-                                let firstName=user.firstName,lastName=user.lastName,email=user.email,UserType=user.UserType;
+                                let firstName=user.firstName,lastName=user.lastName,email=user.email,userType=user.UserType;
                                 return res.send({
                                     status : 200 ,   
                                     message: 'Welcome to Banka, Your user account has been created',
-                                    data : {token,firstName,lastName,email,UserType}});
+                                    data : {token,firstName,lastName,email,userType}});
                                      
                             }
                         });    
