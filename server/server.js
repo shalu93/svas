@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import AccountRouter from './routes/acctRoutes';
 import authRouter from './routes/authRoutes';
 import tranRouter from './routes/tranRoutes';
@@ -10,6 +11,7 @@ import swaggerUi from 'swagger-ui-express';
 dotenv.config();
  
 const app=express();
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
